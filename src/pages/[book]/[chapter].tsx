@@ -27,7 +27,7 @@ const layoutCss = css`
   display: flex;
   justify-content: center;
   margin: 20px auto;
-  gap: 10px;
+  gap: 20px;
 `;
 
 const versesCss = css`
@@ -43,6 +43,7 @@ const navButtonCss = css`
   height: 36px;
   position: sticky;
   top: 80%;
+  margin-bottom: 100px;
 `;
 
 const navButtonPlaceholderCss = css`
@@ -52,6 +53,7 @@ const navButtonPlaceholderCss = css`
 `;
 
 const placesContainerCss = css`
+  padding-top: 40px;
   min-height: 400px;
 `;
 
