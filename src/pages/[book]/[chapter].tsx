@@ -14,9 +14,10 @@ import { getRouteFromBookAndChapter } from "@/utils/getRouteFromBookAndChapter";
 import { getPlacesFromBookAndChapter } from "@/data/getPlacesInBookAndChapter";
 
 import dynamic from "next/dynamic";
+import { BASE_COLOR } from "@/styles/colors";
 
 const DynamicPlacesDisplay = dynamic(
-  async () => import("@/components/PlacesDisplay"),
+  async () => import("@/components/PlacesController"),
   {
     ssr: false,
   }
@@ -36,6 +37,7 @@ const versesCss = css`
   align-items: stretch;
   max-width: 800px;
   gap: 10px;
+  padding-bottom: 40px;
 `;
 
 const navButtonCss = css`
@@ -53,15 +55,15 @@ const navButtonPlaceholderCss = css`
 `;
 
 const placesContainerCss = css`
-  padding-top: 40px;
-  min-height: 400px;
+  height: 400px;
+  border-top: 1px solid ${BASE_COLOR[400]};
+  background-color: ${BASE_COLOR[800]};
 `;
 
 type DataResult = {
   book: string;
   chapter: string;
   verses: Verse[];
-  places: Place[];
 };
 
 type ErrorResult = {
@@ -74,15 +76,10 @@ export const getServerSideProps = (async (context) => {
   const { book, chapter } = context.query;
   const [result, status] = getBookAndChapter(book, chapter);
   const tableOfContents = getTableOfContents();
-  const [places, placesStatus] = await getPlacesFromBookAndChapter(
-    book,
-    chapter
-  );
   return {
     props: {
       ...result,
       tableOfContents,
-      places,
       status: status === 200 ? "success" : "failure",
     },
   };
@@ -178,9 +175,7 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
       </main>
 
       <aside css={placesContainerCss}>
-        <div>
-          <DynamicPlacesDisplay places={props.places} />
-        </div>
+        <DynamicPlacesDisplay book={currentBook} chapter={currentChapter} />
       </aside>
     </>
   );

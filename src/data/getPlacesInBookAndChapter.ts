@@ -27,7 +27,7 @@ export const getPlacesFromBookAndChapter = async (
           {
             role: "system",
             content:
-              "Given the following text, please extract all location names as a JSON list of strings.",
+              "Given the following text, extract all geographic locations as a JSON list of strings.",
           },
           {
             role: "user",
@@ -51,5 +51,8 @@ export const getPlacesFromBookAndChapter = async (
       return [[], 500];
     }
   }
+
+  console.error(`Could not get verses for ${book} ${chapter}`);
+
   return [[], status];
 };

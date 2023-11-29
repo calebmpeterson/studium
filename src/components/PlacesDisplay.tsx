@@ -30,7 +30,7 @@ const layoutCss = css`
 `;
 
 const mapCss = css`
-  min-height: 400px;
+  height: 400px;
 `;
 
 const placesListContainerCss = css`
