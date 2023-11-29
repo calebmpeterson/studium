@@ -1,33 +1,44 @@
-import { Place } from "@/types";
-
-import BIBLICAL_SITES_1 from "./geojson/biblical-sites-1.json";
-import BIBLICAL_SITES_2 from "./geojson/biblical-sites-2.json";
 import { compact, isArray, isEmpty, isString, pick, uniqueId } from "lodash";
+import BIBLICAL_SITES_2 from "./geojson/biblical-sites-2.json";
+import { Point } from "leaflet";
 
-type Feature = {
-  geometry:
-    | {
-        type: "Point";
-        coordinates: [number, number, number];
-      }
-    | {
-        type: string;
-      };
+type PointGeometry = {
+  type: "Point";
+  coordinates: [number, number, number];
+};
+
+type BaseFeature = {
   properties: {
     name: string;
     description: string;
   };
 };
 
+type PointFeature = BaseFeature & {
+  geometry: PointGeometry;
+};
+
+type OtherFeature = BaseFeature & {
+  geometry: {
+    type: string;
+  };
+};
+
+type Feature = PointFeature | OtherFeature;
+
+const isPointFeature = (feature: Feature): feature is PointFeature =>
+  feature.geometry.type === "Point";
+
 const findFeatures = (features: Feature[], query: string, source: string) =>
   features
-    .filter((feature) => feature.geometry.type === "Point")
+    .filter((feature) => isPointFeature(feature))
     .filter((feature) =>
       feature.properties.name.toLowerCase().includes(query.toLowerCase())
     )
     .map(({ geometry, properties }) => ({
       id: uniqueId(),
       source,
+      // @ts-expect-error filter(isPointFeature) ensures this is PointGeometry
       coordinates: geometry.coordinates,
       ...pick(properties, "name", "description"),
     }));
