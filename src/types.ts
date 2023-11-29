@@ -6,4 +6,19 @@ export type Verse = {
   text: string;
 };
 
-export type TableOfContents = Record<string, string[]>;
+export type Coordinate = [number, number, number];
+
+export type PlaceFeature = {
+  id: string;
+  coordinates: Coordinate;
+  name: string;
+  description: string;
+};
+
+export type Place = {
+  id: string;
+  name: string;
+  features: PlaceFeature[];
+};
+
+export type TableOfContents = Record<string, Record<string, string>>;

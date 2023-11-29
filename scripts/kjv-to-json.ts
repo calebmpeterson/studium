@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import _, { groupBy } from "lodash";
 import { BOOK_TITLES } from "./kjv-book-titles";
+import slugify from "slugify";
 
 type Verse = {
   reference: string;
@@ -47,7 +48,7 @@ const groupedByBookAndChapter = _.mapValues(
 );
 
 const slugified = _.mapKeys(groupedByBookAndChapter, (_book, title) =>
-  title.toLowerCase()
+  slugify(title.toLowerCase())
 );
 
 fs.writeFileSync(
