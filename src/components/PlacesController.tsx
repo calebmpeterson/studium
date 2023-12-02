@@ -1,17 +1,19 @@
 import { FC, useEffect, useState } from "react";
 import PlacesDisplay from "./PlacesDisplay";
-import { Place } from "@/types";
+import { Place, Verse } from "@/types";
 import { isEmpty, toLower } from "lodash";
 import { PlacesError } from "./PlacesError";
 import { PlacesLoader } from "./PlacesLoader";
 import { PlacesEmpty } from "./PlacesEmpty";
+import slugify from "slugify";
 
 interface Props {
   book: string;
   chapter: string;
+  verses: Verse[];
 }
 
-export const PlacesController: FC<Props> = ({ book, chapter }) => {
+export const PlacesController: FC<Props> = ({ book, chapter, verses }) => {
   const [isFetching, setIsFetching] = useState(false);
   const [places, setPlaces] = useState<Place[]>([]);
   const [hasError, setHasError] = useState(false);
@@ -23,7 +25,8 @@ export const PlacesController: FC<Props> = ({ book, chapter }) => {
 
       try {
         const response = await fetch(
-          `/api/places?book=${toLower(book)}&chapter=${chapter}`
+          `/api/places?book=${slugify(toLower(book))}&chapter=${chapter}`,
+          { method: "POST", body: JSON.stringify(verses) }
         );
         const data = (await response.json()) as Place[];
 
@@ -38,7 +41,7 @@ export const PlacesController: FC<Props> = ({ book, chapter }) => {
     };
 
     load();
-  }, [book, chapter]);
+  }, [book, chapter, verses]);
 
   if (isFetching) {
     return <PlacesLoader book={book} chapter={chapter} />;

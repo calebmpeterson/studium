@@ -1,5 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getPlacesFromBookAndChapter } from "@/data/getPlacesInBookAndChapter";
+import { Verse } from "@/types";
+import { getPlacesFromVerses } from "@/data/getPlacesFromVerses";
+import { get } from "lodash";
 
 type Result = unknown;
 
@@ -8,6 +10,26 @@ export default async function handler(
   res: NextApiResponse<Result>
 ) {
   const { book, chapter } = req.query;
-  const [places, status] = await getPlacesFromBookAndChapter(book, chapter);
-  res.status(status).json(places);
+
+  try {
+    const verses: Verse[] = JSON.parse(req.body);
+
+    console.log(
+      `Identifying places in ${book} ${chapter} using ${verses.length}`
+    );
+
+    const [places, status] = await getPlacesFromVerses(verses);
+
+    res.status(status).json(places);
+  } catch (error: unknown) {
+    res
+      .status(500)
+      .json({
+        message: get(
+          error,
+          "message",
+          `Failed to fetch places for ${book} ${chapter}`
+        ),
+      });
+  }
 }

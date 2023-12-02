@@ -136,6 +136,7 @@ type Props = InferGetStaticPropsType<typeof getStaticProps>;
 export default function BookAndChapter({ tableOfContents, ...props }: Props) {
   const currentBook = "book" in props ? props.book : "Genesis";
   const currentChapter = "chapter" in props ? props.chapter : "1";
+  const verses = "verses" in props ? props.verses : [];
 
   const previousBookAndChapter = getPreviousBookAndChapter(
     tableOfContents,
@@ -230,7 +231,11 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
       </nav>
 
       <aside css={placesContainerCss}>
-        <DynamicPlacesDisplay book={currentBook} chapter={currentChapter} />
+        <DynamicPlacesDisplay
+          book={currentBook}
+          chapter={currentChapter}
+          verses={verses}
+        />
       </aside>
     </>
   );
