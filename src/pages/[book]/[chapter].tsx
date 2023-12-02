@@ -1,6 +1,11 @@
 import Head from "next/head";
 import { css } from "@emotion/react";
-import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
+import type {
+  InferGetServerSidePropsType,
+  GetServerSideProps,
+  GetStaticProps,
+  InferGetStaticPropsType,
+} from "next";
 import { getBookAndChapter } from "@/data/getBookAndChapter";
 import { Place, TableOfContents, Verse } from "@/types";
 import { getTableOfContents } from "@/data/getTableOfContents";
@@ -17,6 +22,8 @@ import dynamic from "next/dynamic";
 import { BASE_COLOR } from "@/styles/colors";
 import { shadows } from "@/styles/shadows";
 import { breakpoints } from "@/styles/breakpoints";
+import { flatMap, values } from "lodash";
+import slugify from "slugify";
 
 const DynamicPlacesDisplay = dynamic(
   async () => import("@/components/PlacesController"),
@@ -93,8 +100,26 @@ type ErrorResult = {
 
 type Result = (DataResult | ErrorResult) & { tableOfContents: TableOfContents };
 
-export const getServerSideProps = (async (context) => {
-  const { book, chapter } = context.query;
+export const getStaticPaths = async () => {
+  const tableOfContents = getTableOfContents();
+  const paths = flatMap(tableOfContents, (chapters, book) =>
+    Object.keys(chapters).map((chapter) => ({
+      book: slugify(book.toLowerCase()),
+      chapter,
+    }))
+  );
+
+  return {
+    paths: paths.map(({ book, chapter }) => ({ params: { book, chapter } })),
+    fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps<
+  Result & { status: "success" | "failure" },
+  { book: string; chapter: string }
+> = async (context) => {
+  const { book, chapter } = context.params ?? {};
   const [result, status] = getBookAndChapter(book, chapter);
   const tableOfContents = getTableOfContents();
   return {
@@ -104,9 +129,9 @@ export const getServerSideProps = (async (context) => {
       status: status === 200 ? "success" : "failure",
     },
   };
-}) satisfies GetServerSideProps<Result & { status: "success" | "failure" }>;
+};
 
-type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
+type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
 export default function BookAndChapter({ tableOfContents, ...props }: Props) {
   const currentBook = "book" in props ? props.book : "Genesis";
