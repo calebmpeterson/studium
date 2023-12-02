@@ -1,7 +1,22 @@
 import Head from "next/head";
 import { css } from "@emotion/react";
+import Icon from "@mdi/react";
+import {
+  mdiArrowRight,
+  mdiArrowRightBoldOutline,
+  mdiBookOpenPageVariant,
+} from "@mdi/js";
+import { getRouteFromBookAndChapter } from "@/utils/getRouteFromBookAndChapter";
 
-const layoutCss = css``;
+const layoutCss = css`
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+`;
 
 export default function Home() {
   return (
@@ -12,7 +27,13 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main css={layoutCss}></main>
+      <main css={layoutCss}>
+        <Icon path={mdiBookOpenPageVariant} size={3} />
+        <strong>Studium</strong>
+        <a href={getRouteFromBookAndChapter("Genesis", "1")}>
+          Start reading&nbsp;⏵
+        </a>
+      </main>
     </>
   );
 }

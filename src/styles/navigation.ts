@@ -38,4 +38,22 @@ export const navigationCss = css`
       }
     }
   }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+
+    color: ${BASE_COLOR[100]};
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 80%;
+    letter-spacing: 2px;
+
+    transition: ${transition("color")};
+
+    &:hover,
+    &:focus {
+      color: ${ACTIVE_COLOR[300]};
+    }
+  }
 `;
