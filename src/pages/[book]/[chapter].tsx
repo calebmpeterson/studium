@@ -16,6 +16,7 @@ import { getPlacesFromBookAndChapter } from "@/data/getPlacesInBookAndChapter";
 import dynamic from "next/dynamic";
 import { BASE_COLOR } from "@/styles/colors";
 import { shadows } from "@/styles/shadows";
+import { breakpoints } from "@/styles/breakpoints";
 
 const DynamicPlacesDisplay = dynamic(
   async () => import("@/components/PlacesController"),
@@ -52,7 +53,7 @@ const chapterNavigationCss = css`
   display: flex;
   justify-content: space-between;
 
-  @media (max-width: 480px) {
+  @media ${breakpoints["is-mobile"]} {
     padding: 0 30px;
   }
 `;

@@ -4,6 +4,7 @@ import { Place } from "@/types";
 import { isEmpty, toLower } from "lodash";
 import { PlacesError } from "./PlacesError";
 import { PlacesLoader } from "./PlacesLoader";
+import { PlacesEmpty } from "./PlacesEmpty";
 
 interface Props {
   book: string;
@@ -13,10 +14,12 @@ interface Props {
 export const PlacesController: FC<Props> = ({ book, chapter }) => {
   const [isFetching, setIsFetching] = useState(false);
   const [places, setPlaces] = useState<Place[]>([]);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     const load = async () => {
       setIsFetching(true);
+      setHasError(false);
 
       try {
         const response = await fetch(
@@ -28,6 +31,7 @@ export const PlacesController: FC<Props> = ({ book, chapter }) => {
       } catch (error: unknown) {
         console.error(`Failed to fetch places for ${book} ${chapter}`, error);
         setPlaces([]);
+        setHasError(true);
       } finally {
         setIsFetching(false);
       }
@@ -40,8 +44,12 @@ export const PlacesController: FC<Props> = ({ book, chapter }) => {
     return <PlacesLoader book={book} chapter={chapter} />;
   }
 
-  if (isEmpty(places)) {
+  if (hasError) {
     return <PlacesError book={book} chapter={chapter} />;
+  }
+
+  if (isEmpty(places)) {
+    return <PlacesEmpty book={book} chapter={chapter} />;
   }
 
   return <PlacesDisplay places={places} />;

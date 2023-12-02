@@ -10,6 +10,7 @@ import { shadows } from "@/styles/shadows";
 import { getRouteFromBookAndChapter } from "@/utils/getRouteFromBookAndChapter";
 import Icon from "@mdi/react";
 import { mdiBookOpenPageVariant } from "@mdi/js";
+import { breakpoints } from "@/styles/breakpoints";
 
 interface Props {
   tableOfContents: TableOfContents;
@@ -48,7 +49,7 @@ const titleLayoutCss = css`
 `;
 
 const titleCss = css`
-  @media (max-width: 480px) {
+  @media ${breakpoints["is-mobile"]} {
     display: none;
   }
 `;
