@@ -15,6 +15,7 @@ import { getPlacesFromBookAndChapter } from "@/data/getPlacesInBookAndChapter";
 
 import dynamic from "next/dynamic";
 import { BASE_COLOR } from "@/styles/colors";
+import { shadows } from "@/styles/shadows";
 
 const DynamicPlacesDisplay = dynamic(
   async () => import("@/components/PlacesController"),
@@ -36,16 +37,35 @@ const versesCss = css`
   flex-direction: column;
   align-items: stretch;
   max-width: 800px;
+  box-sizing: border-box;
+  padding: 0 20px;
   gap: 10px;
-  padding-bottom: 40px;
 `;
+
+const chapterNavigationCss = css`
+  position: sticky;
+  bottom: 0px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding: 0 0px;
+  max-width: 800px;
+  display: flex;
+  justify-content: space-between;
+
+  @media (max-width: 480px) {
+    padding: 0 30px;
+  }
+`;
+
+const navButtonContainerCss = css``;
 
 const navButtonCss = css`
   width: 36px;
   height: 36px;
   position: sticky;
   top: 80%;
-  margin-bottom: 100px;
+  margin-bottom: 20px;
+  box-shadow: ${shadows["shadow-md"]};
 `;
 
 const navButtonPlaceholderCss = css`
@@ -117,6 +137,7 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
       );
     }
   }, [previousBookAndChapter, router]);
+
   const onNext = useCallback(() => {
     if (!("none" in nextBookAndChapter)) {
       router.push(
@@ -144,35 +165,43 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
       />
 
       <main css={layoutCss}>
-        {hasPrevious ? (
-          <button
-            css={navButtonCss}
-            onClick={onPrevious}
-            aria-label={previousBookAndChapter.label}
-          >
-            ⏴
-          </button>
-        ) : (
-          <div css={navButtonPlaceholderCss} />
-        )}
         <div css={versesCss}>
           {"verses" in props &&
             props.verses.map((verse) => (
               <VerseDisplay key={verse.verse} {...verse} />
             ))}
         </div>
-        {hasNext ? (
-          <button
-            css={navButtonCss}
-            onClick={onNext}
-            aria-label={nextBookAndChapter.label}
-          >
-            ⏵
-          </button>
-        ) : (
-          <div css={navButtonPlaceholderCss} />
-        )}
       </main>
+
+      <nav css={chapterNavigationCss}>
+        <div css={navButtonContainerCss}>
+          {hasPrevious ? (
+            <button
+              css={navButtonCss}
+              onClick={onPrevious}
+              aria-label={previousBookAndChapter.label}
+            >
+              ⏴
+            </button>
+          ) : (
+            <div css={navButtonPlaceholderCss} />
+          )}
+        </div>
+
+        <div css={navButtonContainerCss}>
+          {hasNext ? (
+            <button
+              css={navButtonCss}
+              onClick={onNext}
+              aria-label={nextBookAndChapter.label}
+            >
+              ⏵
+            </button>
+          ) : (
+            <div css={navButtonPlaceholderCss} />
+          )}
+        </div>
+      </nav>
 
       <aside css={placesContainerCss}>
         <DynamicPlacesDisplay book={currentBook} chapter={currentChapter} />

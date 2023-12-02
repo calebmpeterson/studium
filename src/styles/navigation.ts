@@ -6,10 +6,11 @@ import { transition } from "./transition";
 export const navigationCss = css`
   button {
     border: 1px solid ${BASE_COLOR[100]};
-    background-color: transparent;
+    background-color: ${BASE_COLOR[900]};
     color: ${BASE_COLOR[100]};
     border-radius: 5px;
     padding: 5px 10px;
+    box-sizing: border-box;
     font-family: ${BODY_FONT_FAMILY};
     font-weight: 600;
     cursor: pointer;

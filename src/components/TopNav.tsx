@@ -47,6 +47,12 @@ const titleLayoutCss = css`
   gap: 5px;
 `;
 
+const titleCss = css`
+  @media (max-width: 480px) {
+    display: none;
+  }
+`;
+
 const bookButtonCss = css`
   width: 150px;
 `;
@@ -127,7 +133,7 @@ export const TopNav: FC<Props> = ({
     <nav css={layoutCss}>
       <div css={titleLayoutCss}>
         <Icon path={mdiBookOpenPageVariant} size={0.7} />
-        <strong>Studium</strong>
+        <strong css={titleCss}>Studium</strong>
       </div>
 
       <div css={tocContainerCss}>

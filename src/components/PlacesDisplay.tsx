@@ -47,6 +47,7 @@ const placesListCss = css`
   display: flex;
   justify-content: center;
   gap: 10px;
+  flex-wrap: wrap;
 `;
 
 const placeCss = css`
