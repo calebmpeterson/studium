@@ -1,6 +1,5 @@
 import { compact, isArray, isEmpty, isString, pick, uniqueId } from "lodash";
 import BIBLICAL_SITES_2 from "./geojson/biblical-sites-2.json";
-import { Point } from "leaflet";
 
 type PointGeometry = {
   type: "Point";
