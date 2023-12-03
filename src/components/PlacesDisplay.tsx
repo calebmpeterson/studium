@@ -6,6 +6,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { sumBy } from "lodash";
 import { ACTIVE_COLOR, BASE_COLOR } from "@/styles/colors";
+import { MAP_TILER_KEY } from "@/utils/environment";
 
 const icon = L.icon({
   iconUrl: "/marker-icon-2x.png",
@@ -100,8 +101,11 @@ export const PlacesDisplay: FC<Props> = ({ places }) => (
       attributionControl={false}
     >
       <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='"\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e"'
+        url={`https://api.maptiler.com/tiles/hillshade/{z}/{x}/{y}.webp?key=${MAP_TILER_KEY}`}
+        tileSize={512}
+        zoomOffset={-1}
+        minZoom={1}
       />
 
       {places.flatMap((place) =>

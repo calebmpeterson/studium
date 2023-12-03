@@ -1,4 +1,12 @@
-import { compact, isArray, isEmpty, isString, pick, uniqueId } from "lodash";
+import {
+  compact,
+  isArray,
+  isEmpty,
+  isString,
+  pick,
+  uniqueId,
+  words,
+} from "lodash";
 import BIBLICAL_SITES_2 from "./geojson/biblical-sites-2.json";
 
 type PointGeometry = {
@@ -31,9 +39,7 @@ const isPointFeature = (feature: Feature): feature is PointFeature =>
 const findFeatures = (features: Feature[], query: string, source: string) =>
   features
     .filter((feature) => isPointFeature(feature))
-    .filter((feature) =>
-      feature.properties.name.toLowerCase().includes(query.toLowerCase())
-    )
+    .filter((feature) => words(feature.properties.name).includes(query))
     .map(({ geometry, properties }) => ({
       id: uniqueId(),
       source,
