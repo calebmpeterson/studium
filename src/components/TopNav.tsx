@@ -24,7 +24,7 @@ const layoutCss = css`
   border-bottom: 1px solid ${BASE_COLOR[400]};
   padding: 10px;
   position: sticky;
-  z-index: 1000;
+  z-index: 1001;
   top: 0;
   background-color: ${BASE_COLOR[900]};
 
@@ -73,6 +73,7 @@ const menuCss = css`
   box-sizing: border-box;
   border: 1px solid ${BASE_COLOR[400]};
   box-shadow: ${shadows["shadow-xl"]};
+  min-width: 200px;
 `;
 
 const bookMenuCss = css`
