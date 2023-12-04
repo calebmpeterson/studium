@@ -22,3 +22,9 @@ export type Place = {
 };
 
 export type TableOfContents = Record<string, Record<string, string>>;
+
+export type ReadingHistoryEntry = {
+  book: string;
+  chapter: string;
+};
+export type ReadingHistory = ReadingHistoryEntry[];

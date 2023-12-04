@@ -11,7 +11,7 @@ import { Place, TableOfContents, Verse } from "@/types";
 import { getTableOfContents } from "@/data/getTableOfContents";
 import { TopNav } from "@/components/TopNav";
 import { VerseDisplay } from "@/components/VerseDisplay";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { getNextBookAndChapter } from "@/utils/getNextBookAndChapter";
 import { getPreviousBookAndChapter } from "@/utils/getPreviousBookAndChapter";
 import { useRouter } from "next/router";
@@ -22,8 +22,10 @@ import dynamic from "next/dynamic";
 import { BASE_COLOR } from "@/styles/colors";
 import { shadows } from "@/styles/shadows";
 import { breakpoints } from "@/styles/breakpoints";
-import { flatMap, values } from "lodash";
+import { first, flatMap, isEqual, values } from "lodash";
 import slugify from "slugify";
+import { useReadingHistory } from "@/state/useReadingHistory";
+import { useTrackReadingHistory } from "@/state/useTrackReadingHistory";
 
 const DynamicPlacesDisplay = dynamic(
   async () => import("@/components/PlacesController"),
@@ -136,6 +138,8 @@ type Props = InferGetStaticPropsType<typeof getStaticProps>;
 export default function BookAndChapter({ tableOfContents, ...props }: Props) {
   const currentBook = "book" in props ? props.book : "Genesis";
   const currentChapter = "chapter" in props ? props.chapter : "1";
+  useTrackReadingHistory(currentBook, currentChapter);
+
   const verses = "verses" in props ? props.verses : [];
 
   const previousBookAndChapter = getPreviousBookAndChapter(
