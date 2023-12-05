@@ -1,30 +1,23 @@
 import Head from "next/head";
 import { css } from "@emotion/react";
-import type {
-  InferGetServerSidePropsType,
-  GetServerSideProps,
-  GetStaticProps,
-  InferGetStaticPropsType,
-} from "next";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import { getBookAndChapter } from "@/data/getBookAndChapter";
-import { Place, TableOfContents, Verse } from "@/types";
+import { TableOfContents, Verse } from "@/types";
 import { getTableOfContents } from "@/data/getTableOfContents";
 import { TopNav } from "@/components/TopNav";
 import { VerseDisplay } from "@/components/VerseDisplay";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { getNextBookAndChapter } from "@/utils/getNextBookAndChapter";
 import { getPreviousBookAndChapter } from "@/utils/getPreviousBookAndChapter";
 import { useRouter } from "next/router";
 import { getRouteFromBookAndChapter } from "@/utils/getRouteFromBookAndChapter";
-import { getPlacesFromBookAndChapter } from "@/data/getPlacesInBookAndChapter";
-
+import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { BASE_COLOR } from "@/styles/colors";
 import { shadows } from "@/styles/shadows";
 import { breakpoints } from "@/styles/breakpoints";
-import { first, flatMap, isEqual, values } from "lodash";
+import { flatMap } from "lodash";
 import slugify from "slugify";
-import { useReadingHistory } from "@/state/useReadingHistory";
 import { useTrackReadingHistory } from "@/state/useTrackReadingHistory";
 
 const DynamicPlacesDisplay = dynamic(
@@ -169,9 +162,9 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
     }
   }, [previousBookAndChapter, router]);
 
-  const onNext = useCallback(() => {
+  const onNext = useCallback(async () => {
     if (!("none" in nextBookAndChapter)) {
-      router.push(
+      await router.push(
         getRouteFromBookAndChapter(
           nextBookAndChapter.book,
           nextBookAndChapter.chapter
@@ -180,12 +173,12 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
     }
   }, [nextBookAndChapter, router]);
 
+  const title = `${currentBook} ${currentChapter} | Studium`;
+
   return (
     <>
       <Head>
-        <title>
-          {currentBook} {currentChapter} | Studium
-        </title>
+        <title>{title}</title>
         <meta name="description" content="Bible study" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
@@ -197,14 +190,21 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
         currentChapter={currentChapter}
       />
 
-      <main css={layoutCss}>
+      <motion.main
+        key={`${currentBook} ${currentChapter}`}
+        css={layoutCss}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ ease: "easeInOut", duration: 0.3 }}
+      >
         <div css={versesCss}>
           {"verses" in props &&
             props.verses.map((verse) => (
               <VerseDisplay key={verse.verse} {...verse} />
             ))}
         </div>
-      </main>
+      </motion.main>
 
       <nav css={chapterNavigationCss}>
         <div css={navButtonContainerCss}>
