@@ -1,13 +1,12 @@
 import { css } from "@emotion/react";
-import { ACTIVE_COLOR, BASE_COLOR } from "./colors";
 import { BODY_FONT_FAMILY } from "./typography";
 import { transition } from "./transition";
 
 export const navigationCss = css`
   button {
-    border: 1px solid ${BASE_COLOR[100]};
-    background-color: ${BASE_COLOR[900]};
-    color: ${BASE_COLOR[100]};
+    border: 1px solid var(--button-border);
+    background-color: var(--bg);
+    color: var(--button-fg);
     border-radius: 5px;
     padding: 5px 10px;
     box-sizing: border-box;
@@ -19,23 +18,19 @@ export const navigationCss = css`
 
     &:hover,
     &:focus {
-      color: ${ACTIVE_COLOR[300]};
-      border-color: ${ACTIVE_COLOR[300]};
+      color: var(--active-fg);
+      border-color: var(--active-fg);
+      background-color: var(--button-active-bg);
     }
 
     &:disabled {
       background-color: transparent !important;
-      color: ${BASE_COLOR[500]} !important;
+      color: var(--disabled-fg) !important;
       cursor: not-allowed;
     }
 
     &[data-borderless="true"] {
       border: none;
-
-      &:hover,
-      &:focus {
-        background-color: ${BASE_COLOR[800]};
-      }
     }
   }
 
@@ -43,7 +38,7 @@ export const navigationCss = css`
     display: inline-flex;
     align-items: center;
 
-    color: ${BASE_COLOR[100]};
+    color: var(--button-fg);
     text-decoration: none;
     text-transform: uppercase;
     font-size: 80%;
@@ -53,7 +48,7 @@ export const navigationCss = css`
 
     &:hover,
     &:focus {
-      color: ${ACTIVE_COLOR[300]};
+      color: var(--active-fg);
     }
   }
 `;

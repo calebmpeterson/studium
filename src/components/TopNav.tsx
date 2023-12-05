@@ -1,4 +1,3 @@
-import { BASE_COLOR } from "@/styles/colors";
 import { ReadingHistoryEntry, TableOfContents } from "@/types";
 import { css } from "@emotion/react";
 import { FC, useCallback, useEffect, useState } from "react";
@@ -23,12 +22,12 @@ const layoutCss = css`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid ${BASE_COLOR[400]};
+  border-bottom: 1px solid var(--border-color);
   padding: 10px;
   position: sticky;
   z-index: 1001;
   top: 0;
-  background-color: ${BASE_COLOR[900]};
+  background-color: var(--bg);
 
   & > div {
     width: 100%;
@@ -71,18 +70,18 @@ const menuCss = css`
   max-height: 500px;
   overflow-y: auto;
   overflow-x: hidden;
-  background-color: ${BASE_COLOR[900]};
+  background-color: var(--bg);
   border-radius: 5px;
   padding: 5px;
   box-sizing: border-box;
-  border: 1px solid ${BASE_COLOR[400]};
+  border: 1px solid var(--border-color);
   box-shadow: ${shadows["shadow-xl"]};
   min-width: 200px;
 
   & > header {
     padding: 5px 10px;
     font-size: 12px;
-    color: ${BASE_COLOR[400]};
+    color: var(--border-color);
     font-weight: normal;
     text-transform: uppercase;
   }

@@ -79,8 +79,8 @@ const navButtonPlaceholderCss = css`
 
 const placesContainerCss = css`
   height: 400px;
-  border-top: 1px solid ${BASE_COLOR[400]};
-  background-color: ${BASE_COLOR[800]};
+  border-top: 1px solid var(--border-color);
+  background-color: var(--bg);
 `;
 
 type DataResult = {

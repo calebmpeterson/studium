@@ -1,7 +1,8 @@
 import { css } from "@emotion/react";
-import { BASE_COLOR } from "./colors";
+import { ACTIVE_COLOR, BASE_COLOR } from "./colors";
 import { navigationCss } from "./navigation";
 import { BODY_FONT_FAMILY, typographyCss } from "./typography";
+import { scheme } from "./scheme";
 
 export const globalCss = css`
   html,
@@ -14,9 +15,33 @@ export const globalCss = css`
     padding: 0;
   }
 
+  :root {
+    --bg: ${BASE_COLOR[900]};
+    --fg: ${BASE_COLOR[50]};
+    --border-color: ${BASE_COLOR[400]};
+    --button-fg: ${BASE_COLOR[100]};
+    --button-border: ${BASE_COLOR[100]};
+    --button-active-bg: ${BASE_COLOR[800]};
+    --active-fg: ${ACTIVE_COLOR[300]};
+    --disabled-fg: ${BASE_COLOR[500]};
+  }
+
   body {
-    background-color: ${BASE_COLOR[900]};
-    color: ${BASE_COLOR[50]};
+    background-color: var(--bg);
+    color: var(--fg);
+  }
+
+  @media ${scheme.light} {
+    :root {
+      --bg: ${BASE_COLOR[50]};
+      --fg: ${BASE_COLOR[800]};
+      --border-color: ${BASE_COLOR[600]};
+      --button-fg: ${BASE_COLOR[800]};
+      --button-border: ${BASE_COLOR[800]};
+      --button-active-bg: ${ACTIVE_COLOR[100]};
+      --active-fg: ${ACTIVE_COLOR[600]};
+      --disabled-fg: ${BASE_COLOR[600]};
+    }
   }
 
   ${typographyCss}
