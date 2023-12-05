@@ -18,7 +18,7 @@ export const getPlacesFromVerses = async (verses: Verse[]): Promise<Result> => {
         {
           role: "system",
           content:
-            "Given the following text, extract all geographic locations, excluding countries, as a JSON list of strings.",
+            "Given the following text, extract all geographic locations as a JSON list of strings.",
         },
         {
           role: "user",
@@ -32,7 +32,7 @@ export const getPlacesFromVerses = async (verses: Verse[]): Promise<Result> => {
       presence_penalty: 0,
     });
 
-    console.log(`getPlacesFromBookAndChapter`, response.usage);
+    console.log(`getPlacesFromVerses`, response.usage);
 
     const places = extractJsonFromOpenAI(response);
 

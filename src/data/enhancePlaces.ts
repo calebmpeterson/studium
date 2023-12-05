@@ -8,6 +8,7 @@ import {
   words,
 } from "lodash";
 import BIBLICAL_SITES_2 from "./geojson/biblical-sites-2.json";
+import COUNTRIES from "./json/countries.json";
 
 type PointGeometry = {
   type: "Point";
@@ -61,8 +62,16 @@ const enhancePlace = (place: unknown) => {
 
 export const enhancePlaces = (places: unknown) => {
   if (isArray(places)) {
-    return compact(places.map((place) => enhancePlace(place))).filter(
-      ({ features }) => !isEmpty(features)
+    return (
+      compact(
+        places
+          // Omit countries
+          .filter((place) => !COUNTRIES.includes(place))
+          // Enhance place data
+          .map((place) => enhancePlace(place))
+      )
+        // Ignore places for which no features are available
+        .filter(({ features }) => !isEmpty(features))
     );
   }
 
