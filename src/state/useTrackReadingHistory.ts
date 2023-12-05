@@ -13,6 +13,7 @@ export const useTrackReadingHistory = (
       book: currentBook,
       chapter: currentChapter,
     };
+
     setReadingHistory((history) =>
       isEqual(entryForCurrentBookAndChapter, first(history))
         ? history

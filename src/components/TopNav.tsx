@@ -1,5 +1,5 @@
 import { BASE_COLOR } from "@/styles/colors";
-import { TableOfContents } from "@/types";
+import { ReadingHistoryEntry, TableOfContents } from "@/types";
 import { css } from "@emotion/react";
 import { FC, useCallback, useEffect, useState } from "react";
 import { BookMenuItem } from "./BookMenuItem";
@@ -8,8 +8,10 @@ import { useRouter } from "next/router";
 import { shadows } from "@/styles/shadows";
 import { getRouteFromBookAndChapter } from "@/utils/getRouteFromBookAndChapter";
 import Icon from "@mdi/react";
-import { mdiBookOpenPageVariant } from "@mdi/js";
+import { mdiBookOpenPageVariant, mdiHistory } from "@mdi/js";
 import { breakpoints } from "@/styles/breakpoints";
+import { ReadingHistoryMenuItem } from "./ReadingHistoryMenuItem";
+import { useReadingHistory } from "@/state/useReadingHistory";
 
 interface Props {
   tableOfContents: TableOfContents;
@@ -61,6 +63,8 @@ const chapterButtonCss = css`
   width: 50px;
 `;
 
+const readingHistoryButtonCss = css``;
+
 const menuCss = css`
   position: absolute;
   top: calc(100% + 5px);
@@ -74,6 +78,14 @@ const menuCss = css`
   border: 1px solid ${BASE_COLOR[400]};
   box-shadow: ${shadows["shadow-xl"]};
   min-width: 200px;
+
+  & > header {
+    padding: 5px 10px;
+    font-size: 12px;
+    color: ${BASE_COLOR[400]};
+    font-weight: normal;
+    text-transform: uppercase;
+  }
 `;
 
 const bookMenuCss = css`
@@ -88,6 +100,14 @@ const chapterMenuCss = css`
   ${menuCss}
 
   max-width: 372px;
+`;
+
+const readingHistoryMenuCss = css`
+  ${menuCss}
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 `;
 
 export const TopNav: FC<Props> = ({
@@ -125,6 +145,19 @@ export const TopNav: FC<Props> = ({
     [router, selectedBook]
   );
 
+  const [isReadingHistoryMenuOpen, setIsReadingHistoryMenuOpen] =
+    useState(false);
+  const onToggleReadingHistoryMenu = useCallback(() => {
+    setIsReadingHistoryMenuOpen((open) => !open);
+  }, []);
+  const [readingHistory] = useReadingHistory();
+  const onSelectReadingHistoryEntry = useCallback(
+    (entry: ReadingHistoryEntry) => {
+      router.push(getRouteFromBookAndChapter(entry.book, entry.chapter));
+    },
+    [router]
+  );
+
   useEffect(() => {
     setSelectedBook(currentBook);
     setSelectedChapter(currentChapter);
@@ -159,6 +192,24 @@ export const TopNav: FC<Props> = ({
                 key={chapter}
                 chapter={chapter}
                 onSelect={onSelectChapter}
+              />
+            ))}
+          </div>
+        )}
+        <button
+          css={readingHistoryButtonCss}
+          onClick={onToggleReadingHistoryMenu}
+        >
+          <Icon path={mdiHistory} size={0.7} />
+        </button>
+        {isReadingHistoryMenuOpen && (
+          <div css={readingHistoryMenuCss}>
+            <header>Reading History</header>
+            {readingHistory.map((entry, index) => (
+              <ReadingHistoryMenuItem
+                key={index}
+                entry={entry}
+                onSelect={onSelectReadingHistoryEntry}
               />
             ))}
           </div>
