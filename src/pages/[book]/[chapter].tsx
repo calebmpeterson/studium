@@ -183,7 +183,9 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
   return (
     <>
       <Head>
-        <title>Studium</title>
+        <title>
+          {currentBook} {currentChapter} | Studium
+        </title>
         <meta name="description" content="Bible study" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />

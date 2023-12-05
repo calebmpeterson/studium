@@ -1,12 +1,12 @@
 import Head from "next/head";
 import { css } from "@emotion/react";
 import Icon from "@mdi/react";
-import {
-  mdiArrowRight,
-  mdiArrowRightBoldOutline,
-  mdiBookOpenPageVariant,
-} from "@mdi/js";
+import { mdiBookOpenPageVariant } from "@mdi/js";
 import { getRouteFromBookAndChapter } from "@/utils/getRouteFromBookAndChapter";
+import { useReadingHistory } from "@/state/useReadingHistory";
+import { first } from "lodash";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 const layoutCss = css`
   height: 100vh;
@@ -19,6 +19,21 @@ const layoutCss = css`
 `;
 
 export default function Home() {
+  const [readingHistory] = useReadingHistory();
+  const mostRecentReadingHistoryEntry = first(readingHistory);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (mostRecentReadingHistoryEntry) {
+      router.push(
+        getRouteFromBookAndChapter(
+          mostRecentReadingHistoryEntry.book,
+          mostRecentReadingHistoryEntry.chapter
+        )
+      );
+    }
+  }, [mostRecentReadingHistoryEntry, router]);
+
   return (
     <>
       <Head>
