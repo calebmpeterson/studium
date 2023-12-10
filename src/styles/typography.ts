@@ -13,5 +13,10 @@ export const typographyCss = css`
   sup {
     color: ${BASE_COLOR[400]};
     font-size: 12px;
+
+    // Ensure that children retain the <sup> color
+    & > * {
+      color: inherit !important;
+    }
   }
 `;

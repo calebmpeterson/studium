@@ -6,7 +6,7 @@ import { TableOfContents, Verse } from "@/types";
 import { getTableOfContents } from "@/data/getTableOfContents";
 import { TopNav } from "@/components/TopNav";
 import { VerseDisplay } from "@/components/VerseDisplay";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { getNextBookAndChapter } from "@/utils/getNextBookAndChapter";
 import { getPreviousBookAndChapter } from "@/utils/getPreviousBookAndChapter";
 import { useRouter } from "next/router";
