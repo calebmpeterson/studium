@@ -1,4 +1,5 @@
 import {
+  capitalize,
   compact,
   isArray,
   isEmpty,
@@ -66,6 +67,8 @@ export const enhancePlaces = (places: unknown) => {
   if (isArray(places)) {
     return compact(
       places
+        // Omit places that don't have capitalized names
+        .filter((place) => place.name === capitalize(place.name))
         // Omit countries and peoples
         .filter(
           (place) => !COUNTRIES.includes(place) && !PEOPLES.includes(place)
