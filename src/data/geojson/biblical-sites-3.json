@@ -1,0 +1,20 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "8e7adcbe-b593-4a2d-ad98-fd9507f8b200",
+      "properties": {
+        "name": "Aphek"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          34.8833,
+          32.0833,
+          0
+        ]
+      }
+    }
+  ]
+}

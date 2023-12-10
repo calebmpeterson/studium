@@ -8,7 +8,9 @@ import {
   words,
 } from "lodash";
 import BIBLICAL_SITES_2 from "./geojson/biblical-sites-2.json";
+import BIBLICAL_SITES_3 from "./geojson/biblical-sites-3.json";
 import COUNTRIES from "./json/countries.json";
+import PEOPLES from "./json/peoples.json";
 
 type PointGeometry = {
   type: "Point";
@@ -18,7 +20,7 @@ type PointGeometry = {
 type BaseFeature = {
   properties: {
     name: string;
-    description: string;
+    description?: string;
   };
 };
 
@@ -52,8 +54,8 @@ const findFeatures = (features: Feature[], query: string, source: string) =>
 const enhancePlace = (place: unknown) => {
   if (isString(place)) {
     const features = [
-      // ...findFeatures(BIBLICAL_SITES_1.features, place, "sites-1"),
       ...findFeatures(BIBLICAL_SITES_2.features, place, "sites-2"),
+      ...findFeatures(BIBLICAL_SITES_3.features, place, "sites-3"),
     ];
 
     return { id: uniqueId(), name: place, features };
@@ -64,8 +66,10 @@ export const enhancePlaces = (places: unknown) => {
   if (isArray(places)) {
     return compact(
       places
-        // Omit countries
-        .filter((place) => !COUNTRIES.includes(place))
+        // Omit countries and peoples
+        .filter(
+          (place) => !COUNTRIES.includes(place) && !PEOPLES.includes(place)
+        )
         // Enhance place data
         .map((place) => enhancePlace(place))
     );
