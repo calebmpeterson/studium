@@ -4,7 +4,7 @@ import { FC } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { sumBy } from "lodash";
+import { isEmpty, sumBy } from "lodash";
 import { ACTIVE_COLOR, BASE_COLOR } from "@/styles/colors";
 import { MAP_TILER_KEY } from "@/utils/environment";
 
@@ -51,10 +51,10 @@ const placesListCss = css`
   flex-wrap: wrap;
 `;
 
-const placeCss = css`
+const placeCss = (hasFeatures: boolean) => css`
   font-size: 12px;
   font-weight: 600;
-  background-color: ${BASE_COLOR[700]};
+  background-color: ${hasFeatures ? BASE_COLOR[700] : BASE_COLOR[500]};
   color: ${BASE_COLOR[100]};
   padding: 5px 10px;
   border-radius: 50px;
@@ -85,7 +85,7 @@ export const PlacesDisplay: FC<Props> = ({ places }) => (
     <div css={placesListContainerCss}>
       <div css={placesListCss}>
         {places.map((place) => (
-          <div key={place.id} css={placeCss}>
+          <div key={place.id} css={placeCss(!isEmpty(place.features))}>
             {place.name}
           </div>
         ))}

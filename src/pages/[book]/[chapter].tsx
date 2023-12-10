@@ -6,14 +6,13 @@ import { TableOfContents, Verse } from "@/types";
 import { getTableOfContents } from "@/data/getTableOfContents";
 import { TopNav } from "@/components/TopNav";
 import { VerseDisplay } from "@/components/VerseDisplay";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { getNextBookAndChapter } from "@/utils/getNextBookAndChapter";
 import { getPreviousBookAndChapter } from "@/utils/getPreviousBookAndChapter";
 import { useRouter } from "next/router";
 import { getRouteFromBookAndChapter } from "@/utils/getRouteFromBookAndChapter";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
-import { BASE_COLOR } from "@/styles/colors";
 import { shadows } from "@/styles/shadows";
 import { breakpoints } from "@/styles/breakpoints";
 import { flatMap } from "lodash";
@@ -128,12 +127,14 @@ export const getStaticProps: GetStaticProps<
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
+const EMPTY_VERSES: Verse[] = [];
+
 export default function BookAndChapter({ tableOfContents, ...props }: Props) {
   const currentBook = "book" in props ? props.book : "Genesis";
   const currentChapter = "chapter" in props ? props.chapter : "1";
   useTrackReadingHistory(currentBook, currentChapter);
 
-  const verses = "verses" in props ? props.verses : [];
+  const verses = "verses" in props ? props.verses : EMPTY_VERSES;
 
   const previousBookAndChapter = getPreviousBookAndChapter(
     tableOfContents,

@@ -62,16 +62,12 @@ const enhancePlace = (place: unknown) => {
 
 export const enhancePlaces = (places: unknown) => {
   if (isArray(places)) {
-    return (
-      compact(
-        places
-          // Omit countries
-          .filter((place) => !COUNTRIES.includes(place))
-          // Enhance place data
-          .map((place) => enhancePlace(place))
-      )
-        // Ignore places for which no features are available
-        .filter(({ features }) => !isEmpty(features))
+    return compact(
+      places
+        // Omit countries
+        .filter((place) => !COUNTRIES.includes(place))
+        // Enhance place data
+        .map((place) => enhancePlace(place))
     );
   }
 
