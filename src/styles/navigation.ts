@@ -35,6 +35,7 @@ export const navigationCss = css`
   }
 
   a {
+    cursor: pointer;
     display: inline-flex;
     align-items: center;
 
@@ -45,6 +46,17 @@ export const navigationCss = css`
     letter-spacing: 2px;
 
     transition: ${transition("color")};
+
+    &:hover,
+    &:focus {
+      color: var(--active-fg);
+    }
+  }
+
+  a[role="button"] {
+    color: var(--fg-muted);
+    letter-spacing: initial;
+    font-size: 66%;
 
     &:hover,
     &:focus {

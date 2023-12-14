@@ -2,7 +2,11 @@ import Head from "next/head";
 import { css } from "@emotion/react";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import { getBookAndChapter } from "@/data/getBookAndChapter";
-import { TableOfContents, Verse } from "@/types";
+import {
+  CrossReferencesForBookAndChapter,
+  TableOfContents,
+  Verse,
+} from "@/types";
 import { getTableOfContents } from "@/data/getTableOfContents";
 import { TopNav } from "@/components/TopNav";
 import { VerseDisplay } from "@/components/VerseDisplay";
@@ -18,6 +22,7 @@ import { breakpoints } from "@/styles/breakpoints";
 import { flatMap } from "lodash";
 import slugify from "slugify";
 import { useTrackReadingHistory } from "@/state/useTrackReadingHistory";
+import { getCrossReferences } from "@/data/getCrossReferences";
 
 const DynamicPlacesDisplay = dynamic(
   async () => import("@/components/PlacesController"),
@@ -92,7 +97,10 @@ type ErrorResult = {
   message: string;
 };
 
-type Result = (DataResult | ErrorResult) & { tableOfContents: TableOfContents };
+type Result = (DataResult | ErrorResult) & {
+  tableOfContents: TableOfContents;
+  crossReferences: CrossReferencesForBookAndChapter;
+};
 
 export const getStaticPaths = async () => {
   const tableOfContents = getTableOfContents();
@@ -116,9 +124,11 @@ export const getStaticProps: GetStaticProps<
   const { book, chapter } = context.params ?? {};
   const [result, status] = getBookAndChapter(book, chapter);
   const tableOfContents = getTableOfContents();
+  const crossReferences = getCrossReferences(book, chapter);
   return {
     props: {
       ...result,
+      crossReferences,
       tableOfContents,
       status: status === 200 ? "success" : "failure",
     },
@@ -129,7 +139,11 @@ type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
 const EMPTY_VERSES: Verse[] = [];
 
-export default function BookAndChapter({ tableOfContents, ...props }: Props) {
+export default function BookAndChapter({
+  tableOfContents,
+  crossReferences,
+  ...props
+}: Props) {
   const currentBook = "book" in props ? props.book : "Genesis";
   const currentChapter = "chapter" in props ? props.chapter : "1";
   useTrackReadingHistory(currentBook, currentChapter);
@@ -202,7 +216,11 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
         <div css={versesCss}>
           {"verses" in props &&
             props.verses.map((verse) => (
-              <VerseDisplay key={verse.verse} {...verse} />
+              <VerseDisplay
+                key={verse.verse}
+                {...verse}
+                crossReferences={crossReferences[verse.verse]}
+              />
             ))}
         </div>
       </motion.main>

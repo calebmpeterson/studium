@@ -10,8 +10,16 @@ export const typographyCss = css`
     font-weight: bold;
   }
 
+  [data-muted="true"] {
+    color: var(--fg-muted);
+  }
+
+  small {
+    font-size: 66%;
+  }
+
   sup {
-    color: ${BASE_COLOR[400]};
+    color: var(--fg-muted);
     font-size: 12px;
 
     // Ensure that children retain the <sup> color

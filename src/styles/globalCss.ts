@@ -18,6 +18,7 @@ export const globalCss = css`
   :root {
     --bg: ${BASE_COLOR[900]};
     --fg: ${BASE_COLOR[50]};
+    --fg-muted: ${BASE_COLOR[400]};
     --border-color: ${BASE_COLOR[400]};
     --button-fg: ${BASE_COLOR[100]};
     --button-border: ${BASE_COLOR[100]};
@@ -35,6 +36,7 @@ export const globalCss = css`
     :root {
       --bg: ${BASE_COLOR[50]};
       --fg: ${BASE_COLOR[800]};
+      --fg-muted: ${BASE_COLOR[600]};
       --border-color: ${BASE_COLOR[600]};
       --button-fg: ${BASE_COLOR[800]};
       --button-border: ${BASE_COLOR[800]};
