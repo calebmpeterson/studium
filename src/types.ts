@@ -12,7 +12,7 @@ export type PlaceFeature = {
   id: string;
   coordinates: Coordinate;
   name: string;
-  description: string;
+  description?: string;
 };
 
 export type Place = {
@@ -28,3 +28,19 @@ export type ReadingHistoryEntry = {
   chapter: string;
 };
 export type ReadingHistory = ReadingHistoryEntry[];
+
+export type CrossReference = {
+  book: string;
+  chapter: string;
+  verse: string;
+  score: number;
+  slug: string;
+};
+
+export type CrossReferencesForBookAndChapter = {
+  [verse: string]: CrossReference[];
+};
+
+export type CrossReferences = {
+  [bookAndChapterSlug: string]: CrossReferencesForBookAndChapter;
+};
