@@ -6,6 +6,7 @@ import { PlacesError } from "./PlacesError";
 import { PlacesLoader } from "./PlacesLoader";
 import { PlacesEmpty } from "./PlacesEmpty";
 import slugify from "slugify";
+import { ErrorBoundary } from "react-error-boundary";
 
 interface Props {
   book: string;
@@ -55,7 +56,11 @@ export const PlacesController: FC<Props> = ({ book, chapter, verses }) => {
     return <PlacesEmpty book={book} chapter={chapter} />;
   }
 
-  return <PlacesDisplay places={places} />;
+  return (
+    <ErrorBoundary fallback={<PlacesError book={book} chapter={chapter} />}>
+      <PlacesDisplay places={places} />
+    </ErrorBoundary>
+  );
 };
 
 export default PlacesController;
