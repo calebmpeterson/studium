@@ -23,6 +23,7 @@ import { flatMap } from "lodash";
 import slugify from "slugify";
 import { useTrackReadingHistory } from "@/state/useTrackReadingHistory";
 import { getCrossReferences } from "@/data/getCrossReferences";
+import { useCrossReferences } from "@/queries/useCrossReferences";
 
 const DynamicPlacesDisplay = dynamic(
   async () => import("@/components/PlacesController"),
@@ -99,7 +100,6 @@ type ErrorResult = {
 
 type Result = (DataResult | ErrorResult) & {
   tableOfContents: TableOfContents;
-  crossReferences: CrossReferencesForBookAndChapter;
 };
 
 export const getStaticPaths = async () => {
@@ -124,11 +124,9 @@ export const getStaticProps: GetStaticProps<
   const { book, chapter } = context.params ?? {};
   const [result, status] = getBookAndChapter(book, chapter);
   const tableOfContents = getTableOfContents();
-  const crossReferences = getCrossReferences(book, chapter);
   return {
     props: {
       ...result,
-      crossReferences,
       tableOfContents,
       status: status === 200 ? "success" : "failure",
     },
@@ -139,14 +137,12 @@ type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
 const EMPTY_VERSES: Verse[] = [];
 
-export default function BookAndChapter({
-  tableOfContents,
-  crossReferences,
-  ...props
-}: Props) {
+export default function BookAndChapter({ tableOfContents, ...props }: Props) {
   const currentBook = "book" in props ? props.book : "Genesis";
   const currentChapter = "chapter" in props ? props.chapter : "1";
   useTrackReadingHistory(currentBook, currentChapter);
+
+  const crossReferences = useCrossReferences(currentBook, currentChapter);
 
   const verses = "verses" in props ? props.verses : EMPTY_VERSES;
 
