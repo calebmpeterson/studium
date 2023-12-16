@@ -1,11 +1,8 @@
 import CROSS_REFERENCES from "@/data/json/cross-references.json";
-import {
-  CrossReferences,
-  CrossReferencesForBookAndChapter,
-  Verse,
-} from "@/types";
+import { CrossReferences, CrossReferencesForBookAndChapter } from "@/types";
 import { slugifyReference } from "@/utils/slugifyReference";
-import { isError, isString } from "lodash";
+import { isString, mapValues } from "lodash";
+import { getVerseText } from "./getVerseText";
 
 export const getCrossReferences = (
   book: unknown,
@@ -17,7 +14,16 @@ export const getCrossReferences = (
 
       const crossReferences = (CROSS_REFERENCES as CrossReferences)[slug];
 
-      return crossReferences;
+      return mapValues(crossReferences, (crossReferencesForVerse) =>
+        crossReferencesForVerse.map((crossReference) => ({
+          ...crossReference,
+          text: getVerseText(
+            crossReference.book,
+            crossReference.chapter,
+            crossReference.verse
+          ),
+        }))
+      );
     } else {
       console.warn(`Invalid book/chapter provided`, { book, chapter });
       return {};

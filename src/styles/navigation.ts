@@ -8,6 +8,9 @@ export const navigationCss = css`
     background-color: var(--bg);
     color: var(--button-fg);
     border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 5px 10px;
     box-sizing: border-box;
     font-family: ${BODY_FONT_FAMILY};
@@ -31,6 +34,10 @@ export const navigationCss = css`
 
     &[data-borderless="true"] {
       border: none;
+    }
+
+    &[data-icon="true"] {
+      padding: 5px;
     }
   }
 

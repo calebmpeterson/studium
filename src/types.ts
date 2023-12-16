@@ -35,6 +35,7 @@ export type CrossReference = {
   verse: string;
   score: number;
   slug: string;
+  text?: string;
 };
 
 export type CrossReferencesForBookAndChapter = {
