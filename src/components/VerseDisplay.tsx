@@ -16,6 +16,16 @@ const anchorCss = css`
   top: -50vh;
 `;
 
+const crossReferencesBackgroundCss = css`
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  backdrop-filter: blur(2px);
+`;
+
 const crossReferencesContainerCss = css`
   position: fixed;
   z-index: 1;
@@ -89,44 +99,47 @@ export const VerseDisplay: FC<Props> = ({
             Cross refs
           </a>
           {areCrossReferencesOpen && (
-            <div css={crossReferencesContainerCss}>
-              <div css={crossReferencesHeaderCss}>
-                <strong data-muted>
-                  <small>
-                    {book} {chapter}:{verse} Cross References
-                  </small>
-                </strong>
+            <>
+              <div css={crossReferencesBackgroundCss} />
+              <div css={crossReferencesContainerCss}>
+                <div css={crossReferencesHeaderCss}>
+                  <strong data-muted>
+                    <small>
+                      {book} {chapter}:{verse} Cross References
+                    </small>
+                  </strong>
 
-                <button
-                  role="button"
-                  aria-label="Close cross references"
-                  data-icon
-                  onClick={onToggleCrossReferences}
-                >
-                  <Icon path={mdiClose} size={0.7} />
-                </button>
-              </div>
+                  <button
+                    role="button"
+                    aria-label="Close cross references"
+                    data-icon
+                    onClick={onToggleCrossReferences}
+                  >
+                    <Icon path={mdiClose} size={0.7} />
+                  </button>
+                </div>
 
-              <div css={crossReferencesBodyCss}>
-                {crossReferences.map((crossReference) => (
-                  <div key={crossReference.slug}>
-                    {crossReference.text ?? (
-                      <em data-muted>
-                        Failed to look up cross reference text.
-                      </em>
-                    )}
-                    <div>
-                      <small data-muted css={crossReferenceCss}>
-                        <Link href={crossReference.slug}>
-                          {crossReference.book} {crossReference.chapter}:
-                          {crossReference.verse}
-                        </Link>
-                      </small>
+                <div css={crossReferencesBodyCss}>
+                  {crossReferences.map((crossReference) => (
+                    <div key={crossReference.slug}>
+                      {crossReference.text ?? (
+                        <em data-muted>
+                          Failed to look up cross reference text.
+                        </em>
+                      )}
+                      <div>
+                        <small data-muted css={crossReferenceCss}>
+                          <Link href={crossReference.slug}>
+                            {crossReference.book} {crossReference.chapter}:
+                            {crossReference.verse}
+                          </Link>
+                        </small>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
+            </>
           )}
         </>
       )}
