@@ -7,7 +7,7 @@ interface Props {
 }
 
 const containerCss = css`
-  text-align: start;
+  justify-content: start;
 `;
 
 export const BookMenuItem: FC<Props> = ({ book, onSelect }) => (

@@ -8,7 +8,7 @@ interface Props {
 }
 
 const containerCss = css`
-  text-align: start;
+  justify-content: start;
 `;
 
 export const ReadingHistoryMenuItem: FC<Props> = ({ entry, onSelect }) => (
