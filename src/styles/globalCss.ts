@@ -25,7 +25,7 @@ export const globalCss = css`
     --button-active-bg: ${BASE_COLOR[800]};
     --active-fg: ${ACTIVE_COLOR[300]};
     --disabled-fg: ${BASE_COLOR[500]};
-    --backdrop: rgba(0, 0, 0, 0.5);
+    --backdrop: rgba(0, 0, 0, 0.75);
   }
 
   body {
@@ -44,6 +44,7 @@ export const globalCss = css`
       --button-active-bg: ${ACTIVE_COLOR[100]};
       --active-fg: ${ACTIVE_COLOR[600]};
       --disabled-fg: ${BASE_COLOR[600]};
+      --backdrop: rgba(0, 0, 0, 0.5);
     }
   }
 

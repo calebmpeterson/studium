@@ -8,17 +8,17 @@ import { FC } from "react";
 
 const crossReferencesBackgroundCss = css`
   position: fixed;
-  z-index: 1;
+  z-index: 1001;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  backdrop-filter: blur(2px);
+  background-color: var(--backdrop);
 `;
 
 const crossReferencesContainerCss = css`
   position: fixed;
-  z-index: 1;
+  z-index: 1002;
   bottom: 0px;
   left: 0;
   right: 0;
@@ -28,8 +28,6 @@ const crossReferencesContainerCss = css`
   gap: 10px;
   box-sizing: border-box;
   max-width: 800px;
-  border: 1px solid var(--border-color);
-  border-bottom: none;
   padding: 20px 20px 0;
   border-radius: 5px 5px 0 0;
   background-color: var(--bg);
