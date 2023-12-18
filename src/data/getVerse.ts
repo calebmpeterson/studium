@@ -18,7 +18,7 @@ export const getVerse = (
       const verseAsNumber = parseInt(verse, 10);
 
       if (isNumber(verseAsNumber)) {
-        const verseIndex = verseAsNumber + 1;
+        const verseIndex = verseAsNumber - 1;
         return bookAndChapter.verses[verseIndex];
       }
     }
