@@ -14,7 +14,7 @@ interface Props {
   verses: Verse[];
 }
 
-export const PlacesController: FC<Props> = ({ book, chapter, verses }) => {
+export const PlacesController: FC<Props> = memo(({ book, chapter, verses }) => {
   const [isFetching, setIsFetching] = useState(false);
   const [places, setPlaces] = useState<Place[]>([]);
   const [hasError, setHasError] = useState(false);
@@ -61,6 +61,6 @@ export const PlacesController: FC<Props> = ({ book, chapter, verses }) => {
       <PlacesDisplay places={places} />
     </ErrorBoundary>
   );
-};
+});
 
 export default PlacesController;
