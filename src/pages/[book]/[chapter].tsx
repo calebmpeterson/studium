@@ -74,6 +74,11 @@ const navButtonCss = css`
   top: 80%;
   margin-bottom: 20px;
   box-shadow: ${shadows["shadow-md"]};
+
+  @media ${breakpoints["is-mobile"]} {
+    width: 42px;
+    height: 42px;
+  }
 `;
 
 const navButtonPlaceholderCss = css`
