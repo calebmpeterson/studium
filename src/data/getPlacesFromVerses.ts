@@ -18,7 +18,7 @@ export const getPlacesFromVerses = async (verses: Verse[]): Promise<Result> => {
         {
           role: "system",
           content:
-            "Given the following text, extract all geographic locations as a JSON list of strings.",
+            "Given the following text, extract all geographic locations as a JSON list of strings. Exclude all persons.",
         },
         {
           role: "user",
