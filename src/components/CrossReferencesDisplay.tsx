@@ -29,7 +29,7 @@ const crossReferencesContainerCss = css`
   box-sizing: border-box;
   max-width: 800px;
   padding: 20px 20px 0;
-  border-radius: 5px 5px 0 0;
+  border-radius: 10px 10px 0 0;
   background-color: var(--bg);
   max-height: 80vh;
 
@@ -50,9 +50,7 @@ const crossReferencesHeaderCss = css`
   justify-content: space-between;
 `;
 
-const crossReferenceCss = css`
-  color: ;
-`;
+const crossReferenceCss = css``;
 
 interface Props {
   book: string;
@@ -74,9 +72,7 @@ export const CrossReferencesDisplay: FC<Props> = ({
     <div css={crossReferencesContainerCss}>
       <div css={crossReferencesHeaderCss}>
         <strong data-muted>
-          <small>
-            {book} {chapter}:{verse} Cross References
-          </small>
+          {book} {chapter}:{verse} Cross References
         </strong>
 
         <button

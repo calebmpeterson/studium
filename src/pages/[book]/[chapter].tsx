@@ -24,6 +24,8 @@ import slugify from "slugify";
 import { useTrackReadingHistory } from "@/state/useTrackReadingHistory";
 import { getCrossReferences } from "@/data/getCrossReferences";
 import { useCrossReferences } from "@/queries/useCrossReferences";
+import Icon from "@mdi/react";
+import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
 
 const DynamicPlacesDisplay = dynamic(
   async () => import("@/components/PlacesController"),
@@ -68,17 +70,10 @@ const chapterNavigationCss = css`
 const navButtonContainerCss = css``;
 
 const navButtonCss = css`
-  width: 36px;
-  height: 36px;
   position: sticky;
   top: 80%;
   margin-bottom: 20px;
   box-shadow: ${shadows["shadow-md"]};
-
-  @media ${breakpoints["is-mobile"]} {
-    width: 42px;
-    height: 42px;
-  }
 `;
 
 const navButtonPlaceholderCss = css`
@@ -230,11 +225,12 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
         <div css={navButtonContainerCss}>
           {hasPrevious ? (
             <button
+              data-icon
               css={navButtonCss}
               onClick={onPrevious}
               aria-label={previousBookAndChapter.label}
             >
-              ⏴
+              <Icon path={mdiChevronLeft} size={0.7} />
             </button>
           ) : (
             <div css={navButtonPlaceholderCss} />
@@ -244,11 +240,12 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
         <div css={navButtonContainerCss}>
           {hasNext ? (
             <button
+              data-icon
               css={navButtonCss}
               onClick={onNext}
               aria-label={nextBookAndChapter.label}
             >
-              ⏵
+              <Icon path={mdiChevronRight} size={0.7} />
             </button>
           ) : (
             <div css={navButtonPlaceholderCss} />

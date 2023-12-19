@@ -46,7 +46,7 @@ export const VerseDisplay: FC<Props> = ({
       {hasCrossReferences && (
         <>
           &nbsp;
-          <a role="button" onClick={onToggleCrossReferences}>
+          <a role="button" tabIndex={0} onClick={onToggleCrossReferences}>
             Cross refs
           </a>
           {areCrossReferencesOpen && (

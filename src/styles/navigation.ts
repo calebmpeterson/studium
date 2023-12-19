@@ -1,6 +1,7 @@
 import { css } from "@emotion/react";
 import { BODY_FONT_FAMILY } from "./typography";
 import { transition } from "./transition";
+import { breakpoints } from "./breakpoints";
 
 export const navigationCss = css`
   button {
@@ -21,6 +22,7 @@ export const navigationCss = css`
 
     &:hover,
     &:focus {
+      outline: none;
       color: var(--active-fg);
       border-color: var(--active-fg);
       background-color: var(--button-active-bg);
@@ -37,7 +39,15 @@ export const navigationCss = css`
     }
 
     &[data-icon="true"] {
+      width: 36px;
+      height: 36px;
+
       padding: 5px;
+
+      @media ${breakpoints["is-mobile"]} {
+        width: 42px;
+        height: 42px;
+      }
     }
   }
 
