@@ -32,11 +32,12 @@ export const getPlacesFromVerses = async (verses: Verse[]): Promise<Result> => {
       presence_penalty: 0,
     });
 
-    console.log(`getPlacesFromVerses`, response.usage);
-
     const places = extractJsonFromOpenAI(response);
+    const enhancedPlaces = enhancePlaces(places);
 
-    return [enhancePlaces(places), 200];
+    console.log(`getPlacesFromVerses`, response.usage, places, enhancedPlaces);
+
+    return [enhancedPlaces, 200];
   } catch (error: unknown) {
     console.error(`Failed to get places from book and chapter.`);
     return [[], 500];

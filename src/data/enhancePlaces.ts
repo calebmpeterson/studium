@@ -68,7 +68,7 @@ export const enhancePlaces = (places: unknown) => {
     return compact(
       places
         // Omit places that don't have capitalized names
-        .filter((place) => place.name === capitalize(place.name))
+        .filter((place) => place.name !== capitalize(place.name))
         // Omit countries and peoples
         .filter(
           (place) => !COUNTRIES.includes(place) && !PEOPLES.includes(place)
