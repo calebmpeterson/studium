@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { ACTIVE_COLOR, BASE_COLOR } from "./colors";
+import colors, { ACTIVE_COLOR, BASE_COLOR } from "./colors";
 import { navigationCss } from "./navigation";
 import { BODY_FONT_FAMILY, typographyCss } from "./typography";
 import { scheme } from "./scheme";
@@ -26,6 +26,20 @@ export const globalCss = css`
     --active-fg: ${ACTIVE_COLOR[300]};
     --disabled-fg: ${BASE_COLOR[500]};
     --backdrop: rgba(0, 0, 0, 0.75);
+
+    --info: ${colors.blue[500]};
+    --gold: ${colors.yellow[500]};
+    --silver: ${colors.zinc[500]};
+    --brass: ${colors.amber[800]};
+    --iron: ${colors.zinc[500]};
+
+    --red: ${colors.red[400]};
+    --orange: ${colors.orange[500]};
+    --amber: ${colors.amber[500]};
+    --yellow: ${colors.yellow[500]};
+    --green: ${colors.emerald[500]};
+    --blue: ${colors.blue[500]};
+    --purple: ${colors.purple[800]};
   }
 
   body {
@@ -45,6 +59,20 @@ export const globalCss = css`
       --active-fg: ${ACTIVE_COLOR[600]};
       --disabled-fg: ${BASE_COLOR[600]};
       --backdrop: rgba(0, 0, 0, 0.5);
+
+      --info: ${colors.blue[500]};
+      --gold: ${colors.yellow[500]};
+      --silver: ${colors.zinc[500]};
+      --brass: ${colors.amber[800]};
+      --iron: ${colors.zinc[800]};
+
+      --red: ${colors.red[700]};
+      --orange: ${colors.orange[700]};
+      --amber: ${colors.amber[700]};
+      --yellow: ${colors.yellow[500]};
+      --green: ${colors.emerald[800]};
+      --blue: ${colors.blue[800]};
+      --purple: ${colors.purple[800]};
     }
   }
 
