@@ -287,6 +287,16 @@ export const EVENTS: HistoricalEvent[] = [
       "As foretold by Christ in Matthew 24, the Second Temple is destroyed by the Romans along with much of Jerusalem. The Jewish people are scattered abroad until 1948.",
     link: "https://www.bible.com/bible/116/MAT.24.NLT",
   },
+
+  {
+    title: "Balfour Declaration",
+    date_started: 1917,
+    date_completed: 1917,
+    color: "blue",
+    details:
+      "The Balfour Declaration initiated the process of re-establishing the nation of Israel",
+    link: "https://en.wikipedia.org/wiki/Balfour_Declaration",
+  },
   {
     title: "Modern Nation of Israel",
     date_started: 1948,
