@@ -58,9 +58,7 @@ export const navigationCss = css`
 
     color: var(--button-fg);
     text-decoration: none;
-    text-transform: uppercase;
     font-size: 80%;
-    letter-spacing: 2px;
 
     transition: ${transition("color")};
 

@@ -7,7 +7,12 @@ export const HEADING_FONT_FAMILY = "Verdana, sans-serif";
 export const typographyCss = css`
   header {
     font-family: ${HEADING_FONT_FAMILY};
-    font-weight: bold;
+    font-weight: 600;
+
+    &[data-sub-header="true"] {
+      font-size: 80%;
+      color: var(--fg-muted);
+    }
   }
 
   [data-muted="true"] {

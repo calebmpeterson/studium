@@ -4,7 +4,7 @@ import { css } from "@emotion/react";
 import { mdiClose } from "@mdi/js";
 import Icon from "@mdi/react";
 import Link from "next/link";
-import { FC } from "react";
+import { FC, memo } from "react";
 
 const crossReferencesBackgroundCss = css`
   position: fixed;
@@ -60,7 +60,7 @@ interface Props {
   onClose: () => void;
 }
 
-export const CrossReferencesDisplay: FC<Props> = ({
+export const CrossReferencesDisplay: FC<Props> = memo(({
   book,
   chapter,
   verse,
@@ -104,4 +104,4 @@ export const CrossReferencesDisplay: FC<Props> = ({
       </div>
     </div>
   </>
-);
+));

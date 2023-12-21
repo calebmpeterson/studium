@@ -3,7 +3,6 @@ import { css } from "@emotion/react";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import { getBookAndChapter } from "@/data/getBookAndChapter";
 import {
-  CrossReferencesForBookAndChapter,
   TableOfContents,
   Verse,
 } from "@/types";
@@ -22,7 +21,6 @@ import { breakpoints } from "@/styles/breakpoints";
 import { flatMap } from "lodash";
 import slugify from "slugify";
 import { useTrackReadingHistory } from "@/state/useTrackReadingHistory";
-import { getCrossReferences } from "@/data/getCrossReferences";
 import { useCrossReferences } from "@/queries/useCrossReferences";
 import Icon from "@mdi/react";
 import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
@@ -84,6 +82,7 @@ const navButtonPlaceholderCss = css`
 
 const placesContainerCss = css`
   height: 400px;
+  overflow: hidden;
   border-top: 1px solid var(--border-color);
   background-color: var(--bg);
 `;
@@ -250,13 +249,13 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
         </div>
       </nav>
 
-      <aside css={placesContainerCss}>
+      <div css={placesContainerCss}>
         <DynamicPlacesDisplay
           book={currentBook}
           chapter={currentChapter}
           verses={verses}
         />
-      </aside>
+      </div>
     </>
   );
 }

@@ -1,3 +1,4 @@
+import { Footer } from "@/components/Footer";
 import { globalCss } from "@/styles/globalCss";
 import { Global } from "@emotion/react";
 import { Html, Head, Main, NextScript } from "next/document";
@@ -15,6 +16,8 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
+
+        <Footer />
       </body>
     </Html>
   );
