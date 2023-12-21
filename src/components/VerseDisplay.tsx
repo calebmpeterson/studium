@@ -13,6 +13,17 @@ const anchorCss = css`
   top: -50vh;
 `;
 
+const crossReferenceToggleCss = css`
+  color: var(--fg-muted);
+  letter-spacing: initial;
+  font-size: 66%;
+
+  &:hover,
+  &:focus {
+    color: var(--active-fg);
+  }
+`
+
 interface Props extends Verse {
   crossReferences: CrossReference[];
 }
@@ -46,7 +57,7 @@ export const VerseDisplay: FC<Props> = ({
       {hasCrossReferences && (
         <>
           &nbsp;
-          <a role="button" tabIndex={0} onClick={onToggleCrossReferences}>
+          <a css={crossReferenceToggleCss} tabIndex={0} onClick={onToggleCrossReferences}>
             Cross refs
           </a>
           {areCrossReferencesOpen && (

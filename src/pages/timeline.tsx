@@ -9,6 +9,7 @@ import { TimelineMilestone } from "@/components/timeline/TimelineMilestone";
 import { CREATION_YEAR, TOTAL_YEARS } from "@/components/timeline/constants";
 import { css } from "@emotion/react";
 import Head from "next/head";
+import { TopNav } from "@/components/TopNav";
 
 type PageData = {
   bookRows: HistoricalEvent[][];
@@ -42,7 +43,6 @@ const containerCss = css`
   width: 100%;
   min-width: ${TOTAL_YEARS}px;
   min-height: 200px;
-  margin: 20px;
   padding: 40px 0;
   position: relative;
 `;
@@ -76,6 +76,8 @@ export default function Timeline(props: Props) {
       <Head>
         <title>Timeline</title>
       </Head>
+
+      <TopNav />
 
       <div css={scrollingCss}>
         <div css={containerCss}>

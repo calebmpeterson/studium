@@ -4,7 +4,7 @@ import { transition } from "./transition";
 import { breakpoints } from "./breakpoints";
 
 export const navigationCss = css`
-  button {
+  button, a[role="button"] {
     border: 1px solid var(--button-border);
     background-color: var(--bg);
     color: var(--button-fg);
@@ -61,17 +61,6 @@ export const navigationCss = css`
     font-size: 80%;
 
     transition: ${transition("color")};
-
-    &:hover,
-    &:focus {
-      color: var(--active-fg);
-    }
-  }
-
-  a[role="button"] {
-    color: var(--fg-muted);
-    letter-spacing: initial;
-    font-size: 66%;
 
     &:hover,
     &:focus {

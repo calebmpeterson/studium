@@ -24,6 +24,7 @@ import { useTrackReadingHistory } from "@/state/useTrackReadingHistory";
 import { useCrossReferences } from "@/queries/useCrossReferences";
 import Icon from "@mdi/react";
 import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
+import { ReadingNav } from "@/components/ReadingNav";
 
 const DynamicPlacesDisplay = dynamic(
   async () => import("@/components/PlacesController"),
@@ -191,11 +192,13 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
         <title>{title}</title>
       </Head>
 
-      <TopNav
-        tableOfContents={tableOfContents}
-        currentBook={currentBook}
-        currentChapter={currentChapter}
-      />
+      <TopNav>
+        <ReadingNav
+          tableOfContents={tableOfContents}
+          currentBook={currentBook}
+          currentChapter={currentChapter}
+        />
+      </TopNav>
 
       <motion.main
         key={`${currentBook} ${currentChapter}`}
