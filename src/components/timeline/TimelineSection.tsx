@@ -15,12 +15,14 @@ const placementCss = css`
   position: sticky;
   left: 10px;
   float: left;
+  color: var(--fg-muted);
+  text-transform: uppercase;
+  font-spacing: 2px;
+  font-size: 80%;
 `;
 
 export const TimelineSection: FC<Props> = ({ title }) => (
   <div css={containerCss}>
-    <div css={placementCss}>
-      <strong data-muted>{title}</strong>
-    </div>
+    <div css={placementCss}>{title}</div>
   </div>
 );
