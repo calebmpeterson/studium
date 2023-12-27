@@ -106,7 +106,7 @@ export const EVENTS: HistoricalEvent[] = [
     color: "purple",
     details:
       "As recorded in the book of Judges, the nation of Israel is ruled by God through the judges.",
-    link: "https://www.bible.com/bible/116/JDG.1.NLT",
+    link: "/judges/1",
   },
   {
     title: "Davidic Aristocracy",
@@ -115,7 +115,7 @@ export const EVENTS: HistoricalEvent[] = [
     color: "purple",
     details:
       "As recorded in the books of Samuel, Kings, and Chronicles, Israel is ruled as a united kingdom under Saul, David, and David's son Solomon.\n\nThe kingdom is divided into the ten northern tribes of Israel, and the two southern tribes of Judah and Benjamin after Solomon's death by his sons Jeroboam and Rehoboam respectively.\n\nThe aristocratic period represents the extent of Jewish civil authority.",
-    link: "https://www.bible.com/bible/116/1SA.1.NLT",
+    link: "/1-samuel/1",
   },
   {
     title: "Solomon's Temple",
@@ -132,7 +132,7 @@ export const EVENTS: HistoricalEvent[] = [
     color: "info",
     details:
       "In fulfillment of Jeremiah 25:11, the Jewish people are taken captive to Babylon (modern Iraq) for 70 years.",
-    link: "https://www.bible.com/bible/116/jer.25.11",
+    link: "/jeremiah/25#11",
   },
   {
     title: "Babylonian Empire",
@@ -141,7 +141,7 @@ export const EVENTS: HistoricalEvent[] = [
     color: "gold",
     details:
       "As foretold over a century prior by the prophet Isaiah, Babylon is conquered by Cyrus, King of Persia in 539 BC.",
-    link: "https://www.bible.com/bible/116/isa.48.14",
+    link: "/isaiah/48#14",
   },
   {
     title: "Persian Empire",
@@ -172,7 +172,7 @@ export const EVENTS: HistoricalEvent[] = [
     approximate: true,
     details:
       "Artaxerxes I grants permission to Nehemiah to repair Jerusalem. The 69 sevens foretold in Daniel 9:25 begin.",
-    link: "https://www.bible.com/bible/116/NEH.2.NLT",
+    link: "/nehemiah/2",
   },
   {
     title: "69 Sevens",
@@ -182,7 +182,7 @@ export const EVENTS: HistoricalEvent[] = [
     approximate: true,
     details:
       "According to Daniel 9:25, 7 sevens and 62 sevens (69 * 7 years = 483 years) are declared from the command to rebuild Jerusalem until the Anointed One - Messiah - is cut off. Keeping in mind that a Biblical year is 360 days, 483 Biblical years is approximately 476 Gregorian years.",
-    link: "https://www.bible.com/bible/116/DAN.9.NLT",
+    link: "/daniel/9",
   },
   {
     title: "Construction of the Second Temple",
@@ -285,7 +285,7 @@ export const EVENTS: HistoricalEvent[] = [
     color: "red",
     details:
       "As foretold by Christ in Matthew 24, the Second Temple is destroyed by the Romans along with much of Jerusalem. The Jewish people are scattered abroad until 1948.",
-    link: "https://www.bible.com/bible/116/MAT.24.NLT",
+    link: "/matthew/24",
   },
 
   {

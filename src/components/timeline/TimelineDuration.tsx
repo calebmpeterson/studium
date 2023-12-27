@@ -6,6 +6,7 @@ import { CREATION_YEAR } from "./constants";
 import { css } from "@emotion/react";
 import { shadows } from "@/styles/shadows";
 import { eventLabelCss } from "./styles";
+import Link from "next/link";
 
 type TimelineDurationProps = {
   item: HistoricalEvent;
@@ -104,9 +105,12 @@ export const TimelineDuration: FC<TimelineDurationProps> = ({ item }) => {
           ))}
           {item.link && (
             <div>
-              <a href={item.link} target="_blank">
+              <Link
+                href={item.link}
+                target={item.link.startsWith("/") ? undefined : "_blank"}
+              >
                 Learn more
-              </a>
+              </Link>
               &nbsp;&raquo;
             </div>
           )}
