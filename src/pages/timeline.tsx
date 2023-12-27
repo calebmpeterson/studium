@@ -1,5 +1,10 @@
 import { range } from "lodash";
-import { BOOKS, MILESTONES, EVENTS } from "@/data/typed/historical";
+import {
+  BOOKS,
+  MILESTONES,
+  EVENTS,
+  CHURCH_AGES,
+} from "@/data/typed/historical";
 import { layout } from "@/utils/intervalScheduling";
 import { HistoricalEvent, HistoricalMilestone } from "@/types/historical";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
@@ -10,22 +15,26 @@ import { CREATION_YEAR, TOTAL_YEARS } from "@/components/timeline/constants";
 import { css } from "@emotion/react";
 import Head from "next/head";
 import { TopNav } from "@/components/TopNav";
+import { TimelineSection } from "@/components/timeline/TimelineSection";
 
 type PageData = {
   bookRows: HistoricalEvent[][];
   milestones: HistoricalMilestone[];
   eventRows: HistoricalEvent[][];
+  churchAgeRows: HistoricalEvent[][];
 };
 
 export const getStaticProps: GetStaticProps<PageData> = async () => {
   const bookRows = layout(BOOKS);
   const eventRows = layout(EVENTS);
+  const churchAgeRows = layout(CHURCH_AGES);
 
   return {
     props: {
       bookRows,
       milestones: MILESTONES,
-      eventRows: eventRows,
+      eventRows,
+      churchAgeRows,
     },
   };
 };
@@ -84,13 +93,21 @@ export default function Timeline(props: Props) {
           <TimelineRow items={[]} />
 
           {/* Books of the Bible and when they were written */}
+          <TimelineSection title="Books" />
           {props.bookRows.map((booksInRow, index) => (
             <TimelineRow key={`books-${index}`} items={booksInRow} />
           ))}
 
           {/* World events */}
+          <TimelineSection title="Significant Historical Events" />
           {props.eventRows.map((eventsInRow, index) => (
             <TimelineRow key={`event-${index}`} items={eventsInRow} />
+          ))}
+
+          {/* Church ages */}
+          <TimelineSection title="Churches" />
+          {props.churchAgeRows.map((eventsInRow, index) => (
+            <TimelineRow key={`church-age-${index}`} items={eventsInRow} />
           ))}
 
           {/* Millennia */}

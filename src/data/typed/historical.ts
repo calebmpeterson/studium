@@ -352,3 +352,44 @@ export const EVENTS: HistoricalEvent[] = [
     link: "https://en.wikipedia.org/wiki/Council_of_Chalcedon",
   },
 ];
+
+// Church ages
+//
+// Source: Church History: A Biblical Perspective by Greg Axe
+export const CHURCH_AGES = [
+  {
+    title: "Ephesus",
+    date_started: 33,
+    date_completed: 200,
+  },
+  {
+    title: "Smyrna",
+    date_started: 200,
+    date_completed: 325,
+  },
+  {
+    title: "Pergamos",
+    date_started: 325,
+    date_completed: 500,
+  },
+  {
+    title: "Thyatira",
+    date_started: 500,
+    date_completed: 1000,
+  },
+  {
+    title: "Sardis",
+    date_started: 1000,
+    date_completed: 1500,
+  },
+  {
+    title: "Philadelphia",
+    date_started: 1500,
+    date_completed: 1900,
+  },
+  {
+    title: "Laodicea",
+    date_started: 1900,
+    date_completed: CURRENT_YEAR,
+  },
+];
