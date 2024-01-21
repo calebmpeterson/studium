@@ -5,8 +5,9 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { isEmpty, sumBy } from "lodash";
-import { ACTIVE_COLOR, BASE_COLOR } from "@/styles/colors";
+import { BASE_COLOR } from "@/styles/colors";
 import { MAP_TILER_KEY } from "@/utils/environment";
+import { PlacesEmpty } from "./PlacesEmpty";
 
 const icon = L.icon({
   iconUrl: "/marker-icon-2x.png",
@@ -21,6 +22,8 @@ const icon = L.icon({
 });
 
 interface Props {
+  book: string;
+  chapter: string;
   places: Place[];
 }
 
@@ -65,6 +68,11 @@ const getMarkerPosition = (feature: PlaceFeature): [number, number] => [
   feature.coordinates[0],
 ];
 
+const hasValidMarkerPosition = (feature: PlaceFeature) => {
+  const position = getMarkerPosition(feature);
+  return position.every((coordinate) => !Number.isNaN(coordinate));
+};
+
 const getMapCenter = (places: Place[]): [number, number] => {
   const allCoordinates = places.flatMap((place) =>
     place.features.map((feature) => getMarkerPosition(feature))
@@ -80,36 +88,44 @@ const getMapCenter = (places: Place[]): [number, number] => {
   return [x, y];
 };
 
-export const PlacesDisplay: FC<Props> = ({ places }) => (
-  <div css={layoutCss}>
-    <div css={placesListContainerCss}>
-      <div css={placesListCss}>
-        {places.map((place) => (
-          <div key={place.id} css={placeCss(!isEmpty(place.features))}>
-            {place.name}
-          </div>
-        ))}
+export const PlacesDisplay: FC<Props> = ({ book, chapter, places }) => {
+  const featuresToRender = places.flatMap((place) =>
+    place.features.filter((feature) => hasValidMarkerPosition(feature))
+  );
+
+  if (isEmpty(featuresToRender)) {
+    return <PlacesEmpty book={book} chapter={chapter} />;
+  }
+
+  return (
+    <div css={layoutCss}>
+      <div css={placesListContainerCss}>
+        <div css={placesListCss}>
+          {places.map((place) => (
+            <div key={place.id} css={placeCss(!isEmpty(place.features))}>
+              {place.name}
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
 
-    <MapContainer
-      css={mapCss}
-      center={getMapCenter(places)}
-      zoom={6}
-      scrollWheelZoom
-      zoomControl={false}
-      attributionControl={false}
-    >
-      <TileLayer
-        attribution='"\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e"'
-        url={`https://api.maptiler.com/tiles/hillshade/{z}/{x}/{y}.webp?key=${MAP_TILER_KEY}`}
-        tileSize={512}
-        zoomOffset={-1}
-        minZoom={1}
-      />
+      <MapContainer
+        css={mapCss}
+        center={getMapCenter(places)}
+        zoom={6}
+        scrollWheelZoom
+        zoomControl={false}
+        attributionControl={false}
+      >
+        <TileLayer
+          attribution='"\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e"'
+          url={`https://api.maptiler.com/tiles/hillshade/{z}/{x}/{y}.webp?key=${MAP_TILER_KEY}`}
+          tileSize={512}
+          zoomOffset={-1}
+          minZoom={1}
+        />
 
-      {places.flatMap((place) =>
-        place.features.map((feature) => (
+        {featuresToRender.map((feature) => (
           <Marker
             key={feature.id}
             position={getMarkerPosition(feature)}
@@ -119,10 +135,10 @@ export const PlacesDisplay: FC<Props> = ({ places }) => (
               <strong>{feature.name}</strong>
             </Popup>
           </Marker>
-        ))
-      )}
-    </MapContainer>
-  </div>
-);
+        ))}
+      </MapContainer>
+    </div>
+  );
+};
 
 export default PlacesDisplay;

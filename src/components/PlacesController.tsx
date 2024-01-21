@@ -58,7 +58,7 @@ export const PlacesController: FC<Props> = memo(({ book, chapter, verses }) => {
 
   return (
     <ErrorBoundary fallback={<PlacesError book={book} chapter={chapter} />}>
-      <PlacesDisplay places={places} />
+      <PlacesDisplay book={book} chapter={chapter} places={places} />
     </ErrorBoundary>
   );
 });
