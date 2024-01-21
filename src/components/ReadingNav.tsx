@@ -18,7 +18,7 @@ interface Props {
 }
 
 const bookButtonCss = css`
-  width: 150px;
+  white-space: pre;
 `;
 
 const chapterButtonCss = css`
@@ -39,7 +39,6 @@ const menuCss = css`
   box-sizing: border-box;
   border: 1px solid var(--border-color);
   box-shadow: ${shadows["shadow-xl"]};
-  min-width: 200px;
 
   & > header {
     padding: 5px 10px;
@@ -62,6 +61,10 @@ const chapterMenuCss = css`
   ${menuCss}
 
   max-width: 372px;
+
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
 `;
 
 const readingHistoryMenuCss = css`
