@@ -1,10 +1,13 @@
 import { SearchHistory } from "@/types";
 import { css } from "@emotion/react";
+import { isEmpty } from "lodash";
 import { FC, MouseEvent, useCallback } from "react";
+import { SearchHistoryEntryDisplay } from "./SearchHistoryEntryDisplay";
 
 interface Props {
   searchHistory: SearchHistory;
   onClearSearchHistory: () => void;
+  onSetSearchQuery: (query: string) => void;
 }
 
 const containerCss = css`
@@ -19,11 +22,16 @@ const headingLayoutCss = css`
   align-items: end;
 `;
 
-const entryCss = css``;
+const emptyHistoryContainerCss = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
-export const SearchQueryHistory: FC<Props> = ({
+export const SearchHistoryDisplay: FC<Props> = ({
   searchHistory,
   onClearSearchHistory,
+  onSetSearchQuery,
 }) => {
   const onClear = useCallback(
     (event: MouseEvent) => {
@@ -41,11 +49,20 @@ export const SearchQueryHistory: FC<Props> = ({
         </header>
         <a onClick={onClear}>Clear</a>
       </div>
+
       {searchHistory.map((entry, index) => (
-        <div key={index} css={entryCss}>
-          {entry.query}
-        </div>
+        <SearchHistoryEntryDisplay
+          key={index}
+          {...entry}
+          onSetSearchQuery={onSetSearchQuery}
+        />
       ))}
+
+      {isEmpty(searchHistory) && (
+        <div css={emptyHistoryContainerCss}>
+          <em>No search history </em>
+        </div>
+      )}
     </div>
   );
 };

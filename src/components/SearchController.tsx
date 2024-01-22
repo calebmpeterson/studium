@@ -9,7 +9,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { VerseDisplay } from "./VerseDisplay";
 import { SearchResultDisplay } from "./SearchResultDisplay";
 import { Overlay } from "./Overlay";
 import Icon from "@mdi/react";
@@ -17,7 +16,7 @@ import { mdiMagnify } from "@mdi/js";
 import { Spinner } from "./Spinner";
 import { isEmpty } from "lodash";
 import { useTextSearchHistory } from "@/state/useTextSearchHistory";
-import { SearchQueryHistory } from "./SearchQueryHistory";
+import { SearchHistoryDisplay } from "./SearchHistoryDisplay";
 
 interface Props {
   onClose: () => void;
@@ -53,20 +52,10 @@ export const SearchController: FC<Props> = ({ onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState<SearchResults>([]);
   const [hasSearched, setHasSearched] = useState(false);
-
   const [searchHistory, setSearchHistory] = useTextSearchHistory();
 
-  const onClearSearchHistory = useCallback(() => {
-    setSearchHistory([]);
-  }, [setSearchHistory]);
-
-  const onQueryChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setQuery(event.target.value);
-  }, []);
-  const onSearch = useCallback(
-    async (event: FormEvent) => {
-      event.preventDefault();
-
+  const performSearch = useCallback(
+    async (query: string) => {
       // Don't search for empty queries
       if (query.trim().length === 0) {
         setHasSearched(false);
@@ -91,7 +80,23 @@ export const SearchController: FC<Props> = ({ onClose }) => {
         setIsLoading(false);
       }
     },
-    [query, setSearchHistory]
+    [setSearchHistory]
+  );
+
+  const onClearSearchHistory = useCallback(() => {
+    setSearchHistory([]);
+  }, [setSearchHistory]);
+
+  const onQueryChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    setQuery(event.target.value);
+  }, []);
+  const onSearch = useCallback(
+    async (event: FormEvent) => {
+      event.preventDefault();
+
+      await performSearch(query);
+    },
+    [query, performSearch]
   );
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -100,6 +105,19 @@ export const SearchController: FC<Props> = ({ onClose }) => {
       inputRef.current.focus();
     }
   }, []);
+
+  const onSetSearchQuery = useCallback(
+    async (query: string) => {
+      setQuery(query);
+
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+
+      await performSearch(query);
+    },
+    [performSearch]
+  );
 
   const header = (
     <form css={searchFormCss} onSubmit={onSearch}>
@@ -129,9 +147,10 @@ export const SearchController: FC<Props> = ({ onClose }) => {
         )}
 
         {!hasSearched && (
-          <SearchQueryHistory
+          <SearchHistoryDisplay
             searchHistory={searchHistory}
             onClearSearchHistory={onClearSearchHistory}
+            onSetSearchQuery={onSetSearchQuery}
           />
         )}
 
