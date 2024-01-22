@@ -67,6 +67,12 @@ export const SearchController: FC<Props> = ({ onClose }) => {
     async (event: FormEvent) => {
       event.preventDefault();
 
+      // Don't search for empty queries
+      if (query.trim().length === 0) {
+        setHasSearched(false);
+        return;
+      }
+
       setSearchHistory((previous) => [{ query }, ...previous]);
 
       setResults([]);
