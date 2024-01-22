@@ -14,6 +14,8 @@ import { SearchResultDisplay } from "./SearchResultDisplay";
 import { Overlay } from "./Overlay";
 import Icon from "@mdi/react";
 import { mdiMagnify } from "@mdi/js";
+import { Spinner } from "./Spinner";
+import { isEmpty } from "lodash";
 
 interface Props {
   onClose: () => void;
@@ -36,7 +38,7 @@ const searchResultsContainerCss = css`
   gap: 10px;
 `;
 
-const loadingContainerCss = css`
+const statusContainerCss = css`
   height: 40vh;
   display: flex;
   align-items: center;
@@ -47,6 +49,7 @@ export const SearchController: FC<Props> = ({ onClose }) => {
   const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState<SearchResults>([]);
+  const [hasSearched, setHasSearched] = useState(false);
 
   const onQueryChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);
@@ -57,6 +60,7 @@ export const SearchController: FC<Props> = ({ onClose }) => {
 
       setResults([]);
       setIsLoading(true);
+      setHasSearched(true);
 
       try {
         const response = await fetch(
@@ -85,12 +89,12 @@ export const SearchController: FC<Props> = ({ onClose }) => {
         ref={inputRef}
         type="text"
         css={searchInputCss}
-        placeholder="Search..."
+        placeholder="Search the scriptures..."
         value={query}
         onChange={onQueryChange}
       />
 
-      <button role="submit" aria-label="Close cross references" data-icon>
+      <button role="submit" aria-label="Close search" data-icon>
         <Icon path={mdiMagnify} size={0.7} />
       </button>
     </form>
@@ -99,7 +103,17 @@ export const SearchController: FC<Props> = ({ onClose }) => {
   return (
     <>
       <Overlay title="Search" onClose={onClose} header={header}>
-        {isLoading && <div css={loadingContainerCss}>Loading...</div>}
+        {isLoading && (
+          <div css={statusContainerCss}>
+            Loading
+            <Spinner />
+          </div>
+        )}
+
+        {hasSearched && !isLoading && isEmpty(results) && (
+          <div css={statusContainerCss}>Nothing found for "{query}"</div>
+        )}
+
         <div css={searchResultsContainerCss}>
           {results.map((result, index) => (
             <SearchResultDisplay key={index} {...result.item} />
