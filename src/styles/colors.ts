@@ -306,6 +306,6 @@ export type ColorFamilyValue =
 
 export type ColorFamily = Record<ColorFamilyValue, string>;
 
-export const BASE_COLOR = colors["stone"];
+export const BASE_COLOR = colors["zinc"];
 export const ACTIVE_COLOR = colors["purple"];
 export const DANGER_COLOR = colors["rose"];
