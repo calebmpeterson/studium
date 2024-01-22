@@ -111,7 +111,9 @@ export const SearchController: FC<Props> = ({ onClose }) => {
         )}
 
         {hasSearched && !isLoading && isEmpty(results) && (
-          <div css={statusContainerCss}>Nothing found for "{query}"</div>
+          <div css={statusContainerCss}>
+            Nothing found for &ldquo;{query}&rdquo;
+          </div>
         )}
 
         <div css={searchResultsContainerCss}>
