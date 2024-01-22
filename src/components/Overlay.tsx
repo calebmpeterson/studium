@@ -62,7 +62,7 @@ const overlayTitleCss = css`
 
 export const Overlay: FC<Props> = ({ title, header, children, onClose }) => (
   <>
-    <div css={overlayBackgroundCss} data-fade-in />
+    <div css={overlayBackgroundCss} data-fade-in onClick={onClose} />
     <div css={overlayContainerCss} data-fade-in>
       <div css={overlayHeaderCss}>
         <div data-muted css={overlayTitleCss}>
