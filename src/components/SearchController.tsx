@@ -70,6 +70,7 @@ export const SearchController: FC<Props> = ({ onClose }) => {
       // Don't search for empty queries
       if (query.trim().length === 0) {
         setHasSearched(false);
+        setResults([]);
         return;
       }
 
