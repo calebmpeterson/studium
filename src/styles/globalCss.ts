@@ -59,7 +59,7 @@ export const globalCss = css`
 
   @media ${scheme.light} {
     :root {
-      --bg: ${BASE_COLOR[100]};
+      --bg: ${BASE_COLOR[50]};
       --fg: ${BASE_COLOR[800]};
       --fg-muted: ${BASE_COLOR[600]};
       --border-color: ${BASE_COLOR[600]};
