@@ -3,11 +3,13 @@ import { FC, PropsWithChildren, ReactNode } from "react";
 import { mdiClose } from "@mdi/js";
 import Icon from "@mdi/react";
 import { shadows } from "@/styles/shadows";
+import { breakpoints } from "@/styles/breakpoints";
 
 interface Props extends PropsWithChildren<{}> {
   title: string | ReactNode;
   onClose: () => void;
   header?: ReactNode;
+  hasInput?: boolean;
 }
 
 const overlayBackgroundCss = css`
@@ -20,7 +22,7 @@ const overlayBackgroundCss = css`
   background-color: var(--backdrop);
 `;
 
-const overlayContainerCss = css`
+const overlayContainerCss = (hasInput?: boolean) => css`
   position: fixed;
   z-index: 1002;
   bottom: 0px;
@@ -38,6 +40,10 @@ const overlayContainerCss = css`
   max-height: 80vh;
 
   box-shadow: ${shadows["shadow-xl"]};
+
+  @media ${breakpoints["is-mobile"]} {
+    min-height: ${hasInput ? "80vh" : "auto"};
+  }
 `;
 
 const overlayBodyCss = css`
@@ -60,10 +66,16 @@ const overlayTitleCss = css`
   gap: 5px;
 `;
 
-export const Overlay: FC<Props> = ({ title, header, children, onClose }) => (
+export const Overlay: FC<Props> = ({
+  title,
+  header,
+  hasInput,
+  children,
+  onClose,
+}) => (
   <>
     <div css={overlayBackgroundCss} data-fade-in onClick={onClose} />
-    <div css={overlayContainerCss} data-fade-in>
+    <div css={overlayContainerCss(hasInput)} data-fade-in>
       <div css={overlayHeaderCss}>
         <div data-muted css={overlayTitleCss}>
           {title}

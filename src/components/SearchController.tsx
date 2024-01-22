@@ -16,6 +16,8 @@ import Icon from "@mdi/react";
 import { mdiMagnify } from "@mdi/js";
 import { Spinner } from "./Spinner";
 import { isEmpty } from "lodash";
+import { useTextSearchHistory } from "@/state/useTextSearchHistory";
+import { SearchQueryHistory } from "./SearchQueryHistory";
 
 interface Props {
   onClose: () => void;
@@ -26,6 +28,7 @@ const searchFormCss = css`
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-bottom: 10px;
 `;
 
 const searchInputCss = css`
@@ -51,12 +54,20 @@ export const SearchController: FC<Props> = ({ onClose }) => {
   const [results, setResults] = useState<SearchResults>([]);
   const [hasSearched, setHasSearched] = useState(false);
 
+  const [searchHistory, setSearchHistory] = useTextSearchHistory();
+
+  const onClearSearchHistory = useCallback(() => {
+    setSearchHistory([]);
+  }, [setSearchHistory]);
+
   const onQueryChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);
   }, []);
   const onSearch = useCallback(
     async (event: FormEvent) => {
       event.preventDefault();
+
+      setSearchHistory((previous) => [{ query }, ...previous]);
 
       setResults([]);
       setIsLoading(true);
@@ -73,7 +84,7 @@ export const SearchController: FC<Props> = ({ onClose }) => {
         setIsLoading(false);
       }
     },
-    [query]
+    [query, setSearchHistory]
   );
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -102,12 +113,19 @@ export const SearchController: FC<Props> = ({ onClose }) => {
 
   return (
     <>
-      <Overlay title="Search" onClose={onClose} header={header}>
+      <Overlay title="Search" onClose={onClose} header={header} hasInput>
         {isLoading && (
           <div css={statusContainerCss}>
             Loading
             <Spinner />
           </div>
+        )}
+
+        {!hasSearched && (
+          <SearchQueryHistory
+            searchHistory={searchHistory}
+            onClearSearchHistory={onClearSearchHistory}
+          />
         )}
 
         {hasSearched && !isLoading && isEmpty(results) && (

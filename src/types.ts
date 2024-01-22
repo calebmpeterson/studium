@@ -31,6 +31,12 @@ export type ReadingHistoryEntry = {
 };
 export type ReadingHistory = ReadingHistoryEntry[];
 
+export type SearchHistoryEntry = {
+  query: string;
+};
+
+export type SearchHistory = SearchHistoryEntry[];
+
 export type CrossReference = {
   book: string;
   chapter: string;
