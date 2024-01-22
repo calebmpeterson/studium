@@ -1,54 +1,8 @@
-import { shadows } from "@/styles/shadows";
-import { CrossReference, Verse } from "@/types";
+import { CrossReference } from "@/types";
 import { css } from "@emotion/react";
-import { mdiClose } from "@mdi/js";
-import Icon from "@mdi/react";
 import Link from "next/link";
 import { FC, memo } from "react";
-
-const crossReferencesBackgroundCss = css`
-  position: fixed;
-  z-index: 1001;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: var(--backdrop);
-`;
-
-const crossReferencesContainerCss = css`
-  position: fixed;
-  z-index: 1002;
-  bottom: 0px;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  box-sizing: border-box;
-  max-width: 800px;
-  padding: 20px 20px 0;
-  border-radius: 10px 10px 0 0;
-  background-color: var(--bg);
-  max-height: 80vh;
-
-  box-shadow: ${shadows["shadow-xl"]};
-`;
-
-const crossReferencesBodyCss = css`
-  overflow: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding-bottom: 20px;
-`;
-
-const crossReferencesHeaderCss = css`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
+import { Overlay } from "./Overlay";
 
 const crossReferenceCss = css``;
 
@@ -60,48 +14,26 @@ interface Props {
   onClose: () => void;
 }
 
-export const CrossReferencesDisplay: FC<Props> = memo(({
-  book,
-  chapter,
-  verse,
-  crossReferences,
-  onClose,
-}) => (
-  <>
-    <div css={crossReferencesBackgroundCss} />
-    <div css={crossReferencesContainerCss}>
-      <div css={crossReferencesHeaderCss}>
-        <strong data-muted>
-          {book} {chapter}:{verse} Cross References
-        </strong>
-
-        <button
-          role="button"
-          aria-label="Close cross references"
-          data-icon
-          onClick={onClose}
-        >
-          <Icon path={mdiClose} size={0.7} />
-        </button>
-      </div>
-
-      <div css={crossReferencesBodyCss}>
-        {crossReferences.map((crossReference) => (
-          <div key={crossReference.slug}>
-            {crossReference.text ?? (
-              <em data-muted>Failed to look up cross reference text.</em>
-            )}
-            <div>
-              <small data-muted css={crossReferenceCss}>
-                <Link href={crossReference.slug}>
-                  {crossReference.book} {crossReference.chapter}:
-                  {crossReference.verse}
-                </Link>
-              </small>
-            </div>
+export const CrossReferencesDisplay: FC<Props> = memo(
+  ({ book, chapter, verse, crossReferences, onClose }) => (
+    <Overlay
+      title={`Cross References for ${book} ${chapter}:${verse}`}
+      onClose={onClose}
+    >
+      {crossReferences.map((crossReference) => (
+        <div key={crossReference.slug}>
+          <div>
+            <Link href={crossReference.slug}>
+              {crossReference.book} {crossReference.chapter}:
+              {crossReference.verse}
+            </Link>
           </div>
-        ))}
-      </div>
-    </div>
-  </>
-));
+
+          {crossReference.text ?? (
+            <em data-muted>Failed to look up cross reference text.</em>
+          )}
+        </div>
+      ))}
+    </Overlay>
+  )
+);

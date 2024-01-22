@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import _, { groupBy } from "lodash";
+import _ from "lodash";
 import { BOOK_TITLES } from "./kjv-book-titles";
 import slugify from "slugify";
 

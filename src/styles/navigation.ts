@@ -4,11 +4,12 @@ import { transition } from "./transition";
 import { breakpoints } from "./breakpoints";
 
 export const navigationCss = css`
-  button, a[role="button"] {
+  button,
+  a[role="button"] {
     border: 1px solid var(--button-border);
     background-color: var(--bg);
     color: var(--button-fg);
-    border-radius: 5px;
+    border-radius: var(--border-radius);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -39,15 +40,11 @@ export const navigationCss = css`
     }
 
     &[data-icon="true"] {
-      width: 36px;
-      height: 36px;
+      width: var(--input-size);
+      height: var(--input-size);
 
       padding: 5px;
-
-      @media ${breakpoints["is-mobile"]} {
-        width: 42px;
-        height: 42px;
-      }
+      flex-shrink: 0;
     }
   }
 
@@ -56,7 +53,7 @@ export const navigationCss = css`
     display: inline-flex;
     align-items: center;
 
-    color: var(--button-fg);
+    color: var(--fg-muted);
     text-decoration: none;
     font-size: 80%;
 

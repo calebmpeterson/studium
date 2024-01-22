@@ -3,6 +3,8 @@ import colors, { ACTIVE_COLOR, BASE_COLOR } from "./colors";
 import { navigationCss } from "./navigation";
 import { BODY_FONT_FAMILY, typographyCss } from "./typography";
 import { scheme } from "./scheme";
+import { formsCss } from "./forms";
+import { breakpoints } from "./breakpoints";
 
 export const globalCss = css`
   html,
@@ -40,6 +42,13 @@ export const globalCss = css`
     --green: ${colors.emerald[500]};
     --blue: ${colors.blue[500]};
     --purple: ${colors.purple[800]};
+
+    --input-size: 36px;
+    --border-radius: 5px;
+
+    @media ${breakpoints["is-mobile"]} {
+      --input-size: 42px;
+    }
   }
 
   body {
@@ -78,4 +87,5 @@ export const globalCss = css`
 
   ${typographyCss}
   ${navigationCss}
+  ${formsCss}
 `;

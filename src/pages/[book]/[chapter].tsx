@@ -2,14 +2,11 @@ import Head from "next/head";
 import { css } from "@emotion/react";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import { getBookAndChapter } from "@/data/getBookAndChapter";
-import {
-  TableOfContents,
-  Verse,
-} from "@/types";
+import { TableOfContents, Verse } from "@/types";
 import { getTableOfContents } from "@/data/getTableOfContents";
 import { TopNav } from "@/components/TopNav";
 import { VerseDisplay } from "@/components/VerseDisplay";
-import { useCallback } from "react";
+import { ChangeEvent, FormEvent, useCallback, useState } from "react";
 import { getNextBookAndChapter } from "@/utils/getNextBookAndChapter";
 import { getPreviousBookAndChapter } from "@/utils/getPreviousBookAndChapter";
 import { useRouter } from "next/router";
@@ -25,6 +22,8 @@ import { useCrossReferences } from "@/queries/useCrossReferences";
 import Icon from "@mdi/react";
 import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
 import { ReadingNav } from "@/components/ReadingNav";
+import { Overlay } from "@/components/Overlay";
+import { SearchController } from "@/components/SearchController";
 
 const DynamicPlacesDisplay = dynamic(
   async () => import("@/components/PlacesController"),
@@ -59,6 +58,7 @@ const chapterNavigationCss = css`
   padding: 0 0px;
   max-width: 800px;
   display: flex;
+  gap: 10px;
   justify-content: space-between;
 
   @media ${breakpoints["is-mobile"]} {
@@ -76,9 +76,18 @@ const navButtonCss = css`
 `;
 
 const navButtonPlaceholderCss = css`
-  width: 36px;
-  min-width: 36px;
-  height: 36px;
+  width: var(--input-size);
+  min-width: var(--input-size);
+  height: var(--input-size);
+`;
+
+const navSearchFormCss = css`
+  width: 100%;
+`;
+
+const navSearchCss = css`
+  width: 100%;
+  box-shadow: ${shadows["shadow-md"]};
 `;
 
 const placesContainerCss = css`
@@ -184,6 +193,14 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
     }
   }, [nextBookAndChapter, router]);
 
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const onOpenSearch = useCallback(() => {
+    setIsSearchOpen(true);
+  }, []);
+  const onCloseSearch = useCallback(() => {
+    setIsSearchOpen(false);
+  }, []);
+
   const title = `${currentBook} ${currentChapter} | Studium`;
 
   return (
@@ -236,6 +253,15 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
           )}
         </div>
 
+        <form css={navSearchFormCss}>
+          <input
+            type="text"
+            css={navSearchCss}
+            placeholder="Search..."
+            onFocus={onOpenSearch}
+          />
+        </form>
+
         <div css={navButtonContainerCss}>
           {hasNext ? (
             <button
@@ -259,6 +285,8 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
           verses={verses}
         />
       </div>
+
+      {isSearchOpen && <SearchController onClose={onCloseSearch} />}
     </>
   );
 }

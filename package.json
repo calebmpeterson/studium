@@ -11,13 +11,15 @@
     "build:data:kjv": "ts-node --skipProject scripts/kjv-to-json.ts",
     "build:data:toc": "ts-node --skipProject scripts/kjv-to-table-of-contents.ts",
     "build:data:cross-references": "ts-node --skipProject scripts/cross-references-to-json.ts",
-    "build:data:sites-3": "ts-node --skipProject scripts/build-biblical-sites-3.ts"
+    "build:data:sites-3": "ts-node --skipProject scripts/build-biblical-sites-3.ts",
+    "build:search-index": "ts-node --skipProject scripts/build-search-index.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@mdi/js": "^7.3.67",
     "@mdi/react": "^1.6.1",
     "framer-motion": "^10.16.14",
+    "fuse.js": "^7.0.0",
     "leaflet": "^1.9.4",
     "lodash": "^4.17.21",
     "next": "14.0.3",
