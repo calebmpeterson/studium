@@ -63,7 +63,10 @@ export const SearchController: FC<Props> = ({ onClose }) => {
         return;
       }
 
-      setSearchHistory((previous) => [{ query }, ...previous]);
+      setSearchHistory((previous) => [
+        { query, timestamp: Date.now() },
+        ...previous,
+      ]);
 
       setResults([]);
       setIsLoading(true);

@@ -33,6 +33,7 @@ export type ReadingHistory = ReadingHistoryEntry[];
 
 export type SearchHistoryEntry = {
   query: string;
+  timestamp: number;
 };
 
 export type SearchHistory = SearchHistoryEntry[];

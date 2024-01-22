@@ -1,8 +1,14 @@
 import { SearchHistoryEntry } from "@/types";
 import { css } from "@emotion/react";
 import { FC, MouseEvent, useCallback } from "react";
+import ago from "s-ago";
 
-const containerCss = css``;
+const containerCss = css`
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  width: 100%;
+`;
 
 interface Props extends SearchHistoryEntry {
   onSetSearchQuery: (query: string) => void;
@@ -10,6 +16,7 @@ interface Props extends SearchHistoryEntry {
 
 export const SearchHistoryEntryDisplay: FC<Props> = ({
   query,
+  timestamp,
   onSetSearchQuery,
 }) => {
   const onClick = useCallback(
@@ -22,8 +29,9 @@ export const SearchHistoryEntryDisplay: FC<Props> = ({
   );
 
   return (
-    <div css={containerCss}>
-      <a onClick={onClick}>{query}</a>
-    </div>
+    <a css={containerCss} onClick={onClick}>
+      <span>{query}</span>
+      <span>{timestamp && ago(new Date(timestamp))}</span>
+    </a>
   );
 };
