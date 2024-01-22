@@ -5,6 +5,7 @@ import { BODY_FONT_FAMILY, typographyCss } from "./typography";
 import { scheme } from "./scheme";
 import { formsCss } from "./forms";
 import { breakpoints } from "./breakpoints";
+import { animationsCss } from "./animations";
 
 export const globalCss = css`
   html,
@@ -88,4 +89,5 @@ export const globalCss = css`
   ${typographyCss}
   ${navigationCss}
   ${formsCss}
+  ${animationsCss}
 `;
