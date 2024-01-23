@@ -7,6 +7,7 @@ const containerCss = css`
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+  gap: 20px;
   width: 100%;
 `;
 
@@ -31,7 +32,7 @@ export const SearchHistoryEntryDisplay: FC<Props> = ({
   return (
     <a css={containerCss} onClick={onClick}>
       <span>{query}</span>
-      <span>{timestamp && ago(new Date(timestamp))}</span>
+      <em>{timestamp && ago(new Date(timestamp))}</em>
     </a>
   );
 };
