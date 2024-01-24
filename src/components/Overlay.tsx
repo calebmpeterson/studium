@@ -77,9 +77,7 @@ export const Overlay: FC<Props> = ({
     <div css={overlayBackgroundCss} data-fade-in onClick={onClose} />
     <div css={overlayContainerCss(hasInput)} data-fade-in>
       <div css={overlayHeaderCss}>
-        <div data-muted css={overlayTitleCss}>
-          {title}
-        </div>
+        <header css={overlayTitleCss}>{title}</header>
 
         <button
           role="button"

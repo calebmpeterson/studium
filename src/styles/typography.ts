@@ -1,13 +1,15 @@
 import { css } from "@emotion/react";
-import { BASE_COLOR } from "./colors";
 
-export const BODY_FONT_FAMILY = "Verdana, sans-serif";
-export const HEADING_FONT_FAMILY = "Verdana, sans-serif";
+export const BODY_FONT_FAMILY = "'Hind', Verdana, sans-serif";
+export const HEADING_FONT_FAMILY = "'Expletus Sans', Verdana, sans-serif";
 
 export const typographyCss = css`
+  @import url("https://fonts.googleapis.com/css2?family=Expletus+Sans&display=swap");
+  @import url("https://fonts.googleapis.com/css2?family=Hind&display=swap");
+
   header {
     font-family: ${HEADING_FONT_FAMILY};
-    font-weight: 500;
+    font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 1px;
 

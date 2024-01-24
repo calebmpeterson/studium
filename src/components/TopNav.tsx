@@ -56,7 +56,7 @@ export const TopNav: FC<Props> = ({ children }) => (
   <nav css={layoutCss}>
     <div css={titleLayoutCss}>
       <Icon path={mdiBookOpenPageVariant} size={0.7} />
-      <strong css={titleCss}>Studium</strong>
+      <header css={titleCss}>Studium</header>
     </div>
 
     <div css={centerContainerCss}>{children}</div>

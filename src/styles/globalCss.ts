@@ -8,12 +8,15 @@ import { breakpoints } from "./breakpoints";
 import { animationsCss } from "./animations";
 
 export const globalCss = css`
+  ${typographyCss}
+
   html,
   body {
     min-width: 100%;
     max-width: 100%;
     min-height: 100vh;
     font-family: ${BODY_FONT_FAMILY};
+    font-weight: 400;
     margin: 0;
     padding: 0;
   }
@@ -86,7 +89,6 @@ export const globalCss = css`
     }
   }
 
-  ${typographyCss}
   ${navigationCss}
   ${formsCss}
   ${animationsCss}

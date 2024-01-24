@@ -1,7 +1,12 @@
 import { css } from "@emotion/react";
 import { transition } from "./transition";
+import { BODY_FONT_FAMILY } from "./typography";
 
 export const formsCss = css`
+  input {
+    font-family: ${BODY_FONT_FAMILY};
+  }
+
   input[type="text"] {
     padding: 5px 10px;
     height: var(--input-size);
@@ -21,6 +26,7 @@ export const formsCss = css`
   }
 
   input::placeholder {
+    font-family: ${BODY_FONT_FAMILY};
     color: var(--fg-muted);
   }
 `;

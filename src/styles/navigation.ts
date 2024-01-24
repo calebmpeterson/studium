@@ -1,7 +1,6 @@
 import { css } from "@emotion/react";
 import { BODY_FONT_FAMILY } from "./typography";
 import { transition } from "./transition";
-import { breakpoints } from "./breakpoints";
 
 export const navigationCss = css`
   button,
@@ -16,6 +15,7 @@ export const navigationCss = css`
     padding: 5px 10px;
     box-sizing: border-box;
     font-family: ${BODY_FONT_FAMILY};
+    letter-spacing: 1px;
     font-weight: 600;
     cursor: pointer;
 
@@ -63,5 +63,9 @@ export const navigationCss = css`
     &:focus {
       color: var(--active-fg);
     }
+  }
+
+  button {
+    font-weight: 600;
   }
 `;
