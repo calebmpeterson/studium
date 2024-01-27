@@ -9,7 +9,7 @@ interface Props extends PropsWithChildren {}
 
 const layoutCss = css`
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-between;
   border-bottom: 1px solid var(--border-color);
   padding: 10px;
@@ -22,6 +22,10 @@ const layoutCss = css`
 
   & > div {
     width: 100%;
+
+    @media ${breakpoints["is-mobile"]} {
+      width: auto;
+    }
   }
 `;
 
@@ -29,6 +33,11 @@ const titleLayoutCss = css`
   display: flex;
   align-items: center;
   gap: 5px;
+
+  // No title on mobile
+  @media ${breakpoints["is-mobile"]} {
+    display: none;
+  }
 `;
 
 const centerContainerCss = css`
@@ -37,6 +46,11 @@ const centerContainerCss = css`
   display: flex;
   gap: 5px;
   justify-content: center;
+
+  @media ${breakpoints["is-mobile"]} {
+    flex: 1 0 auto;
+    justify-content: start;
+  }
 `;
 
 const rightContainerCss = css`
