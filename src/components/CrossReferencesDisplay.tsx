@@ -23,7 +23,7 @@ export const CrossReferencesDisplay: FC<Props> = memo(
       {crossReferences.map((crossReference) => (
         <div key={crossReference.slug}>
           <div>
-            <Link href={crossReference.slug}>
+            <Link href={crossReference.slug} onClick={onClose}>
               {crossReference.book} {crossReference.chapter}:
               {crossReference.verse}
             </Link>
