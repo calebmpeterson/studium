@@ -30,6 +30,7 @@
     "react-leaflet": "^4.2.1",
     "s-ago": "^2.2.0",
     "slugify": "^1.6.6",
+    "use-click-outside": "^2.0.0",
     "use-local-storage-state": "^19.1.0",
     "uuid": "^9.0.1"
   },

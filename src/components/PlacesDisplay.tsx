@@ -55,11 +55,15 @@ const placesListCss = css`
 `;
 
 const placeCss = (hasFeatures: boolean) => css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 12px;
   font-weight: 600;
   background-color: ${hasFeatures ? BASE_COLOR[700] : BASE_COLOR[500]};
   color: ${BASE_COLOR[100]};
-  padding: 5px 10px;
+  padding: 5px 10px 3px;
+  line-height: 100%;
   border-radius: 50px;
 `;
 

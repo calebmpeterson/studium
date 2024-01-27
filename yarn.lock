@@ -9759,6 +9759,11 @@ urlpattern-polyfill@8.0.2:
   resolved "https://registry.yarnpkg.com/urlpattern-polyfill/-/urlpattern-polyfill-8.0.2.tgz#99f096e35eff8bf4b5a2aa7d58a1523d6ebc7ce5"
   integrity sha512-Qp95D4TPJl1kC9SKigDcqgyM2VDVO4RiJc2d4qe5GrYm+zbIQCWWKAFaJNQ4BhdFeDGwBmAxqJBwWSJDb9T3BQ==
 
+use-click-outside@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/use-click-outside/-/use-click-outside-2.0.0.tgz#87a60baab538e91e8ae15c21caad29edf9cd034e"
+  integrity sha512-sUDWeFbpzFrjtSX0NfBk8EsDs+qWbI/fW5RfSnQl1nX6RIiHC48/JZtEdlgCyszBqRUPdkIBBP7zD3K/9sg5PQ==
+
 use-local-storage-state@^19.1.0:
   version "19.1.0"
   resolved "https://registry.yarnpkg.com/use-local-storage-state/-/use-local-storage-state-19.1.0.tgz#9424981fd95dd37d253aad982f0a959ef5542fe2"

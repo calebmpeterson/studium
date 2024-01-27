@@ -10,6 +10,7 @@ import Icon from "@mdi/react";
 import { mdiHistory } from "@mdi/js";
 import { ReadingHistoryMenuItem } from "./ReadingHistoryMenuItem";
 import { useReadingHistory } from "@/state/useReadingHistory";
+import { FloatingBox } from "./FloatingBox";
 
 interface Props {
   tableOfContents: TableOfContents;
@@ -27,40 +28,17 @@ const chapterButtonCss = css`
 
 const readingHistoryButtonCss = css``;
 
-const menuCss = css`
-  position: absolute;
-  top: calc(100% + 5px);
-  max-height: 500px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  background-color: var(--bg);
-  border-radius: 5px;
-  padding: 5px;
-  box-sizing: border-box;
-  border: 1px solid var(--border-color);
-  box-shadow: ${shadows["shadow-xl"]};
-
-  & > header {
-    padding: 5px 10px;
-    font-size: 12px;
-    color: var(--border-color);
-    font-weight: normal;
-    text-transform: uppercase;
-  }
-`;
-
 const bookMenuCss = css`
-  ${menuCss}
-
   display: flex;
   flex-direction: column;
   gap: 5px;
+  padding-right: 10px;
 `;
 
 const chapterMenuCss = css`
-  ${menuCss}
-
-  max-width: 372px;
+  width: fit-content;
+  max-width: 400px;
+  padding-right: 10px;
 
   display: flex;
   gap: 5px;
@@ -68,11 +46,11 @@ const chapterMenuCss = css`
 `;
 
 const readingHistoryMenuCss = css`
-  ${menuCss}
-
+  padding-right: 10px;
   display: flex;
   flex-direction: column;
   gap: 5px;
+  min-width: 240px;
 `;
 
 export const ReadingNav: FC<Props> = ({
@@ -86,11 +64,17 @@ export const ReadingNav: FC<Props> = ({
     setIsBookMenuOpen((open) => !open);
     setIsChapterMenuOpen(false);
   }, []);
+  const onCloseBookMenu = useCallback(() => {
+    setIsBookMenuOpen(false);
+  }, []);
 
   const [isChapterMenuOpen, setIsChapterMenuOpen] = useState(false);
   const onToggleChapterMenu = useCallback(() => {
     setIsBookMenuOpen(false);
     setIsChapterMenuOpen((open) => !open);
+  }, []);
+  const onCloseChapterMenu = useCallback(() => {
+    setIsChapterMenuOpen(false);
   }, []);
 
   const [selectedBook, setSelectedBook] = useState(currentBook);
@@ -115,6 +99,9 @@ export const ReadingNav: FC<Props> = ({
   const onToggleReadingHistoryMenu = useCallback(() => {
     setIsReadingHistoryMenuOpen((open) => !open);
   }, []);
+  const onCloseReadingHistoryMenu = useCallback(() => {
+    setIsReadingHistoryMenuOpen(false);
+  }, []);
   const [readingHistory] = useReadingHistory();
   const onSelectReadingHistoryEntry = useCallback(
     (entry: ReadingHistoryEntry) => {
@@ -134,18 +121,18 @@ export const ReadingNav: FC<Props> = ({
         {selectedBook}
       </button>
       {isBookMenuOpen && (
-        <div css={bookMenuCss}>
+        <FloatingBox css={bookMenuCss} onClickOutside={onCloseBookMenu}>
           {Object.keys(tableOfContents).map((book) => (
             <BookMenuItem key={book} book={book} onSelect={onSelectBook} />
           ))}
-        </div>
+        </FloatingBox>
       )}
 
       <button css={chapterButtonCss} onClick={onToggleChapterMenu}>
         {selectedChapter}
       </button>
       {isChapterMenuOpen && (
-        <div css={chapterMenuCss}>
+        <FloatingBox css={chapterMenuCss} onClickOutside={onCloseChapterMenu}>
           {Object.keys(tableOfContents[selectedBook]).map((chapter) => (
             <ChapterMenuItem
               key={chapter}
@@ -153,7 +140,7 @@ export const ReadingNav: FC<Props> = ({
               onSelect={onSelectChapter}
             />
           ))}
-        </div>
+        </FloatingBox>
       )}
       <button
         css={readingHistoryButtonCss}
@@ -162,8 +149,11 @@ export const ReadingNav: FC<Props> = ({
         <Icon path={mdiHistory} size={0.7} />
       </button>
       {isReadingHistoryMenuOpen && (
-        <div css={readingHistoryMenuCss}>
-          <header>Reading History</header>
+        <FloatingBox
+          css={readingHistoryMenuCss}
+          onClickOutside={onCloseReadingHistoryMenu}
+        >
+          <header data-sub-header>Reading History</header>
           {readingHistory.map((entry, index) => (
             <ReadingHistoryMenuItem
               key={index}
@@ -171,7 +161,7 @@ export const ReadingNav: FC<Props> = ({
               onSelect={onSelectReadingHistoryEntry}
             />
           ))}
-        </div>
+        </FloatingBox>
       )}
     </>
   );

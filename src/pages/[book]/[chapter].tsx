@@ -58,7 +58,7 @@ const chapterNavigationCss = css`
   padding: 0 0px;
   max-width: 800px;
   display: flex;
-  gap: 10px;
+  gap: 5px;
   justify-content: space-between;
 
   @media ${breakpoints["is-mobile"]} {
@@ -257,7 +257,7 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
           <input
             type="text"
             css={navSearchCss}
-            placeholder="Search the scriptures..."
+            placeholder="Search..."
             onFocus={onOpenSearch}
           />
         </form>

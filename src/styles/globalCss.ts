@@ -28,7 +28,7 @@ export const globalCss = css`
     --border-color: ${BASE_COLOR[400]};
     --button-fg: ${BASE_COLOR[100]};
     --button-border: ${BASE_COLOR[100]};
-    --button-active-bg: ${BASE_COLOR[800]};
+    --button-active-bg: ${BASE_COLOR[950]};
     --active-fg: ${ACTIVE_COLOR[300]};
     --disabled-fg: ${BASE_COLOR[500]};
     --backdrop: rgba(0, 0, 0, 0.75);
