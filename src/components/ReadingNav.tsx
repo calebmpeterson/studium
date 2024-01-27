@@ -11,6 +11,7 @@ import { mdiHistory } from "@mdi/js";
 import { ReadingHistoryMenuItem } from "./ReadingHistoryMenuItem";
 import { useReadingHistory } from "@/state/useReadingHistory";
 import { FloatingBox } from "./FloatingBox";
+import { marginCss } from "@/styles/layout";
 
 interface Props {
   tableOfContents: TableOfContents;
@@ -153,7 +154,10 @@ export const ReadingNav: FC<Props> = ({
           css={readingHistoryMenuCss}
           onClickOutside={onCloseReadingHistoryMenu}
         >
-          <header data-sub-header>Reading History</header>
+          <header data-sub-header data-muted css={marginCss("5px")}>
+            Reading History
+          </header>
+
           {readingHistory.map((entry, index) => (
             <ReadingHistoryMenuItem
               key={index}
