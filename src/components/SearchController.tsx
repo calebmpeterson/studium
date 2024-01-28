@@ -17,6 +17,7 @@ import { Spinner } from "./Spinner";
 import { isEmpty } from "lodash";
 import { useTextSearchHistory } from "@/state/useTextSearchHistory";
 import { SearchHistoryDisplay } from "./SearchHistoryDisplay";
+import Skeleton from "react-loading-skeleton";
 
 interface Props {
   onClose: () => void;
@@ -143,10 +144,22 @@ export const SearchController: FC<Props> = ({ onClose }) => {
     <>
       <Overlay title="Search" onClose={onClose} header={header} hasInput>
         {isLoading && (
-          <div css={statusContainerCss}>
-            Loading
-            <Spinner />
-          </div>
+          <>
+            <div>
+              <Skeleton containerClassName="flex-1" height={14} width="100px" />
+              <Skeleton containerClassName="flex-1" height={20} />
+            </div>
+
+            <div>
+              <Skeleton containerClassName="flex-1" height={14} width="100px" />
+              <Skeleton containerClassName="flex-1" height={20} />
+            </div>
+
+            <div>
+              <Skeleton containerClassName="flex-1" height={14} width="100px" />
+              <Skeleton containerClassName="flex-1" height={20} />
+            </div>
+          </>
         )}
 
         {!hasSearched && (

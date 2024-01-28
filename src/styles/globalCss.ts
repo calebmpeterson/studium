@@ -53,6 +53,9 @@ export const globalCss = css`
     @media ${breakpoints["is-mobile"]} {
       --input-size: 42px;
     }
+
+    --skeleton-base-color: ${BASE_COLOR[800]};
+    --skeleton-highlight-color: ${BASE_COLOR[900]};
   }
 
   body {
@@ -86,6 +89,9 @@ export const globalCss = css`
       --green: ${colors.emerald[800]};
       --blue: ${colors.blue[800]};
       --purple: ${colors.purple[800]};
+
+      --skeleton-base-color: ${BASE_COLOR[200]};
+      --skeleton-highlight-color: ${BASE_COLOR[100]};
     }
   }
 
