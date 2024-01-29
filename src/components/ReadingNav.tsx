@@ -106,6 +106,7 @@ export const ReadingNav: FC<Props> = ({
   const [readingHistory] = useReadingHistory();
   const onSelectReadingHistoryEntry = useCallback(
     (entry: ReadingHistoryEntry) => {
+      setIsReadingHistoryMenuOpen(false);
       router.push(getRouteFromBookAndChapter(entry.book, entry.chapter));
     },
     [router]
