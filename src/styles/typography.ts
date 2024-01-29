@@ -18,6 +18,10 @@ export const typographyCss = css`
     }
   }
 
+  p {
+    margin: 0 0 10px;
+  }
+
   [data-muted="true"] {
     color: var(--fg-muted);
   }
@@ -35,5 +39,10 @@ export const typographyCss = css`
     & > * {
       color: inherit !important;
     }
+  }
+
+  hr {
+    border: none;
+    border-bottom: 1px solid var(--border-color);
   }
 `;

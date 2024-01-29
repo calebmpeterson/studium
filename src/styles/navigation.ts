@@ -49,6 +49,7 @@ export const navigationCss = css`
 
     &[data-is-active="true"] {
       color: var(--active-fg);
+      border-color: var(--active-fg);
     }
   }
 
