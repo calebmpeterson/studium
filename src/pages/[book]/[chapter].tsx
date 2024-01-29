@@ -15,12 +15,12 @@ import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { shadows } from "@/styles/shadows";
 import { breakpoints } from "@/styles/breakpoints";
-import { flatMap } from "lodash";
+import { flatMap, isMap } from "lodash";
 import slugify from "slugify";
 import { useTrackReadingHistory } from "@/state/useTrackReadingHistory";
 import { useCrossReferences } from "@/queries/useCrossReferences";
 import Icon from "@mdi/react";
-import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
+import { mdiChevronLeft, mdiChevronRight, mdiMapMarkerMultiple } from "@mdi/js";
 import { ReadingNav } from "@/components/ReadingNav";
 import { Overlay } from "@/components/Overlay";
 import { SearchController } from "@/components/SearchController";
@@ -92,9 +92,6 @@ const navSearchCss = css`
 
 const placesContainerCss = css`
   height: 400px;
-  overflow: hidden;
-  border-top: 1px solid var(--border-color);
-  background-color: var(--bg);
 `;
 
 type DataResult = {
@@ -201,6 +198,14 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
     setIsSearchOpen(false);
   }, []);
 
+  const [isMapOpen, setIsMapOpen] = useState(false);
+  const onOpenMap = useCallback(() => {
+    setIsMapOpen(true);
+  }, []);
+  const onCloseMap = useCallback(() => {
+    setIsMapOpen(false);
+  }, []);
+
   const title = `${currentBook} ${currentChapter} | Studium`;
 
   return (
@@ -262,6 +267,15 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
           />
         </form>
 
+        <button
+          data-icon
+          css={navButtonCss}
+          onClick={onOpenMap}
+          aria-label="View places"
+        >
+          <Icon path={mdiMapMarkerMultiple} size={0.7} />
+        </button>
+
         <div css={navButtonContainerCss}>
           {hasNext ? (
             <button
@@ -278,13 +292,20 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
         </div>
       </nav>
 
-      <div css={placesContainerCss}>
-        <DynamicPlacesDisplay
-          book={currentBook}
-          chapter={currentChapter}
-          verses={verses}
-        />
-      </div>
+      {isMapOpen && (
+        <Overlay
+          title={`Places in ${currentBook} ${currentChapter}`}
+          onClose={onCloseMap}
+        >
+          <div css={placesContainerCss}>
+            <DynamicPlacesDisplay
+              book={currentBook}
+              chapter={currentChapter}
+              verses={verses}
+            />
+          </div>
+        </Overlay>
+      )}
 
       {isSearchOpen && <SearchController onClose={onCloseSearch} />}
     </>

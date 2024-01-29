@@ -31,25 +31,21 @@ const layoutCss = css`
   display: flex;
   flex-direction: column;
   justify-content: start;
+  gap: 10px;
+  padding-bottom: 20px;
 `;
 
 const mapCss = css`
   height: 400px;
+
+  border-radius: var(--border-radius);
 `;
 
-const placesListContainerCss = css`
-  position: relative;
-  height: 0;
-`;
+const placesListContainerCss = css``;
 
 const placesListCss = css`
-  position: absolute;
-  z-index: 1000;
-  left: 0;
-  right: 0;
-  top: calc(100% + 10px);
   display: flex;
-  justify-content: center;
+  justify-content: start;
   gap: 10px;
   flex-wrap: wrap;
 `;
