@@ -13,7 +13,6 @@ import { SearchResultDisplay } from "./SearchResultDisplay";
 import { Overlay } from "./Overlay";
 import Icon from "@mdi/react";
 import { mdiMagnify } from "@mdi/js";
-import { Spinner } from "./Spinner";
 import { isEmpty } from "lodash";
 import { useTextSearchHistory } from "@/state/useTextSearchHistory";
 import { SearchHistoryDisplay } from "./SearchHistoryDisplay";
