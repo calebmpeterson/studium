@@ -1,6 +1,6 @@
 import { ReadingHistoryEntry } from "@/types";
 import { css } from "@emotion/react";
-import { FC } from "react";
+import { FC, useEffect, useRef } from "react";
 
 interface Props {
   entry: ReadingHistoryEntry;

@@ -46,6 +46,10 @@ export const navigationCss = css`
       padding: 5px;
       flex-shrink: 0;
     }
+
+    &[data-is-active="true"] {
+      color: var(--active-fg);
+    }
   }
 
   a {

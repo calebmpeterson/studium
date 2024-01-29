@@ -124,7 +124,12 @@ export const ReadingNav: FC<Props> = ({
       {isBookMenuOpen && (
         <FloatingBox css={bookMenuCss} onClickOutside={onCloseBookMenu}>
           {Object.keys(tableOfContents).map((book) => (
-            <BookMenuItem key={book} book={book} onSelect={onSelectBook} />
+            <BookMenuItem
+              key={book}
+              book={book}
+              isSelected={currentBook === book}
+              onSelect={onSelectBook}
+            />
           ))}
         </FloatingBox>
       )}
@@ -138,11 +143,13 @@ export const ReadingNav: FC<Props> = ({
             <ChapterMenuItem
               key={chapter}
               chapter={chapter}
+              isSelected={currentChapter === chapter}
               onSelect={onSelectChapter}
             />
           ))}
         </FloatingBox>
       )}
+
       <button
         css={readingHistoryButtonCss}
         onClick={onToggleReadingHistoryMenu}
