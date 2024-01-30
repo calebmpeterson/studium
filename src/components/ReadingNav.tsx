@@ -4,7 +4,6 @@ import { FC, useCallback, useEffect, useState } from "react";
 import { BookMenuItem } from "./BookMenuItem";
 import { ChapterMenuItem } from "./ChapterMenuItem";
 import { useRouter } from "next/router";
-import { shadows } from "@/styles/shadows";
 import { getRouteFromBookAndChapter } from "@/utils/getRouteFromBookAndChapter";
 import Icon from "@mdi/react";
 import { mdiHistory } from "@mdi/js";
