@@ -142,18 +142,18 @@ export const GENEALOGIES: Patriarchs = [
     ageOfFatherAtBirth: 70,
   },
   {
-    name: "Isaac",
-    reference: "/genesis/21#5",
-    age: 175,
-    father: "Abraham",
-    ageOfFatherAtBirth: 100,
-  },
-  {
     name: "Ishmael",
     reference: "/genesis/16#16",
     age: 137,
     father: "Abraham",
     ageOfFatherAtBirth: 86,
+  },
+  {
+    name: "Isaac",
+    reference: "/genesis/21#5",
+    age: 175,
+    father: "Abraham",
+    ageOfFatherAtBirth: 100,
   },
   {
     name: "Jacob",
