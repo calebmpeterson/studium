@@ -7,6 +7,7 @@ import { css } from "@emotion/react";
 import { shadows } from "@/styles/shadows";
 import { eventLabelCss } from "./styles";
 import Link from "next/link";
+import { split } from "lodash";
 
 type TimelineDurationProps = {
   item: HistoricalEvent;
@@ -38,7 +39,7 @@ const detailsContainerCss = css`
   min-width: 300px;
   max-width: 400px;
   padding: 10px;
-  background-color: var(--bg);
+  background-color: var(--tooltip-bg);
   box-shadow: ${shadows["shadow"]};
   border-radius: 2px;
 
@@ -48,6 +49,7 @@ const detailsContainerCss = css`
 `;
 
 export const TimelineDuration: FC<TimelineDurationProps> = ({ item }) => {
+  const hasDetails = Boolean(item.details || item.link);
   const containerRef = useRef<HTMLDivElement>(null);
   const [areDetailsOpen, setDetailsOpen] = useState(false);
 
@@ -61,7 +63,7 @@ export const TimelineDuration: FC<TimelineDurationProps> = ({ item }) => {
     }
   }, []);
 
-  const containerProps = item.details
+  const containerProps = hasDetails
     ? {
         role: "button",
         tabIndex: 0,
@@ -73,11 +75,13 @@ export const TimelineDuration: FC<TimelineDurationProps> = ({ item }) => {
   return (
     <div
       ref={containerRef}
-      css={containerCss(Boolean(item.details))}
+      css={containerCss(hasDetails)}
       style={{
         left: `${item.date_started + CREATION_YEAR}px`,
         minWidth: `${item.date_completed - item.date_started - BORDER_WIDTH}px`,
-        borderColor: `var(--${item.color || "light"})`,
+        borderColor: item.color?.startsWith("#")
+          ? item.color
+          : `var(--${item.color || "light"})`,
       }}
       {...containerProps}
     >
@@ -98,9 +102,9 @@ export const TimelineDuration: FC<TimelineDurationProps> = ({ item }) => {
         </small>
       </div>
 
-      {item.details && areDetailsOpen && (
+      {hasDetails && areDetailsOpen && (
         <div css={detailsContainerCss}>
-          {item.details.split("\n").map((detail, index) => (
+          {split(item.details, "\n").map((detail, index) => (
             <p key={index}>{detail}</p>
           ))}
           {item.link && (

@@ -16,18 +16,24 @@ import { css } from "@emotion/react";
 import Head from "next/head";
 import { TopNav } from "@/components/TopNav";
 import { TimelineSection } from "@/components/timeline/TimelineSection";
+import { processGenealogy } from "@/data/processGenealogy";
+import { GENEALOGIES } from "@/data/typed/genealogies";
 
 type PageData = {
   bookRows: HistoricalEvent[][];
   milestones: HistoricalMilestone[];
   eventRows: HistoricalEvent[][];
   churchAgeRows: HistoricalEvent[][];
+  patriarchRows: HistoricalEvent[][];
 };
 
 export const getStaticProps: GetStaticProps<PageData> = async () => {
   const bookRows = layout(BOOKS);
   const eventRows = layout(EVENTS);
-  const churchAgeRows = layout(CHURCH_AGES);
+  const churchAgeRows = CHURCH_AGES.map((event) => [event]);
+  const patriarchRows = processGenealogy(GENEALOGIES, -4000).map((event) => [
+    event,
+  ]);
 
   return {
     props: {
@@ -35,6 +41,7 @@ export const getStaticProps: GetStaticProps<PageData> = async () => {
       milestones: MILESTONES,
       eventRows,
       churchAgeRows,
+      patriarchRows,
     },
   };
 };
@@ -96,6 +103,12 @@ export default function Timeline(props: Props) {
           <TimelineSection title="Books" />
           {props.bookRows.map((booksInRow, index) => (
             <TimelineRow key={`books-${index}`} items={booksInRow} />
+          ))}
+
+          {/* Ante-deluvian Patriarchs */}
+          <TimelineSection title="Patriarchs" />
+          {props.patriarchRows.map((eventsInRow, index) => (
+            <TimelineRow key={`patriarch-${index}`} items={eventsInRow} />
           ))}
 
           {/* World events */}

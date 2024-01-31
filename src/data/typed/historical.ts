@@ -79,7 +79,7 @@ export const BOOKS: HistoricalEvent[] = [
 
 export const MILESTONES: HistoricalMilestone[] = [
   { title: "Creation", date: -4000, color: "green", approximate: true },
-  { title: "Noah's Flood", date: -2350, color: "blue", approximate: true },
+  { title: "Noah's Flood", date: -2343, color: "blue", approximate: true },
   { title: "Tower of Babel", date: -2200, color: "amber", approximate: true },
 
   {
@@ -304,52 +304,6 @@ export const EVENTS: HistoricalEvent[] = [
     color: "blue",
     details: "Israel is re-established as a nation after almost 2,000 years.",
     link: "https://en.wikipedia.org/wiki/Jewish_state",
-  },
-
-  // Church councils
-  {
-    title: "Council of Nicaea",
-    date_started: 325,
-    date_completed: 325,
-    color: "info",
-    details:
-      "Addressed the Arian controversy and formulated the Nicene Creed, asserting the orthodox belief in the divinity of Jesus Christ.",
-    link: "https://en.wikipedia.org/wiki/First_Council_of_Nicaea",
-  },
-  {
-    title: "Council of Hippo",
-    date_started: 393,
-    date_completed: 393,
-    color: "info",
-    details: "Discussed and affirmed the canon of the Old and New Testaments.",
-    link: "https://en.wikipedia.org/wiki/Council_of_Hippo",
-  },
-  {
-    title: "Council of Carthage",
-    date_started: 397,
-    date_completed: 397,
-    color: "info",
-    details:
-      "Ratified the canon of both the Old and New Testaments, confirming the same canon as the Council of Hippo.",
-    link: "https://en.wikipedia.org/wiki/Council_of_Carthage_(397)",
-  },
-  {
-    title: "Council of Ephesus",
-    date_started: 431,
-    date_completed: 431,
-    color: "info",
-    details:
-      "Addressed theological matters, affirmed the title of Mary as Theotokos, indirectly influencing the acceptance of certain New Testament books.",
-    link: "https://en.wikipedia.org/wiki/Council_of_Ephesus",
-  },
-  {
-    title: "Council of Chalcedon",
-    date_started: 451,
-    date_completed: 451,
-    color: "info",
-    details:
-      "Dealt primarily with Christological controversies, affirming the belief in the two natures of Christ, indirectly influencing the acceptance of certain texts related to Christology.",
-    link: "https://en.wikipedia.org/wiki/Council_of_Chalcedon",
   },
 ];
 

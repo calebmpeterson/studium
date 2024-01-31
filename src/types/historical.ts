@@ -12,7 +12,8 @@ export type HistoricalEventColor =
   | "yellow"
   | "green"
   | "blue"
-  | "purple";
+  | "purple"
+  | string;
 
 export type HistoricalEvent = {
   title: string;

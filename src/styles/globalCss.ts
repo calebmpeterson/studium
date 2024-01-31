@@ -33,6 +33,8 @@ export const globalCss = css`
     --disabled-fg: ${BASE_COLOR[500]};
     --backdrop: rgba(0, 0, 0, 0.75);
 
+    --tooltip-bg: ${BASE_COLOR[800]};
+
     --info: ${colors.blue[500]};
     --gold: ${colors.yellow[500]};
     --silver: ${colors.zinc[500]};
@@ -75,6 +77,7 @@ export const globalCss = css`
       --active-fg: ${ACTIVE_COLOR[600]};
       --disabled-fg: ${BASE_COLOR[600]};
       --backdrop: rgba(0, 0, 0, 0.5);
+      --tooltip-bg: ${BASE_COLOR[50]};
 
       --info: ${colors.blue[500]};
       --gold: ${colors.yellow[500]};
