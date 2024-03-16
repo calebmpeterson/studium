@@ -30,6 +30,7 @@ export const globalCss = css`
     --button-border: ${BASE_COLOR[100]};
     --button-active-bg: ${BASE_COLOR[950]};
     --active-fg: ${ACTIVE_COLOR[300]};
+    --active-bg: ${ACTIVE_COLOR[950]};
     --disabled-fg: ${BASE_COLOR[500]};
     --backdrop: rgba(0, 0, 0, 0.75);
 
@@ -75,6 +76,7 @@ export const globalCss = css`
       --button-border: ${BASE_COLOR[800]};
       --button-active-bg: ${ACTIVE_COLOR[100]};
       --active-fg: ${ACTIVE_COLOR[600]};
+      --active-bg: ${ACTIVE_COLOR[200]};
       --disabled-fg: ${BASE_COLOR[600]};
       --backdrop: rgba(0, 0, 0, 0.5);
       --tooltip-bg: ${BASE_COLOR[50]};

@@ -1,8 +1,10 @@
 import { CrossReference, Verse } from "@/types";
 import { css } from "@emotion/react";
 import { isEmpty } from "lodash";
-import { FC, useCallback, useState } from "react";
+import { FC, MouseEvent, useCallback, useState } from "react";
 import { CrossReferencesDisplay } from "./CrossReferencesDisplay";
+import { useIsVerseHighlighted } from "@/state/useIsVerseHighlighted";
+import { transition } from "@/styles/transition";
 
 const containerCss = css`
   position: relative;
@@ -22,6 +24,18 @@ const crossReferenceToggleCss = css`
   &:hover,
   &:focus {
     color: var(--active-fg);
+  }
+`;
+
+const verseCss = css`
+  background-color: transparent;
+  border-top-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+
+  transition: ${transition("background-color")};
+
+  &[data-is-highlighted="true"] {
+    background-color: var(--active-bg);
   }
 `;
 
@@ -47,14 +61,34 @@ export const VerseDisplay: FC<Props> = ({
     setAreCrossReferencesOpen(false);
   }, []);
 
+  const isHighlighted = useIsVerseHighlighted(verse);
+
+  const onClickAnchor = useCallback(
+    (event: MouseEvent<HTMLElement>) => {
+      event.preventDefault();
+
+      history.replaceState({}, "", `#${verse}`);
+      window.dispatchEvent(new HashChangeEvent("hashchange"));
+
+      (event.target as HTMLElement).scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    },
+    [verse]
+  );
+
   return (
     <div css={containerCss}>
       <div id={verse} css={anchorCss} />
-      <sup>
-        <a href={`#${verse}`}>{verse}</a>
-      </sup>
-      &nbsp;
-      {text}
+      <span css={verseCss} data-is-highlighted={isHighlighted}>
+        <sup>
+          <a href={`#${verse}`} onClick={onClickAnchor}>
+            {verse}
+          </a>
+        </sup>
+        &nbsp;{text}
+      </span>
       {hasCrossReferences && (
         <>
           &nbsp;
