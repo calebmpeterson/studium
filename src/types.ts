@@ -1,5 +1,11 @@
 import { FuseResult } from "fuse.js";
 
+export type VerseReference = {
+  book: string;
+  chapter: string;
+  verse: string;
+};
+
 export type Verse = {
   reference: string;
   book: string;
