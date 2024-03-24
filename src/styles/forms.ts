@@ -29,4 +29,9 @@ export const formsCss = css`
     font-family: ${BODY_FONT_FAMILY};
     color: var(--fg-muted);
   }
+
+  input[type="radio"],
+  input[type="checkbox"] {
+    accent-color: var(--active-fg);
+  }
 `;
