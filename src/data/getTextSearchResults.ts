@@ -1,8 +1,9 @@
-import Fuse, { FuseIndex } from "fuse.js";
-import _, { isArray } from "lodash";
+import Fuse from "fuse.js";
+import _ from "lodash";
 import KJV from "@/data/json/kjv.json";
 import KJV_INDEX from "@/data/json/kjv-search-index.json";
 import { normalizeQuery } from "./normalizeQuery";
+import { Verse } from "@/types";
 
 type Options = {
   limit: string | string[] | undefined;
@@ -21,13 +22,13 @@ export const getTextSearchResults = (
   const normalizedQuery = normalizeQuery(query);
   const parsedLimit = parseInt(_.get(_.flatten([limit]), 0), 10);
 
-  const allVerses = _.flatMap(KJV, (chapters) =>
+  const allVerses: Verse[] = _.flatMap(KJV, (chapters) =>
     _.flatMap(chapters, (verses) => verses)
-  ).filter(_.isObject);
+  ).filter(_.isObject) as Verse[];
 
   const kjvIndex = Fuse.parseIndex(KJV_INDEX);
 
-  const fuse = new Fuse(
+  const fuse = new Fuse<Verse>(
     allVerses,
     {
       includeScore: true,
@@ -43,5 +44,5 @@ export const getTextSearchResults = (
     { limit: parsedLimit }
   );
 
-  return results;
+  return results.map(({ item }) => item);
 };

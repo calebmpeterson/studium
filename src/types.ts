@@ -61,7 +61,7 @@ export type CrossReferences = {
   [bookAndChapterSlug: string]: CrossReferencesForBookAndChapter;
 };
 
-export type SearchResult = FuseResult<Verse>;
+export type SearchResult = Verse;
 
 export type SearchResults = SearchResult[];
 

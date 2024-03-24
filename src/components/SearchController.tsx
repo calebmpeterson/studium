@@ -34,6 +34,12 @@ const searchInputCss = css`
   width: 100%;
 `;
 
+const searchTypeSelectorCss = css`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+`;
+
 const searchResultsContainerCss = css`
   display: flex;
   flex-direction: column;
@@ -53,6 +59,7 @@ export const SearchController: FC<Props> = ({ onClose }) => {
   const [results, setResults] = useState<SearchResults>([]);
   const [hasSearched, setHasSearched] = useState(false);
   const [searchHistory, setSearchHistory] = useTextSearchHistory();
+  const [searchType, setSearchType] = useState("text");
 
   const performSearch = useCallback(
     async (query: string) => {
@@ -72,9 +79,12 @@ export const SearchController: FC<Props> = ({ onClose }) => {
       setIsLoading(true);
       setHasSearched(true);
 
+      const endpoint =
+        searchType === "text" ? "/api/search" : "/api/semantic-search";
+
       try {
         const response = await fetch(
-          `/api/search?query=${encodeURIComponent(query)}`
+          `${endpoint}?query=${encodeURIComponent(query)}`
         );
         const { results } = (await response.json()) as SearchResponse;
 
@@ -83,7 +93,7 @@ export const SearchController: FC<Props> = ({ onClose }) => {
         setIsLoading(false);
       }
     },
-    [setSearchHistory]
+    [searchType, setSearchHistory]
   );
 
   const onClearSearchHistory = useCallback(() => {
@@ -93,6 +103,7 @@ export const SearchController: FC<Props> = ({ onClose }) => {
   const onQueryChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);
   }, []);
+
   const onSearch = useCallback(
     async (event: FormEvent) => {
       event.preventDefault();
@@ -122,21 +133,52 @@ export const SearchController: FC<Props> = ({ onClose }) => {
     [performSearch]
   );
 
-  const header = (
-    <form css={searchFormCss} onSubmit={onSearch}>
-      <input
-        ref={inputRef}
-        type="text"
-        css={searchInputCss}
-        placeholder="Search the scriptures..."
-        value={query}
-        onChange={onQueryChange}
-      />
+  const onChangeSearchType = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      setSearchType(event.target.value);
+    },
+    []
+  );
 
-      <button role="submit" aria-label="Close search" data-icon>
-        <Icon path={mdiMagnify} size={0.7} />
-      </button>
-    </form>
+  const header = (
+    <div>
+      <form css={searchFormCss} onSubmit={onSearch}>
+        <input
+          ref={inputRef}
+          type="text"
+          css={searchInputCss}
+          placeholder="Search the scriptures..."
+          value={query}
+          onChange={onQueryChange}
+        />
+
+        <button role="submit" aria-label="Close search" data-icon>
+          <Icon path={mdiMagnify} size={0.7} />
+        </button>
+      </form>
+
+      <div css={searchTypeSelectorCss}>
+        <label>
+          <input
+            type="radio"
+            value="text"
+            checked={searchType === "text"}
+            onChange={onChangeSearchType}
+          />
+          &nbsp;Text
+        </label>
+
+        <label>
+          <input
+            type="radio"
+            value="semantic"
+            checked={searchType === "semantic"}
+            onChange={onChangeSearchType}
+          />
+          &nbsp;Semantic
+        </label>
+      </div>
+    </div>
   );
 
   return (
@@ -177,11 +219,7 @@ export const SearchController: FC<Props> = ({ onClose }) => {
 
         <div css={searchResultsContainerCss}>
           {results.map((result, index) => (
-            <SearchResultDisplay
-              key={index}
-              {...result.item}
-              onClick={onClose}
-            />
+            <SearchResultDisplay key={index} {...result} onClick={onClose} />
           ))}
         </div>
       </Overlay>

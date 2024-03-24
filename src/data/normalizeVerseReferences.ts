@@ -1,8 +1,5 @@
 import { Verse, VerseReference } from "@/types";
-import { slugifyReference } from "@/utils/slugifyReference";
-import { isArray, isObject, toLower, toString } from "lodash";
-import slugify from "slugify";
-import { getVerseText } from "./getVerseText";
+import { isArray, isObject } from "lodash";
 import { getVerse } from "./getVerse";
 
 const isValidReference = (reference: unknown): reference is VerseReference =>

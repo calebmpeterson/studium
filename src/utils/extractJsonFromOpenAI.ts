@@ -7,7 +7,9 @@ export const extractJsonFromOpenAI = (response: OpenAI.ChatCompletion) => {
 
     if (content) {
       try {
-        return JSON.parse(content);
+        return content.startsWith("```json")
+          ? JSON.parse(content.slice(7, -3).trim())
+          : JSON.parse(content);
       } catch (error: unknown) {
         console.error(
           `Failed to extract JSON from OpenAI response`,
