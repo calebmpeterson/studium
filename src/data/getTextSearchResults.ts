@@ -22,14 +22,14 @@ export const getTextSearchResults = (
   const normalizedQuery = normalizeQuery(query);
   const parsedLimit = parseInt(_.get(_.flatten([limit]), 0), 10);
 
-  const allVerses: Verse[] = _.flatMap(KJV, (chapters) =>
+  const allVerses = _.flatMap(KJV, (chapters) =>
     _.flatMap(chapters, (verses) => verses)
-  ).filter(_.isObject) as Verse[];
+  ).filter(_.isObject);
 
   const kjvIndex = Fuse.parseIndex(KJV_INDEX);
 
   const fuse = new Fuse<Verse>(
-    allVerses,
+    allVerses as unknown as Verse[],
     {
       includeScore: true,
       includeMatches: true,
