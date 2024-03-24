@@ -3,7 +3,7 @@ import { extractJsonFromOpenAI } from "@/utils/extractJsonFromOpenAI";
 import OpenAI from "openai";
 import { normalizeVerseReferences } from "./normalizeVerseReferences";
 import { isUndefined } from "lodash";
-import { sanitizeQuery } from "./sanitizeQuery";
+import { normalizeQuery } from "./normalizeQuery";
 
 type Result = VerseReference[];
 
@@ -21,7 +21,7 @@ export const getSemanticSearchResults = async (
   }
 
   try {
-    const sanitizedQuery = sanitizeQuery(query);
+    const normalizedQuery = normalizeQuery(query);
 
     const openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
@@ -36,7 +36,7 @@ export const getSemanticSearchResults = async (
         },
         {
           role: "user",
-          content: `Query: ${sanitizedQuery}`,
+          content: `Query: ${normalizedQuery}`,
         },
       ],
       temperature: 1,

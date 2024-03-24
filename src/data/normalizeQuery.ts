@@ -1,4 +1,4 @@
 import { isArray } from "lodash";
 
-export const sanitizeQuery = (query: string | string[]) =>
+export const normalizeQuery = (query: string | string[]) =>
   isArray(query) ? query.join(" ") : query;
