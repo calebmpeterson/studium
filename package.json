@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "netlify dev",
     "lint": "next lint",
+    "typecheck": "yarn tsc --noEmit",
     "build:data:kml": "ts-node --skipProject scripts/kml-to-geojson.ts",
     "build:data:kjv": "ts-node --skipProject scripts/kjv-to-json.ts",
     "build:data:toc": "ts-node --skipProject scripts/kjv-to-table-of-contents.ts",
