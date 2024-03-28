@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { get } from "lodash";
 import { getTextSearchResults } from "@/data/getTextSearchResults";
+import { getSemanticSearchResults } from "@/data/getSemanticSearchResults";
 
 type Result = unknown;
 
@@ -13,7 +14,12 @@ export default async function handler(
   try {
     console.log(`Searching for "${query}"`);
 
-    const results = getTextSearchResults(query, { limit });
+    const [textResults, semanticResults] = await Promise.all([
+      getTextSearchResults(query, { limit }),
+      getSemanticSearchResults(query),
+    ]);
+
+    const results = [...semanticResults, ...textResults];
 
     res.status(200).json({ results });
   } catch (error: unknown) {

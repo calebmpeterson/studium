@@ -59,7 +59,6 @@ export const SearchController: FC<Props> = ({ onClose }) => {
   const [results, setResults] = useState<SearchResults>([]);
   const [hasSearched, setHasSearched] = useState(false);
   const [searchHistory, setSearchHistory] = useTextSearchHistory();
-  const [searchType, setSearchType] = useState("text");
 
   const performSearch = useCallback(
     async (query: string) => {
@@ -79,12 +78,9 @@ export const SearchController: FC<Props> = ({ onClose }) => {
       setIsLoading(true);
       setHasSearched(true);
 
-      const endpoint =
-        searchType === "text" ? "/api/search" : "/api/semantic-search";
-
       try {
         const response = await fetch(
-          `${endpoint}?query=${encodeURIComponent(query)}`
+          `/api/search?query=${encodeURIComponent(query)}`
         );
         const { results } = (await response.json()) as SearchResponse;
 
@@ -93,7 +89,7 @@ export const SearchController: FC<Props> = ({ onClose }) => {
         setIsLoading(false);
       }
     },
-    [searchType, setSearchHistory]
+    [setSearchHistory]
   );
 
   const onClearSearchHistory = useCallback(() => {
@@ -133,13 +129,6 @@ export const SearchController: FC<Props> = ({ onClose }) => {
     [performSearch]
   );
 
-  const onChangeSearchType = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      setSearchType(event.target.value);
-    },
-    []
-  );
-
   const header = (
     <div>
       <form css={searchFormCss} onSubmit={onSearch}>
@@ -156,28 +145,6 @@ export const SearchController: FC<Props> = ({ onClose }) => {
           <Icon path={mdiMagnify} size={0.7} />
         </button>
       </form>
-
-      <div css={searchTypeSelectorCss}>
-        <label>
-          <input
-            type="radio"
-            value="text"
-            checked={searchType === "text"}
-            onChange={onChangeSearchType}
-          />
-          &nbsp;Text
-        </label>
-
-        <label>
-          <input
-            type="radio"
-            value="semantic"
-            checked={searchType === "semantic"}
-            onChange={onChangeSearchType}
-          />
-          &nbsp;Semantic
-        </label>
-      </div>
     </div>
   );
 
