@@ -1,8 +1,18 @@
 import { useShowToast } from "@/contexts/toasts";
 import { isBrowser } from "@/utils/isBrowser";
+import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 
-export const useShare = (title: string, url: string) => {
+interface Props {
+  title?: string;
+  url?: string;
+}
+
+export const useShare = ({ title, url: urlFromProps }: Props = {}) => {
+  const router = useRouter();
+
+  const url = urlFromProps ?? router.asPath;
+
   const showToast = useShowToast();
   const [canShare, setCanShare] = useState(false);
 
@@ -17,7 +27,7 @@ export const useShare = (title: string, url: string) => {
     if (navigator.share) {
       try {
         await navigator.share({
-          title,
+          title: title ?? document.title,
           url,
         });
       } catch {

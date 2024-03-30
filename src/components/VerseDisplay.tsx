@@ -82,10 +82,10 @@ export const VerseDisplay: FC<Props> = ({
     [verse]
   );
 
-  const { canShare, share } = useShare(
-    `${book} ${chapter}:${verse}`,
-    slugifyReference({ book, chapter, verse })
-  );
+  const { canShare, share } = useShare({
+    title: `${book} ${chapter}:${verse}`,
+    url: slugifyReference({ book, chapter, verse }),
+  });
 
   const onShare = useCallback(
     async (event: MouseEvent<HTMLElement>) => {

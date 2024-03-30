@@ -1,9 +1,14 @@
 import { css } from "@emotion/react";
-import { FC, PropsWithChildren } from "react";
+import { FC, MouseEvent, PropsWithChildren, useCallback } from "react";
 import Icon from "@mdi/react";
-import { mdiBookOpenPageVariant, mdiChartTimeline } from "@mdi/js";
+import {
+  mdiBookOpenPageVariant,
+  mdiChartTimeline,
+  mdiShareVariantOutline,
+} from "@mdi/js";
 import { breakpoints } from "@/styles/breakpoints";
 import Link from "next/link";
+import { useShare } from "@/hooks/useShare";
 
 interface Props extends PropsWithChildren {}
 
@@ -66,19 +71,41 @@ const titleCss = css`
   }
 `;
 
-export const TopNav: FC<Props> = ({ children }) => (
-  <nav css={layoutCss}>
-    <div css={titleLayoutCss}>
-      <Icon path={mdiBookOpenPageVariant} size={0.7} />
-      <header css={titleCss}>Studium</header>
-    </div>
+export const TopNav: FC<Props> = ({ children }) => {
+  const { canShare, share } = useShare();
+  const onShare = useCallback(
+    async (event: MouseEvent) => {
+      event.preventDefault();
 
-    <div css={centerContainerCss}>{children}</div>
+      await share();
+    },
+    [share]
+  );
 
-    <div css={rightContainerCss}>
-      <Link role="button" aria-label="View Biblical timeline" href="/timeline">
-        <Icon path={mdiChartTimeline} size={0.7} />
-      </Link>
-    </div>
-  </nav>
-);
+  return (
+    <nav css={layoutCss}>
+      <div css={titleLayoutCss}>
+        <Icon path={mdiBookOpenPageVariant} size={0.7} />
+        <header css={titleCss}>Studium</header>
+      </div>
+
+      <div css={centerContainerCss}>{children}</div>
+
+      <div css={rightContainerCss}>
+        {canShare && (
+          <button type="button" onClick={onShare}>
+            <Icon path={mdiShareVariantOutline} size={0.7} />
+          </button>
+        )}
+
+        <Link
+          role="button"
+          aria-label="View Biblical timeline"
+          href="/timeline"
+        >
+          <Icon path={mdiChartTimeline} size={0.7} />
+        </Link>
+      </div>
+    </nav>
+  );
+};
