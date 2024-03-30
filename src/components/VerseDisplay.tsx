@@ -5,6 +5,8 @@ import { FC, MouseEvent, useCallback, useState } from "react";
 import { CrossReferencesDisplay } from "./CrossReferencesDisplay";
 import { useIsVerseHighlighted } from "@/state/useIsVerseHighlighted";
 import { transition } from "@/styles/transition";
+import { slugifyReference } from "@/utils/slugifyReference";
+import { useShare } from "@/hooks/useShare";
 
 const containerCss = css`
   position: relative;
@@ -15,7 +17,7 @@ const anchorCss = css`
   top: -50vh;
 `;
 
-const crossReferenceToggleCss = css`
+const linkCss = css`
   color: var(--fg-muted);
   letter-spacing: initial;
   font-size: 66%;
@@ -25,6 +27,8 @@ const crossReferenceToggleCss = css`
   &:focus {
     color: var(--active-fg);
   }
+
+  padding-left: 5px;
 `;
 
 const verseCss = css`
@@ -78,6 +82,20 @@ export const VerseDisplay: FC<Props> = ({
     [verse]
   );
 
+  const { canShare, share } = useShare(
+    `${book} ${chapter}:${verse}`,
+    slugifyReference({ book, chapter, verse })
+  );
+
+  const onShare = useCallback(
+    async (event: MouseEvent<HTMLElement>) => {
+      event.preventDefault();
+
+      await share();
+    },
+    [share]
+  );
+
   return (
     <div css={containerCss}>
       <div id={verse} css={anchorCss} />
@@ -89,27 +107,32 @@ export const VerseDisplay: FC<Props> = ({
         </sup>
         &nbsp;{text}
       </span>
-      {hasCrossReferences && (
-        <>
-          &nbsp;
-          <a
-            css={crossReferenceToggleCss}
-            tabIndex={0}
-            onClick={onToggleCrossReferences}
-          >
-            Cross refs
-          </a>
-          {areCrossReferencesOpen && (
-            <CrossReferencesDisplay
-              book={book}
-              chapter={chapter}
-              verse={verse}
-              crossReferences={crossReferences}
-              onClose={onCloseCrossReferences}
-            />
-          )}
-        </>
-      )}
+      <span>
+        &nbsp;
+        {hasCrossReferences && (
+          <>
+            <a css={linkCss} tabIndex={0} onClick={onToggleCrossReferences}>
+              Cross refs
+            </a>
+            {areCrossReferencesOpen && (
+              <CrossReferencesDisplay
+                book={book}
+                chapter={chapter}
+                verse={verse}
+                crossReferences={crossReferences}
+                onClose={onCloseCrossReferences}
+              />
+            )}
+          </>
+        )}
+        {canShare && (
+          <>
+            <a css={linkCss} tabIndex={0} onClick={onShare}>
+              Share
+            </a>
+          </>
+        )}
+      </span>
     </div>
   );
 };
