@@ -83,6 +83,8 @@ const navButtonPlaceholderCss = css`
 
 const navSearchFormCss = css`
   width: 100%;
+  // Override the default form flex layout.
+  display: block;
 `;
 
 const navSearchCss = css`

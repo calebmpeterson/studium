@@ -1,3 +1,4 @@
+import { ToastProvider } from "@/contexts/toasts";
 import { AnimatePresence } from "framer-motion";
 import type { AppProps } from "next/app";
 import { SkeletonTheme } from "react-loading-skeleton";
@@ -10,7 +11,9 @@ export default function App({ Component, pageProps }: AppProps) {
       baseColor="var(--skeleton-base-color)"
     >
       <AnimatePresence mode="wait" initial={false}>
-        <Component {...pageProps} />
+        <ToastProvider>
+          <Component {...pageProps} />
+        </ToastProvider>
       </AnimatePresence>
     </SkeletonTheme>
   );

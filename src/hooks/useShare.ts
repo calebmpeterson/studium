@@ -1,7 +1,9 @@
+import { useShowToast } from "@/contexts/toasts";
 import { isBrowser } from "@/utils/isBrowser";
 import { useCallback, useEffect, useState } from "react";
 
 export const useShare = (title: string, url: string) => {
+  const showToast = useShowToast();
   const [canShare, setCanShare] = useState(false);
 
   useEffect(() => {
@@ -19,10 +21,10 @@ export const useShare = (title: string, url: string) => {
           url,
         });
       } catch {
-        // TODO
+        showToast({ message: "Sharing is not supported on your device." });
       }
     }
-  }, [title, url]);
+  }, [showToast, title, url]);
 
   return {
     canShare,

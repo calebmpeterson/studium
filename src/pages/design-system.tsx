@@ -1,4 +1,5 @@
 import { Overlay } from "@/components/Overlay";
+import { useShowToast } from "@/contexts/toasts";
 import { css } from "@emotion/react";
 import { mdiAbjadHebrew } from "@mdi/js";
 import Icon from "@mdi/react";
@@ -45,6 +46,12 @@ export default function Timeline() {
   const onCloseOverlay = () => {
     setIsOverlayOpen(false);
   };
+
+  const showToast = useShowToast();
+  const onShowToast = () => {
+    showToast({ message: "Hello, world." });
+  };
+
   return (
     <>
       <Head>
@@ -76,6 +83,12 @@ export default function Timeline() {
         <Section title="Forms">
           <form>
             <input type="text" placeholder="Text input" />
+            <label>
+              <input type="radio" /> Radio
+            </label>
+            <label>
+              <input type="checkbox" /> Checkbox
+            </label>
           </form>
         </Section>
 
@@ -86,6 +99,10 @@ export default function Timeline() {
               Overlay content
             </Overlay>
           )}
+        </Section>
+
+        <Section title="Toasts">
+          <button onClick={onShowToast}>Show Toast</button>
         </Section>
       </div>
     </>

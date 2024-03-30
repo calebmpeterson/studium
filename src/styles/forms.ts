@@ -3,6 +3,12 @@ import { transition } from "./transition";
 import { BODY_FONT_FAMILY } from "./typography";
 
 export const formsCss = css`
+  form {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
   input {
     font-family: ${BODY_FONT_FAMILY};
   }

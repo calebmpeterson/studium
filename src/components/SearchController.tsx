@@ -24,9 +24,6 @@ interface Props {
 
 const searchFormCss = css`
   width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 5px;
   margin-bottom: 10px;
 `;
 
