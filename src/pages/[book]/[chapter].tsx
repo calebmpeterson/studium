@@ -171,9 +171,9 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
 
   const router = useRouter();
 
-  const onPrevious = useCallback(() => {
+  const onPrevious = useCallback(async () => {
     if (!("none" in previousBookAndChapter)) {
-      router.push(
+      await router.push(
         getRouteFromBookAndChapter(
           previousBookAndChapter.book,
           previousBookAndChapter.chapter
@@ -212,11 +212,11 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
   const title = `${currentBook} ${currentChapter} | Studium`;
 
   const swipeHandlers = useSwipeable({
-    onSwipedLeft: () => {
-      onNext();
+    onSwipedLeft: async () => {
+      await onNext();
     },
-    onSwipedRight: () => {
-      onPrevious();
+    onSwipedRight: async () => {
+      await onPrevious();
     },
   });
 
