@@ -24,6 +24,7 @@ import { mdiChevronLeft, mdiChevronRight, mdiMapMarkerMultiple } from "@mdi/js";
 import { ReadingNav } from "@/components/ReadingNav";
 import { Overlay } from "@/components/Overlay";
 import { SearchController } from "@/components/SearchController";
+import { useSwipeable } from "react-swipeable";
 
 const DynamicPlacesDisplay = dynamic(
   async () => import("@/components/PlacesController"),
@@ -210,6 +211,15 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
 
   const title = `${currentBook} ${currentChapter} | Studium`;
 
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: () => {
+      onNext();
+    },
+    onSwipedRight: () => {
+      onPrevious();
+    },
+  });
+
   return (
     <>
       <Head>
@@ -232,7 +242,7 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
         exit={{ opacity: 0 }}
         transition={{ ease: "easeInOut", duration: 0.3 }}
       >
-        <div css={versesCss}>
+        <div css={versesCss} {...swipeHandlers}>
           {"verses" in props &&
             props.verses.map((verse) => (
               <VerseDisplay

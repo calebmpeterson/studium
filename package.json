@@ -30,6 +30,7 @@
     "react-error-boundary": "^4.0.11",
     "react-leaflet": "^4.2.1",
     "react-loading-skeleton": "^3.3.1",
+    "react-swipeable": "^7.0.1",
     "s-ago": "^2.2.0",
     "slugify": "^1.6.6",
     "use-click-outside": "^2.0.0",
