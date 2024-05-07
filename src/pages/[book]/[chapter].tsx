@@ -24,7 +24,8 @@ import { mdiChevronLeft, mdiChevronRight, mdiMapMarkerMultiple } from "@mdi/js";
 import { ReadingNav } from "@/components/ReadingNav";
 import { Overlay } from "@/components/Overlay";
 import { SearchController } from "@/components/SearchController";
-import { useSwipeable } from "react-swipeable";
+import { LEFT, RIGHT, useSwipeable } from "react-swipeable";
+import { SwipeNavigationFeedback } from "@/components/SwipeNavigationFeedback";
 
 const DynamicPlacesDisplay = dynamic(
   async () => import("@/components/PlacesController"),
@@ -211,13 +212,28 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
 
   const title = `${currentBook} ${currentChapter} | Studium`;
 
+  const [swipeHintPlacement, setSwipeHintPlacement] = useState<
+    "left" | "right" | undefined
+  >(undefined);
+
   const swipeHandlers = useSwipeable({
+    onSwiping: (event) => {
+      if (event.dir === LEFT) {
+        setSwipeHintPlacement("left");
+      }
+      if (event.dir === RIGHT) {
+        setSwipeHintPlacement("right");
+      }
+    },
     onSwipedLeft: async () => {
       await onNext();
+      setSwipeHintPlacement(undefined);
     },
     onSwipedRight: async () => {
       await onPrevious();
+      setSwipeHintPlacement(undefined);
     },
+    delta: 100,
   });
 
   return (
@@ -252,6 +268,19 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
               />
             ))}
         </div>
+
+        {nextBookAndChapter.hasNext && swipeHintPlacement === "left" && (
+          <SwipeNavigationFeedback placement="right">
+            {nextBookAndChapter.book} {nextBookAndChapter.chapter}
+          </SwipeNavigationFeedback>
+        )}
+
+        {previousBookAndChapter.hasPrevious &&
+          swipeHintPlacement === "right" && (
+            <SwipeNavigationFeedback placement="left">
+              {previousBookAndChapter.book} {previousBookAndChapter.chapter}
+            </SwipeNavigationFeedback>
+          )}
       </motion.main>
 
       <nav css={chapterNavigationCss}>

@@ -2,11 +2,13 @@ import { TableOfContents } from "@/types";
 
 type ReturnValue =
   | {
+      hasNext: true;
       book: string;
       chapter: string;
       label: string;
     }
   | {
+      hasNext: false;
       none: true;
       label: string;
     };
@@ -24,6 +26,7 @@ export const getNextBookAndChapter = (
 
   if (nextChapter.toString() in currentBook) {
     return {
+      hasNext: true,
       book,
       chapter: nextChapter.toString(),
       label: `Read ${book} ${nextChapter}`,
@@ -34,6 +37,7 @@ export const getNextBookAndChapter = (
   if (nextBook) {
     const nextChapter = "1";
     return {
+      hasNext: true,
       book: booksAsArray[indexOfCurrentBook + 1],
       chapter: nextChapter,
       label: `Read ${nextBook} ${nextChapter}`,
@@ -41,6 +45,7 @@ export const getNextBookAndChapter = (
   }
 
   return {
+    hasNext: false,
     none: true,
     label: `${book} ${chapter} is the end`,
   };

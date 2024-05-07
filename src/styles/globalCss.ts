@@ -52,6 +52,7 @@ export const globalCss = css`
 
     --input-size: 36px;
     --border-radius: 5px;
+    --border-radius-lg: 15px;
 
     @media ${breakpoints["is-mobile"]} {
       --input-size: 42px;

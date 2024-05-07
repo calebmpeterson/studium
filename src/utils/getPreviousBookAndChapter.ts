@@ -3,11 +3,13 @@ import { last } from "lodash";
 
 type ReturnValue =
   | {
+      hasPrevious: true;
       book: string;
       chapter: string;
       label: string;
     }
   | {
+      hasPrevious: false;
       none: true;
       label: string;
     };
@@ -25,6 +27,7 @@ export const getPreviousBookAndChapter = (
 
   if (previousChapter.toString() in currentBook) {
     return {
+      hasPrevious: true,
       book,
       chapter: previousChapter.toString(),
       label: `Read ${book} ${previousChapter}`,
@@ -35,6 +38,7 @@ export const getPreviousBookAndChapter = (
   if (previousBook) {
     const previousChapter = last(Object.keys(tableOfContents[previousBook]))!;
     return {
+      hasPrevious: true,
       book: booksAsArray[indexOfCurrentBook - 1],
       chapter: previousChapter,
       label: `Read ${previousBook} ${previousChapter}`,
@@ -42,6 +46,7 @@ export const getPreviousBookAndChapter = (
   }
 
   return {
+    hasPrevious: false,
     none: true,
     label: `${book} ${chapter} is the beginning`,
   };
