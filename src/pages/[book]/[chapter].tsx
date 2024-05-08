@@ -234,6 +234,7 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
       setSwipeHintPlacement(undefined);
     },
     delta: 100,
+    preventScrollOnSwipe: true,
   });
 
   return (
