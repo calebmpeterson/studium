@@ -20,6 +20,7 @@ import { FloatingBox } from "./FloatingBox";
 import { marginCss } from "@/styles/layout";
 import { flatMap, isEmpty, map } from "lodash";
 import { TableOfContentsItem } from "./TableOfContentsItem";
+import { useHotkeys } from "react-hotkeys-hook";
 
 interface Props {
   tableOfContents: TableOfContents;
@@ -105,6 +106,8 @@ export const ReadingNav: FC<Props> = ({
   const onCloseTableOfContents = useCallback(() => {
     setIsTableOfContentsOpen(false);
   }, []);
+
+  useHotkeys("ctrl+k", onToggleTableOfContents);
 
   const [isBookMenuOpen, setIsBookMenuOpen] = useState(false);
   const onToggleBookMenu = useCallback(() => {
