@@ -1,22 +1,33 @@
 import { ReadingHistoryEntry, TableOfContents } from "@/types";
 import { css } from "@emotion/react";
-import { FC, useCallback, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  FC,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { BookMenuItem } from "./BookMenuItem";
 import { ChapterMenuItem } from "./ChapterMenuItem";
 import { useRouter } from "next/router";
 import { getRouteFromBookAndChapter } from "@/utils/getRouteFromBookAndChapter";
 import Icon from "@mdi/react";
-import { mdiHistory } from "@mdi/js";
+import { mdiHistory, mdiTableOfContents } from "@mdi/js";
 import { ReadingHistoryMenuItem } from "./ReadingHistoryMenuItem";
 import { useReadingHistory } from "@/state/useReadingHistory";
 import { FloatingBox } from "./FloatingBox";
 import { marginCss } from "@/styles/layout";
+import { flatMap, isEmpty, map } from "lodash";
+import { TableOfContentsItem } from "./TableOfContentsItem";
 
 interface Props {
   tableOfContents: TableOfContents;
   currentBook: string;
   currentChapter: string;
 }
+
+const tableOfContentsButtonCss = css``;
 
 const bookButtonCss = css`
   white-space: pre;
@@ -27,6 +38,23 @@ const chapterButtonCss = css`
 `;
 
 const readingHistoryButtonCss = css``;
+
+const tableOfContentsCss = css`
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
+
+const tableOfContentsFilterCss = css`
+  position: sticky;
+  top: 5px;
+  margin: 5px;
+`;
+
+const emptyTableOfContentsCss = css`
+  padding: 0 10px;
+`;
 
 const bookMenuCss = css`
   display: flex;
@@ -59,8 +87,28 @@ export const ReadingNav: FC<Props> = ({
   currentChapter,
 }) => {
   const router = useRouter();
+
+  const filterInputRef = useRef<HTMLInputElement>(null);
+  const [isTableOfContentsOpen, setIsTableOfContentsOpen] = useState(false);
+  const onToggleTableOfContents = useCallback(() => {
+    setTableOfContentsFilter("");
+    setIsTableOfContentsOpen((open) => !open);
+    setIsBookMenuOpen(false);
+    setIsChapterMenuOpen(false);
+
+    setTimeout(() => {
+      if (filterInputRef.current) {
+        filterInputRef.current.focus();
+      }
+    }, 0);
+  }, []);
+  const onCloseTableOfContents = useCallback(() => {
+    setIsTableOfContentsOpen(false);
+  }, []);
+
   const [isBookMenuOpen, setIsBookMenuOpen] = useState(false);
   const onToggleBookMenu = useCallback(() => {
+    setIsTableOfContentsOpen(false);
     setIsBookMenuOpen((open) => !open);
     setIsChapterMenuOpen(false);
   }, []);
@@ -70,6 +118,7 @@ export const ReadingNav: FC<Props> = ({
 
   const [isChapterMenuOpen, setIsChapterMenuOpen] = useState(false);
   const onToggleChapterMenu = useCallback(() => {
+    setIsTableOfContentsOpen(false);
     setIsBookMenuOpen(false);
     setIsChapterMenuOpen((open) => !open);
   }, []);
@@ -94,6 +143,16 @@ export const ReadingNav: FC<Props> = ({
     [router, selectedBook]
   );
 
+  const onSelectBookAndChapter = useCallback(
+    (book: string, chapter: string, slug: string) => {
+      setIsTableOfContentsOpen(false);
+      setSelectedBook(book);
+      setSelectedChapter(chapter);
+      router.push(getRouteFromBookAndChapter(book, chapter));
+    },
+    [router]
+  );
+
   const [isReadingHistoryMenuOpen, setIsReadingHistoryMenuOpen] =
     useState(false);
   const onToggleReadingHistoryMenu = useCallback(() => {
@@ -111,6 +170,29 @@ export const ReadingNav: FC<Props> = ({
     [router]
   );
 
+  const tableOfContentsEntries = flatMap(tableOfContents, (chapters, book) =>
+    map(chapters, (slug, chapter) => ({
+      book,
+      chapter,
+      slug,
+    }))
+  );
+
+  const [tableOfContentsFilter, setTableOfContentsFilter] = useState("");
+  const onChangeTableOfContentsFilter = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      setTableOfContentsFilter(event.target.value);
+    },
+    []
+  );
+
+  const filteredTableOfContentsEntries = tableOfContentsEntries.filter(
+    (entry) =>
+      `${entry.book} ${entry.chapter}`
+        .toLowerCase()
+        .includes(tableOfContentsFilter.toLowerCase())
+  );
+
   useEffect(() => {
     setSelectedBook(currentBook);
     setSelectedChapter(currentChapter);
@@ -118,6 +200,44 @@ export const ReadingNav: FC<Props> = ({
 
   return (
     <>
+      <button css={tableOfContentsButtonCss} onClick={onToggleTableOfContents}>
+        <Icon path={mdiTableOfContents} size={0.7} />
+      </button>
+      {isTableOfContentsOpen && (
+        <FloatingBox
+          css={tableOfContentsCss}
+          onClickOutside={onCloseTableOfContents}
+        >
+          <input
+            ref={filterInputRef}
+            type="text"
+            css={tableOfContentsFilterCss}
+            placeholder="Start typing to filter"
+            value={tableOfContentsFilter}
+            onChange={onChangeTableOfContentsFilter}
+          />
+
+          {filteredTableOfContentsEntries.map((entry) => (
+            <TableOfContentsItem
+              key={entry.slug}
+              book={entry.book}
+              chapter={entry.chapter}
+              slug={entry.slug}
+              isSelected={
+                currentBook === entry.book && currentChapter === entry.chapter
+              }
+              onSelect={onSelectBookAndChapter}
+            />
+          ))}
+
+          {isEmpty(filteredTableOfContentsEntries) && (
+            <div css={emptyTableOfContentsCss}>
+              <em data-muted>Nothing matches your filter.</em>
+            </div>
+          )}
+        </FloatingBox>
+      )}
+
       <button css={bookButtonCss} onClick={onToggleBookMenu}>
         {selectedBook}
       </button>
