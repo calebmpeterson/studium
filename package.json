@@ -21,6 +21,7 @@
     "@mdi/react": "^1.6.1",
     "framer-motion": "^10.16.14",
     "fuse.js": "^7.0.0",
+    "fuzzysearch": "^1.0.3",
     "leaflet": "^1.9.4",
     "lodash": "^4.17.21",
     "next": "14.0.3",
@@ -39,6 +40,7 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@types/fuzzysearch": "^1.0.2",
     "@types/leaflet": "^1.9.8",
     "@types/lodash": "^4.14.202",
     "@types/node": "^20",

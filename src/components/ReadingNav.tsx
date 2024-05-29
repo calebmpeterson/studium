@@ -21,6 +21,7 @@ import { marginCss } from "@/styles/layout";
 import { flatMap, isEmpty, map } from "lodash";
 import { TableOfContentsItem } from "./TableOfContentsItem";
 import { useHotkeys } from "react-hotkeys-hook";
+import fuzzysearch from "fuzzysearch";
 
 interface Props {
   tableOfContents: TableOfContents;
@@ -191,9 +192,10 @@ export const ReadingNav: FC<Props> = ({
 
   const filteredTableOfContentsEntries = tableOfContentsEntries.filter(
     (entry) =>
-      `${entry.book} ${entry.chapter}`
-        .toLowerCase()
-        .includes(tableOfContentsFilter.toLowerCase())
+      fuzzysearch(
+        tableOfContentsFilter.toLowerCase(),
+        `${entry.book} ${entry.chapter}`.toLowerCase()
+      )
   );
 
   useEffect(() => {
