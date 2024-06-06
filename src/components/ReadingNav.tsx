@@ -13,7 +13,7 @@ import { ChapterMenuItem } from "./ChapterMenuItem";
 import { useRouter } from "next/router";
 import { getRouteFromBookAndChapter } from "@/utils/getRouteFromBookAndChapter";
 import Icon from "@mdi/react";
-import { mdiHistory, mdiTableOfContents } from "@mdi/js";
+import { mdiClose, mdiHistory, mdiTableOfContents } from "@mdi/js";
 import { ReadingHistoryMenuItem } from "./ReadingHistoryMenuItem";
 import { useReadingHistory } from "@/state/useReadingHistory";
 import { FloatingBox } from "./FloatingBox";
@@ -22,12 +22,45 @@ import { flatMap, isEmpty, map } from "lodash";
 import { TableOfContentsItem } from "./TableOfContentsItem";
 import { useHotkeys } from "react-hotkeys-hook";
 import fuzzysearch from "fuzzysearch";
+import { shadows } from "@/styles/shadows";
 
 interface Props {
   tableOfContents: TableOfContents;
   currentBook: string;
   currentChapter: string;
 }
+
+const overlayHeaderCss = css`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const overlayTitleCss = css`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+`;
+
+interface TableOfContentsProps {
+  onClose: () => void;
+}
+
+const TableOfContentsTitle: FC<TableOfContentsProps> = ({ onClose }) => (
+  <div css={overlayHeaderCss}>
+    <header css={overlayTitleCss}>Table of Contents</header>
+
+    <button
+      role="button"
+      aria-label="Close cross references"
+      data-icon
+      data-borderless
+      onClick={onClose}
+    >
+      <Icon path={mdiClose} size={0.7} />
+    </button>
+  </div>
+);
 
 const tableOfContentsButtonCss = css``;
 
@@ -46,12 +79,38 @@ const tableOfContentsCss = css`
   display: flex;
   flex-direction: column;
   gap: 5px;
+
+  // Override the default FloatingBox padding
+  // so that the top controls will be full-width.
+  padding: 0px;
+`;
+
+const topControlsCss = css`
+  position: sticky;
+  top: 0px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 5px;
+  box-sizing: border-box;
+  padding: 10px;
+  background-color: var(--bg);
+  box-shadow: ${shadows["shadow-inset"]};
 `;
 
 const tableOfContentsFilterCss = css`
-  position: sticky;
-  top: 5px;
-  margin: 5px;
+  width: 100%;
+  box-sizing: border-box;
+`;
+
+const tableOfContentsItemsCss = css`
+  padding: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 `;
 
 const emptyTableOfContentsCss = css`
@@ -210,36 +269,42 @@ export const ReadingNav: FC<Props> = ({
       </button>
       {isTableOfContentsOpen && (
         <FloatingBox
+          shouldMaximizeOnMobile
           css={tableOfContentsCss}
           onClickOutside={onCloseTableOfContents}
         >
-          <input
-            ref={filterInputRef}
-            type="text"
-            css={tableOfContentsFilterCss}
-            placeholder="Start typing to filter"
-            value={tableOfContentsFilter}
-            onChange={onChangeTableOfContentsFilter}
-          />
-
-          {filteredTableOfContentsEntries.map((entry) => (
-            <TableOfContentsItem
-              key={entry.slug}
-              book={entry.book}
-              chapter={entry.chapter}
-              slug={entry.slug}
-              isSelected={
-                currentBook === entry.book && currentChapter === entry.chapter
-              }
-              onSelect={onSelectBookAndChapter}
+          <div css={topControlsCss}>
+            <TableOfContentsTitle onClose={onCloseTableOfContents} />
+            <input
+              ref={filterInputRef}
+              type="text"
+              css={tableOfContentsFilterCss}
+              placeholder="Start typing to filter"
+              value={tableOfContentsFilter}
+              onChange={onChangeTableOfContentsFilter}
             />
-          ))}
+          </div>
 
-          {isEmpty(filteredTableOfContentsEntries) && (
-            <div css={emptyTableOfContentsCss}>
-              <em data-muted>Nothing matches your filter.</em>
-            </div>
-          )}
+          <div css={tableOfContentsItemsCss}>
+            {filteredTableOfContentsEntries.map((entry) => (
+              <TableOfContentsItem
+                key={entry.slug}
+                book={entry.book}
+                chapter={entry.chapter}
+                slug={entry.slug}
+                isSelected={
+                  currentBook === entry.book && currentChapter === entry.chapter
+                }
+                onSelect={onSelectBookAndChapter}
+              />
+            ))}
+
+            {isEmpty(filteredTableOfContentsEntries) && (
+              <div css={emptyTableOfContentsCss}>
+                <em data-muted>Nothing matches your filter.</em>
+              </div>
+            )}
+          </div>
         </FloatingBox>
       )}
 
