@@ -160,6 +160,9 @@ export const ReadingNav: FC<Props> = ({
     setTimeout(() => {
       if (filterInputRef.current) {
         filterInputRef.current.focus();
+
+        const event = new Event("touchstart", { bubbles: true });
+        filterInputRef.current.dispatchEvent(event);
       }
     }, 0);
   }, []);
