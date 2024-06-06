@@ -11,6 +11,7 @@ export const formsCss = css`
 
   input {
     font-family: ${BODY_FONT_FAMILY};
+    font-size: 16px;
   }
 
   input[type="text"] {
