@@ -1,68 +1,23 @@
 import { ReadingHistoryEntry, TableOfContents } from "@/types";
 import { css } from "@emotion/react";
-import {
-  ChangeEvent,
-  FC,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { BookMenuItem } from "./BookMenuItem";
 import { ChapterMenuItem } from "./ChapterMenuItem";
 import { useRouter } from "next/router";
 import { getRouteFromBookAndChapter } from "@/utils/getRouteFromBookAndChapter";
 import Icon from "@mdi/react";
-import { mdiClose, mdiHistory, mdiTableOfContents } from "@mdi/js";
+import { mdiHistory } from "@mdi/js";
 import { ReadingHistoryMenuItem } from "./ReadingHistoryMenuItem";
 import { useReadingHistory } from "@/state/useReadingHistory";
 import { FloatingBox } from "./FloatingBox";
 import { marginCss } from "@/styles/layout";
-import { flatMap, isEmpty, map } from "lodash";
-import { TableOfContentsItem } from "./TableOfContentsItem";
-import { useHotkeys } from "react-hotkeys-hook";
-import fuzzysearch from "fuzzysearch";
-import { shadows } from "@/styles/shadows";
+import { TableOfContentsMenu } from "./ReadingNav/TableOfContentsMenu";
 
 interface Props {
   tableOfContents: TableOfContents;
   currentBook: string;
   currentChapter: string;
 }
-
-const overlayHeaderCss = css`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const overlayTitleCss = css`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-`;
-
-interface TableOfContentsProps {
-  onClose: () => void;
-}
-
-const TableOfContentsTitle: FC<TableOfContentsProps> = ({ onClose }) => (
-  <div css={overlayHeaderCss}>
-    <header css={overlayTitleCss}>Table of Contents</header>
-
-    <button
-      role="button"
-      aria-label="Close cross references"
-      data-icon
-      data-borderless
-      onClick={onClose}
-    >
-      <Icon path={mdiClose} size={0.7} />
-    </button>
-  </div>
-);
-
-const tableOfContentsButtonCss = css``;
 
 const bookButtonCss = css`
   white-space: pre;
@@ -73,49 +28,6 @@ const chapterButtonCss = css`
 `;
 
 const readingHistoryButtonCss = css``;
-
-const tableOfContentsCss = css`
-  min-width: 300px;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-
-  // Override the default FloatingBox padding
-  // so that the top controls will be full-width.
-  padding: 0px;
-`;
-
-const topControlsCss = css`
-  position: sticky;
-  top: 0px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 5px;
-  box-sizing: border-box;
-  padding: 10px;
-  background-color: var(--bg);
-  box-shadow: ${shadows["shadow-inset"]};
-`;
-
-const tableOfContentsFilterCss = css`
-  width: 100%;
-  box-sizing: border-box;
-`;
-
-const tableOfContentsItemsCss = css`
-  padding: 5px;
-  width: 100%;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-`;
-
-const emptyTableOfContentsCss = css`
-  padding: 0 10px;
-`;
 
 const bookMenuCss = css`
   display: flex;
@@ -149,28 +61,15 @@ export const ReadingNav: FC<Props> = ({
 }) => {
   const router = useRouter();
 
-  const filterInputRef = useRef<HTMLInputElement>(null);
   const [isTableOfContentsOpen, setIsTableOfContentsOpen] = useState(false);
   const onToggleTableOfContents = useCallback(() => {
-    setTableOfContentsFilter("");
     setIsTableOfContentsOpen((open) => !open);
     setIsBookMenuOpen(false);
     setIsChapterMenuOpen(false);
-
-    setTimeout(() => {
-      if (filterInputRef.current) {
-        filterInputRef.current.focus();
-
-        const event = new Event("touchstart", { bubbles: true });
-        filterInputRef.current.dispatchEvent(event);
-      }
-    }, 0);
   }, []);
   const onCloseTableOfContents = useCallback(() => {
     setIsTableOfContentsOpen(false);
   }, []);
-
-  useHotkeys("ctrl+k", onToggleTableOfContents);
 
   const [isBookMenuOpen, setIsBookMenuOpen] = useState(false);
   const onToggleBookMenu = useCallback(() => {
@@ -236,30 +135,6 @@ export const ReadingNav: FC<Props> = ({
     [router]
   );
 
-  const tableOfContentsEntries = flatMap(tableOfContents, (chapters, book) =>
-    map(chapters, (slug, chapter) => ({
-      book,
-      chapter,
-      slug,
-    }))
-  );
-
-  const [tableOfContentsFilter, setTableOfContentsFilter] = useState("");
-  const onChangeTableOfContentsFilter = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      setTableOfContentsFilter(event.target.value);
-    },
-    []
-  );
-
-  const filteredTableOfContentsEntries = tableOfContentsEntries.filter(
-    (entry) =>
-      fuzzysearch(
-        tableOfContentsFilter.toLowerCase(),
-        `${entry.book} ${entry.chapter}`.toLowerCase()
-      )
-  );
-
   useEffect(() => {
     setSelectedBook(currentBook);
     setSelectedChapter(currentChapter);
@@ -267,49 +142,15 @@ export const ReadingNav: FC<Props> = ({
 
   return (
     <>
-      <button css={tableOfContentsButtonCss} onClick={onToggleTableOfContents}>
-        <Icon path={mdiTableOfContents} size={0.7} />
-      </button>
-      {isTableOfContentsOpen && (
-        <FloatingBox
-          shouldMaximizeOnMobile
-          css={tableOfContentsCss}
-          onClickOutside={onCloseTableOfContents}
-        >
-          <div css={topControlsCss}>
-            <TableOfContentsTitle onClose={onCloseTableOfContents} />
-            <input
-              ref={filterInputRef}
-              type="text"
-              css={tableOfContentsFilterCss}
-              placeholder="Start typing to filter"
-              value={tableOfContentsFilter}
-              onChange={onChangeTableOfContentsFilter}
-            />
-          </div>
-
-          <div css={tableOfContentsItemsCss}>
-            {filteredTableOfContentsEntries.map((entry) => (
-              <TableOfContentsItem
-                key={entry.slug}
-                book={entry.book}
-                chapter={entry.chapter}
-                slug={entry.slug}
-                isSelected={
-                  currentBook === entry.book && currentChapter === entry.chapter
-                }
-                onSelect={onSelectBookAndChapter}
-              />
-            ))}
-
-            {isEmpty(filteredTableOfContentsEntries) && (
-              <div css={emptyTableOfContentsCss}>
-                <em data-muted>Nothing matches your filter.</em>
-              </div>
-            )}
-          </div>
-        </FloatingBox>
-      )}
+      <TableOfContentsMenu
+        tableOfContents={tableOfContents}
+        currentBook={currentBook}
+        currentChapter={currentChapter}
+        isTableOfContentsOpen={isTableOfContentsOpen}
+        onToggleTableOfContents={onToggleTableOfContents}
+        onCloseTableOfContents={onCloseTableOfContents}
+        onSelectBookAndChapter={onSelectBookAndChapter}
+      />
 
       <button css={bookButtonCss} onClick={onToggleBookMenu}>
         {selectedBook}
