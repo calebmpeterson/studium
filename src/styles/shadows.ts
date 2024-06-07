@@ -18,5 +18,5 @@ export const shadows = {
 
   "shadow-none": "0 0 #0000;",
 
-  "shadow-inset": "0 0 10px -5px rgba(0, 0, 0, 0.5)",
+  "shadow-inset": "0 5px 10px -5px rgba(0, 0, 0, 0.125)",
 };
