@@ -19,6 +19,7 @@ export const globalCss = css`
     font-weight: 400;
     margin: 0;
     padding: 0;
+    scrollbar-width: thin;
   }
 
   :root {

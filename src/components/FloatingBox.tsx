@@ -31,6 +31,7 @@ const containerCss = (shouldMaximizeOnMobile: boolean) => css`
   max-height: 500px;
   overflow-y: auto;
   overflow-x: hidden;
+  scrollbar-width: thin;
   background-color: var(--bg);
   border-radius: 5px;
   padding: 5px;
