@@ -166,7 +166,7 @@ export const TableOfContentsMenu: FC<Props> = ({
               ref={filterInputRef}
               type="text"
               css={tableOfContentsFilterCss}
-              placeholder="Start typing to filter"
+              placeholder="Jump to book and chapter..."
               value={tableOfContentsFilter}
               onChange={onChangeTableOfContentsFilter}
             />

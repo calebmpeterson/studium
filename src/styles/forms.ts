@@ -12,6 +12,7 @@ export const formsCss = css`
   input {
     font-family: ${BODY_FONT_FAMILY};
     font-size: 16px;
+    caret-color: var(--active-fg);
   }
 
   input[type="text"] {

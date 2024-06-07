@@ -304,7 +304,7 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
           <input
             type="text"
             css={navSearchCss}
-            placeholder="Search..."
+            placeholder="Search by words or topic..."
             onFocus={onOpenSearch}
           />
         </form>

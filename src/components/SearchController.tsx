@@ -133,7 +133,7 @@ export const SearchController: FC<Props> = ({ onClose }) => {
           ref={inputRef}
           type="text"
           css={searchInputCss}
-          placeholder="Search the scriptures..."
+          placeholder="Search by words or topic..."
           value={query}
           onChange={onQueryChange}
         />
