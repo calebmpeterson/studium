@@ -354,9 +354,7 @@ export const ReadingNav: FC<Props> = ({
           css={readingHistoryMenuCss}
           onClickOutside={onCloseReadingHistoryMenu}
         >
-          <header data-sub-header data-muted css={marginCss("5px")}>
-            Reading History
-          </header>
+          <header css={marginCss("5px")}>Reading History</header>
 
           {readingHistory.map((entry, index) => (
             <ReadingHistoryMenuItem
