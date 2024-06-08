@@ -1,27 +1,30 @@
-import { range } from "lodash";
-import {
-  BOOKS,
-  MILESTONES,
-  EVENTS,
-  CHURCH_AGES,
-} from "@/data/typed/historical";
-import { layout } from "@/utils/intervalScheduling";
-import { HistoricalEvent, HistoricalMilestone } from "@/types/historical";
-import { GetStaticProps, InferGetStaticPropsType } from "next";
-import { TimelineRow } from "@/components/timeline/TimelineRow";
-import { formatYear } from "@/utils/timeline/formatYear";
-import { TimelineMilestone } from "@/components/timeline/TimelineMilestone";
-import { CREATION_YEAR, TOTAL_YEARS } from "@/components/timeline/constants";
 import { css } from "@emotion/react";
+import { range } from "lodash";
+import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
-import { TopNav } from "@/components/TopNav";
+
+import { CREATION_YEAR, TOTAL_YEARS } from "@/components/timeline/constants";
+import { TimelineMilestone } from "@/components/timeline/TimelineMilestone";
+import { TimelineRow } from "@/components/timeline/TimelineRow";
 import { TimelineSection } from "@/components/timeline/TimelineSection";
+import { TopNav } from "@/components/TopNav";
 import { processGenealogy } from "@/data/processGenealogy";
 import { GENEALOGIES } from "@/data/typed/genealogies";
+import {
+  BOOKS,
+  CHURCH_AGES,
+  DISPENSATIONS,
+  EVENTS,
+  MILESTONES,
+} from "@/data/typed/historical";
+import { HistoricalEvent, HistoricalMilestone } from "@/types/historical";
+import { layout } from "@/utils/intervalScheduling";
+import { formatYear } from "@/utils/timeline/formatYear";
 
 type PageData = {
   bookRows: HistoricalEvent[][];
   milestones: HistoricalMilestone[];
+  dispensations: HistoricalMilestone[];
   eventRows: HistoricalEvent[][];
   churchAgeRows: HistoricalEvent[][];
   patriarchRows: HistoricalEvent[][];
@@ -39,6 +42,7 @@ export const getStaticProps: GetStaticProps<PageData> = async () => {
     props: {
       bookRows,
       milestones: MILESTONES,
+      dispensations: DISPENSATIONS,
       eventRows,
       churchAgeRows,
       patriarchRows,
@@ -159,6 +163,10 @@ export default function Timeline(props: Props) {
 
           {props.milestones.map((event, index) => (
             <TimelineMilestone key={`milestone-${index}`} event={event} />
+          ))}
+
+          {props.dispensations.map((event, index) => (
+            <TimelineMilestone key={`dispensation-${index}`} event={event} />
           ))}
         </div>
       </div>
