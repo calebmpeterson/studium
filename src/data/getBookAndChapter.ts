@@ -1,6 +1,7 @@
+import { isError, isString } from "lodash";
+
 import KJV from "@/data/json/kjv.json";
 import { Verse } from "@/types";
-import { isError, isString } from "lodash";
 
 type DataResult = {
   book: string;

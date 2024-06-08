@@ -1,4 +1,5 @@
 import { css } from "@emotion/react";
+
 import { transitionDuration, transitionTimingFunction } from "./transition";
 
 export const animationsCss = css`

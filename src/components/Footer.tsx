@@ -1,10 +1,11 @@
-import { FC } from "react";
-import BOOK_CATEGORIES from "@/data/json/categorized-books.json";
-import slugify from "slugify";
-import { map } from "lodash";
 import { css } from "@emotion/react";
-import { getRouteFromBookAndChapter } from "@/utils/getRouteFromBookAndChapter";
+import { map } from "lodash";
 import Link from "next/link";
+import { FC } from "react";
+import slugify from "slugify";
+
+import BOOK_CATEGORIES from "@/data/json/categorized-books.json";
+import { getRouteFromBookAndChapter } from "@/utils/getRouteFromBookAndChapter";
 
 type Testament = keyof typeof BOOK_CATEGORIES;
 

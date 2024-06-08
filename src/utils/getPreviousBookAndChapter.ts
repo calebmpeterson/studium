@@ -1,5 +1,6 @@
-import { TableOfContents } from "@/types";
 import { last } from "lodash";
+
+import { TableOfContents } from "@/types";
 
 type ReturnValue =
   | {

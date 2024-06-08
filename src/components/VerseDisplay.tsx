@@ -1,12 +1,14 @@
-import { CrossReference, Verse } from "@/types";
 import { css } from "@emotion/react";
 import { isEmpty } from "lodash";
 import { FC, MouseEvent, useCallback, useState } from "react";
-import { CrossReferencesDisplay } from "./CrossReferencesDisplay";
+
+import { useShare } from "@/hooks/useShare";
 import { useIsVerseHighlighted } from "@/state/useIsVerseHighlighted";
 import { transition } from "@/styles/transition";
+import { CrossReference, Verse } from "@/types";
 import { slugifyReference } from "@/utils/slugifyReference";
-import { useShare } from "@/hooks/useShare";
+
+import { CrossReferencesDisplay } from "./CrossReferencesDisplay";
 
 const containerCss = css`
   position: relative;

@@ -1,7 +1,9 @@
-import { CrossReference } from "@/types";
 import { css } from "@emotion/react";
 import Link from "next/link";
 import { FC, memo } from "react";
+
+import { CrossReference } from "@/types";
+
 import { Overlay } from "./Overlay";
 
 const crossReferenceCss = css``;

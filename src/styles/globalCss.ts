@@ -1,11 +1,12 @@
 import { css } from "@emotion/react";
-import colors, { ACTIVE_COLOR, BASE_COLOR } from "./colors";
-import { navigationCss } from "./navigation";
-import { BODY_FONT_FAMILY, typographyCss } from "./typography";
-import { scheme } from "./scheme";
-import { formsCss } from "./forms";
-import { breakpoints } from "./breakpoints";
+
 import { animationsCss } from "./animations";
+import { breakpoints } from "./breakpoints";
+import colors, { ACTIVE_COLOR, BASE_COLOR } from "./colors";
+import { formsCss } from "./forms";
+import { navigationCss } from "./navigation";
+import { scheme } from "./scheme";
+import { BODY_FONT_FAMILY, typographyCss } from "./typography";
 
 export const globalCss = css`
   ${typographyCss}

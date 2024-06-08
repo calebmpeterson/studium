@@ -1,7 +1,8 @@
-import { SearchHistoryEntry } from "@/types";
 import { css } from "@emotion/react";
 import { FC, MouseEvent, useCallback } from "react";
 import ago from "s-ago";
+
+import { SearchHistoryEntry } from "@/types";
 
 const containerCss = css`
   display: flex;

@@ -1,14 +1,15 @@
 import { css } from "@emotion/react";
-import { FC, MouseEvent, PropsWithChildren, useCallback } from "react";
-import Icon from "@mdi/react";
 import {
   mdiBookOpenPageVariant,
   mdiChartTimeline,
   mdiShareVariantOutline,
 } from "@mdi/js";
-import { breakpoints } from "@/styles/breakpoints";
+import Icon from "@mdi/react";
 import Link from "next/link";
+import { FC, MouseEvent, PropsWithChildren, useCallback } from "react";
+
 import { useShare } from "@/hooks/useShare";
+import { breakpoints } from "@/styles/breakpoints";
 
 interface Props extends PropsWithChildren {}
 

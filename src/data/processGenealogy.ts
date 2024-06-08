@@ -1,7 +1,8 @@
+import { isUndefined, mapKeys } from "lodash";
+
 import colors from "@/styles/colors";
 import { Patriarch, Patriarchs } from "@/types/genealogies";
 import { HistoricalEvent } from "@/types/historical";
-import { isUndefined, mapKeys } from "lodash";
 
 type Lookup = Record<string, Patriarch>;
 

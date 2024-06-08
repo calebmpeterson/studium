@@ -1,7 +1,8 @@
-import { useShowToast } from "@/contexts/toasts";
-import { isBrowser } from "@/utils/isBrowser";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
+
+import { useShowToast } from "@/contexts/toasts";
+import { isBrowser } from "@/utils/isBrowser";
 
 interface Props {
   title?: string;

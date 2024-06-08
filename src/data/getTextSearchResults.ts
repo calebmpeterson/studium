@@ -1,9 +1,11 @@
 import Fuse from "fuse.js";
 import _ from "lodash";
+
 import KJV from "@/data/json/kjv.json";
 import KJV_INDEX from "@/data/json/kjv-search-index.json";
-import { normalizeQuery } from "./normalizeQuery";
 import { Verse } from "@/types";
+
+import { normalizeQuery } from "./normalizeQuery";
 
 type Options = {
   limit: string | string[] | undefined;

@@ -1,8 +1,10 @@
-import { ToastProvider } from "@/contexts/toasts";
+import "react-loading-skeleton/dist/skeleton.css";
+
 import { AnimatePresence } from "framer-motion";
 import type { AppProps } from "next/app";
 import { SkeletonTheme } from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+
+import { ToastProvider } from "@/contexts/toasts";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

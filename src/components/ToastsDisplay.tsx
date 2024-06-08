@@ -1,6 +1,8 @@
-import { Toast } from "@/contexts/toasts";
 import { css } from "@emotion/react";
 import { FC } from "react";
+
+import { Toast } from "@/contexts/toasts";
+
 import { ToastDisplay } from "./ToastDisplay";
 
 interface Props {

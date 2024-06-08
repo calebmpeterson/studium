@@ -1,7 +1,8 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import { Verse } from "@/types";
-import { getPlacesFromVerses } from "@/data/getPlacesFromVerses";
 import { get } from "lodash";
+import type { NextApiRequest, NextApiResponse } from "next";
+
+import { getPlacesFromVerses } from "@/data/getPlacesFromVerses";
+import { Verse } from "@/types";
 
 type Result = unknown;
 

@@ -1,5 +1,3 @@
-import { shadows } from "@/styles/shadows";
-import { TableOfContents } from "@/types";
 import { css } from "@emotion/react";
 import { mdiClose, mdiTableOfContents } from "@mdi/js";
 import Icon from "@mdi/react";
@@ -7,6 +5,10 @@ import fuzzysearch from "fuzzysearch";
 import { flatMap, isEmpty, map } from "lodash";
 import { ChangeEvent, FC, useCallback, useRef, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
+
+import { shadows } from "@/styles/shadows";
+import { TableOfContents } from "@/types";
+
 import { FloatingBox } from "../FloatingBox";
 import { TableOfContentsItem } from "./TableOfContentsItem";
 
@@ -166,7 +168,7 @@ export const TableOfContentsMenu: FC<Props> = ({
               ref={filterInputRef}
               type="text"
               css={tableOfContentsFilterCss}
-              placeholder="Jump to book and chapter..."
+              placeholder="Search for book and chapter..."
               value={tableOfContentsFilter}
               onChange={onChangeTableOfContentsFilter}
             />

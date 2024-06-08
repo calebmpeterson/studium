@@ -1,7 +1,9 @@
-import { Verse } from "@/types";
-import { getBookAndChapter } from "./getBookAndChapter";
 import { isNumber, isString, toString } from "lodash";
 import slugify from "slugify";
+
+import { Verse } from "@/types";
+
+import { getBookAndChapter } from "./getBookAndChapter";
 
 export const getVerse = (
   book: unknown,

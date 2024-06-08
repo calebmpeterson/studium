@@ -1,7 +1,8 @@
-import { CrossReferencesForBookAndChapter } from "@/types";
 import { toLower } from "lodash";
 import { useEffect, useState } from "react";
 import slugify from "slugify";
+
+import { CrossReferencesForBookAndChapter } from "@/types";
 
 export const useCrossReferences = (book: string, chapter: string) => {
   const [crossReferences, setCrossReferences] =

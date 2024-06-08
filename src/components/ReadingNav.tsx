@@ -1,16 +1,18 @@
-import { ReadingHistoryEntry, TableOfContents } from "@/types";
 import { css } from "@emotion/react";
+import { mdiHistory } from "@mdi/js";
+import Icon from "@mdi/react";
+import { useRouter } from "next/router";
 import { FC, useCallback, useEffect, useState } from "react";
+
+import { useReadingHistory } from "@/state/useReadingHistory";
+import { marginCss } from "@/styles/layout";
+import { ReadingHistoryEntry, TableOfContents } from "@/types";
+import { getRouteFromBookAndChapter } from "@/utils/getRouteFromBookAndChapter";
+
 import { BookMenuItem } from "./BookMenuItem";
 import { ChapterMenuItem } from "./ChapterMenuItem";
-import { useRouter } from "next/router";
-import { getRouteFromBookAndChapter } from "@/utils/getRouteFromBookAndChapter";
-import Icon from "@mdi/react";
-import { mdiHistory } from "@mdi/js";
-import { ReadingHistoryMenuItem } from "./ReadingHistoryMenuItem";
-import { useReadingHistory } from "@/state/useReadingHistory";
 import { FloatingBox } from "./FloatingBox";
-import { marginCss } from "@/styles/layout";
+import { ReadingHistoryMenuItem } from "./ReadingHistoryMenuItem";
 import { TableOfContentsMenu } from "./ReadingNav/TableOfContentsMenu";
 
 interface Props {

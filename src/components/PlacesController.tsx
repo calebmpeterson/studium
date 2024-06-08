@@ -1,12 +1,14 @@
-import { FC, memo, useEffect, useState } from "react";
-import PlacesDisplay from "./PlacesDisplay";
-import { Place, Verse } from "@/types";
 import { isEmpty, toLower } from "lodash";
+import { FC, memo, useEffect, useState } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import slugify from "slugify";
+
+import { Place, Verse } from "@/types";
+
+import PlacesDisplay from "./PlacesDisplay";
+import { PlacesEmpty } from "./PlacesEmpty";
 import { PlacesError } from "./PlacesError";
 import { PlacesLoader } from "./PlacesLoader";
-import { PlacesEmpty } from "./PlacesEmpty";
-import slugify from "slugify";
-import { ErrorBoundary } from "react-error-boundary";
 
 interface Props {
   book: string;

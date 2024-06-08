@@ -1,9 +1,11 @@
+import { isUndefined } from "lodash";
+import OpenAI from "openai";
+
 import { VerseReference } from "@/types";
 import { extractJsonFromOpenAI } from "@/utils/extractJsonFromOpenAI";
-import OpenAI from "openai";
-import { normalizeVerseReferences } from "./normalizeVerseReferences";
-import { isUndefined } from "lodash";
+
 import { normalizeQuery } from "./normalizeQuery";
+import { normalizeVerseReferences } from "./normalizeVerseReferences";
 
 type Result = VerseReference[];
 

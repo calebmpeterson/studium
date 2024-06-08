@@ -1,9 +1,10 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from "next";
 import { isError, isString } from "lodash";
+import type { NextApiRequest, NextApiResponse } from "next";
+
+import { getBookAndChapter } from "@/data/getBookAndChapter";
 import KJV from "@/data/json/kjv.json";
 import { Verse } from "@/types";
-import { getBookAndChapter } from "@/data/getBookAndChapter";
 
 type DataResult = {
   book: string;

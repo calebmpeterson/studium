@@ -1,12 +1,13 @@
-import Head from "next/head";
 import { css } from "@emotion/react";
-import Icon from "@mdi/react";
 import { mdiBookOpenPageVariant } from "@mdi/js";
-import { getRouteFromBookAndChapter } from "@/utils/getRouteFromBookAndChapter";
-import { useReadingHistory } from "@/state/useReadingHistory";
+import Icon from "@mdi/react";
 import { first } from "lodash";
-import { useEffect } from "react";
+import Head from "next/head";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
+
+import { useReadingHistory } from "@/state/useReadingHistory";
+import { getRouteFromBookAndChapter } from "@/utils/getRouteFromBookAndChapter";
 
 const layoutCss = css`
   height: 100vh;

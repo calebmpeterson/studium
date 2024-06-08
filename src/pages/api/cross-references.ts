@@ -1,7 +1,8 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import { CrossReferencesForBookAndChapter } from "@/types";
 import { get } from "lodash";
+import type { NextApiRequest, NextApiResponse } from "next";
+
 import { getCrossReferences } from "@/data/getCrossReferences";
+import { CrossReferencesForBookAndChapter } from "@/types";
 
 type ErrorResult = {
   message: string;

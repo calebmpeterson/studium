@@ -1,31 +1,33 @@
-import Head from "next/head";
 import { css } from "@emotion/react";
+import { mdiChevronLeft, mdiChevronRight, mdiMapMarkerMultiple } from "@mdi/js";
+import Icon from "@mdi/react";
+import { motion } from "framer-motion";
+import { flatMap, isMap } from "lodash";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
-import { getBookAndChapter } from "@/data/getBookAndChapter";
-import { TableOfContents, Verse } from "@/types";
-import { getTableOfContents } from "@/data/getTableOfContents";
+import dynamic from "next/dynamic";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { ChangeEvent, FormEvent, useCallback, useState } from "react";
+import { LEFT, RIGHT, useSwipeable } from "react-swipeable";
+import slugify from "slugify";
+
+import { Overlay } from "@/components/Overlay";
+import { ReadingNav } from "@/components/ReadingNav";
+import { SearchController } from "@/components/SearchController";
+import { SwipeNavigationFeedback } from "@/components/SwipeNavigationFeedback";
 import { TopNav } from "@/components/TopNav";
 import { VerseDisplay } from "@/components/VerseDisplay";
-import { ChangeEvent, FormEvent, useCallback, useState } from "react";
+import { getBookAndChapter } from "@/data/getBookAndChapter";
+import { getTableOfContents } from "@/data/getTableOfContents";
+import { useCrossReferences } from "@/queries/useCrossReferences";
+import { useTrackReadingHistory } from "@/state/useTrackReadingHistory";
+import { breakpoints } from "@/styles/breakpoints";
+import { fade } from "@/styles/motion";
+import { shadows } from "@/styles/shadows";
+import { TableOfContents, Verse } from "@/types";
 import { getNextBookAndChapter } from "@/utils/getNextBookAndChapter";
 import { getPreviousBookAndChapter } from "@/utils/getPreviousBookAndChapter";
-import { useRouter } from "next/router";
 import { getRouteFromBookAndChapter } from "@/utils/getRouteFromBookAndChapter";
-import { motion } from "framer-motion";
-import dynamic from "next/dynamic";
-import { shadows } from "@/styles/shadows";
-import { breakpoints } from "@/styles/breakpoints";
-import { flatMap, isMap } from "lodash";
-import slugify from "slugify";
-import { useTrackReadingHistory } from "@/state/useTrackReadingHistory";
-import { useCrossReferences } from "@/queries/useCrossReferences";
-import Icon from "@mdi/react";
-import { mdiChevronLeft, mdiChevronRight, mdiMapMarkerMultiple } from "@mdi/js";
-import { ReadingNav } from "@/components/ReadingNav";
-import { Overlay } from "@/components/Overlay";
-import { SearchController } from "@/components/SearchController";
-import { LEFT, RIGHT, useSwipeable } from "react-swipeable";
-import { SwipeNavigationFeedback } from "@/components/SwipeNavigationFeedback";
 
 const DynamicPlacesDisplay = dynamic(
   async () => import("@/components/PlacesController"),
@@ -254,10 +256,7 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
       <motion.main
         key={`${currentBook} ${currentChapter}`}
         css={layoutCss}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ ease: "easeInOut", duration: 0.3 }}
+        {...fade}
       >
         <div css={versesCss} {...swipeHandlers}>
           {"verses" in props &&

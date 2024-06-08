@@ -1,7 +1,9 @@
-import { SearchHistory } from "@/types";
 import { css } from "@emotion/react";
 import { isEmpty } from "lodash";
 import { FC, MouseEvent, useCallback } from "react";
+
+import { SearchHistory } from "@/types";
+
 import { SearchHistoryEntryDisplay } from "./SearchHistoryEntryDisplay";
 
 interface Props {

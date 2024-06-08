@@ -1,7 +1,9 @@
-import { HistoricalEvent } from "@/types/historical";
-import { FC } from "react";
-import { TimelineDuration } from "./TimelineDuration";
 import { css } from "@emotion/react";
+import { FC } from "react";
+
+import { HistoricalEvent } from "@/types/historical";
+
+import { TimelineDuration } from "./TimelineDuration";
 
 type TimelineRowProps = {
   items: HistoricalEvent[];

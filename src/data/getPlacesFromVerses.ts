@@ -1,6 +1,8 @@
 import OpenAI from "openai";
-import { extractJsonFromOpenAI } from "@/utils/extractJsonFromOpenAI";
+
 import { Place, Verse } from "@/types";
+import { extractJsonFromOpenAI } from "@/utils/extractJsonFromOpenAI";
+
 import { enhancePlaces } from "./enhancePlaces";
 
 type Result = [Place[], number];

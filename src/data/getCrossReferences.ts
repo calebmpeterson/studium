@@ -1,7 +1,9 @@
+import { isString, mapValues } from "lodash";
+
 import CROSS_REFERENCES from "@/data/json/cross-references.json";
 import { CrossReferences, CrossReferencesForBookAndChapter } from "@/types";
 import { slugifyReference } from "@/utils/slugifyReference";
-import { isString, mapValues } from "lodash";
+
 import { getVerseText } from "./getVerseText";
 
 export const getCrossReferences = (

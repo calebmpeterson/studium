@@ -1,5 +1,7 @@
-import { SearchResponse, SearchResults } from "@/types";
 import { css } from "@emotion/react";
+import { mdiMagnify } from "@mdi/js";
+import Icon from "@mdi/react";
+import { isEmpty } from "lodash";
 import {
   ChangeEvent,
   FC,
@@ -9,14 +11,14 @@ import {
   useRef,
   useState,
 } from "react";
-import { SearchResultDisplay } from "./SearchResultDisplay";
-import { Overlay } from "./Overlay";
-import Icon from "@mdi/react";
-import { mdiMagnify } from "@mdi/js";
-import { isEmpty } from "lodash";
-import { useTextSearchHistory } from "@/state/useTextSearchHistory";
-import { SearchHistoryDisplay } from "./SearchHistoryDisplay";
 import Skeleton from "react-loading-skeleton";
+
+import { useTextSearchHistory } from "@/state/useTextSearchHistory";
+import { SearchResponse, SearchResults } from "@/types";
+
+import { Overlay } from "./Overlay";
+import { SearchHistoryDisplay } from "./SearchHistoryDisplay";
+import { SearchResultDisplay } from "./SearchResultDisplay";
 
 interface Props {
   onClose: () => void;

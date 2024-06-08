@@ -1,8 +1,9 @@
-import { DANGER_COLOR } from "@/styles/colors";
 import { css } from "@emotion/react";
 import { mdiAlert, mdiAlertOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { FC } from "react";
+
+import { DANGER_COLOR } from "@/styles/colors";
 
 interface Props {
   book: string;

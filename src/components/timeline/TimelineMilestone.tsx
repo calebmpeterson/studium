@@ -1,8 +1,10 @@
+import { css } from "@emotion/react";
+import { FC } from "react";
+
 import { HistoricalMilestone } from "@/types/historical";
 import { formatYear } from "@/utils/timeline/formatYear";
-import { FC } from "react";
+
 import { eventLabelCss } from "./styles";
-import { css } from "@emotion/react";
 
 type TimelineMilestoneProps = {
   event: HistoricalMilestone;

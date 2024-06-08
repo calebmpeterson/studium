@@ -1,5 +1,6 @@
 import { getBookAndChapter } from "@/data/getBookAndChapter";
 import { Place } from "@/types";
+
 import { getPlacesFromVerses } from "./getPlacesFromVerses";
 
 type Result = [Place[], number];

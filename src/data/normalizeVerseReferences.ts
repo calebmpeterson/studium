@@ -1,5 +1,7 @@
-import { Verse, VerseReference } from "@/types";
 import { isArray, isObject } from "lodash";
+
+import { Verse, VerseReference } from "@/types";
+
 import { getVerse } from "./getVerse";
 
 const isValidReference = (reference: unknown): reference is VerseReference =>

@@ -1,8 +1,9 @@
-import { breakpoints } from "@/styles/breakpoints";
-import { shadows } from "@/styles/shadows";
 import { css } from "@emotion/react";
 import { FC, PropsWithChildren, useRef } from "react";
 import useClickOutside from "use-click-outside";
+
+import { breakpoints } from "@/styles/breakpoints";
+import { shadows } from "@/styles/shadows";
 
 interface Props extends PropsWithChildren {
   onClickOutside: () => void;

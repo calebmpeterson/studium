@@ -1,12 +1,15 @@
-import { Place, PlaceFeature } from "@/types";
-import { css } from "@emotion/react";
-import { FC } from "react";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+
+import { css } from "@emotion/react";
 import L from "leaflet";
 import { isEmpty, sumBy } from "lodash";
+import { FC } from "react";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+
 import { BASE_COLOR } from "@/styles/colors";
+import { Place, PlaceFeature } from "@/types";
 import { MAP_TILER_KEY } from "@/utils/environment";
+
 import { PlacesEmpty } from "./PlacesEmpty";
 
 const icon = L.icon({

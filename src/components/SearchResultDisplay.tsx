@@ -1,7 +1,8 @@
-import { Verse } from "@/types";
-import { getRouteFromBookAndChapter } from "@/utils/getRouteFromBookAndChapter";
 import Link from "next/link";
 import { FC } from "react";
+
+import { Verse } from "@/types";
+import { getRouteFromBookAndChapter } from "@/utils/getRouteFromBookAndChapter";
 
 interface Props extends Verse {
   onClick: () => void;

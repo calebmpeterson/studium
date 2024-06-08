@@ -1,9 +1,12 @@
 import { css } from "@emotion/react";
-import { FC, PropsWithChildren, ReactNode } from "react";
 import { mdiClose } from "@mdi/js";
 import Icon from "@mdi/react";
-import { shadows } from "@/styles/shadows";
+import { motion } from "framer-motion";
+import { FC, PropsWithChildren, ReactNode } from "react";
+
 import { breakpoints } from "@/styles/breakpoints";
+import { fade } from "@/styles/motion";
+import { shadows } from "@/styles/shadows";
 
 interface Props extends PropsWithChildren<{}> {
   title: string | ReactNode;
@@ -38,6 +41,7 @@ const overlayContainerCss = (hasInput?: boolean) => css`
   border-radius: 10px 10px 0 0;
   background-color: var(--bg);
   max-height: 80vh;
+  min-height: 40vh;
 
   box-shadow: ${shadows["shadow-xl"]};
 
@@ -75,8 +79,13 @@ export const Overlay: FC<Props> = ({
   onClose,
 }) => (
   <>
-    <div css={overlayBackgroundCss} data-fade-in onClick={onClose} />
-    <div css={overlayContainerCss(hasInput)} data-fade-in>
+    <motion.div
+      {...fade}
+      css={overlayBackgroundCss}
+      data-fade-in
+      onClick={onClose}
+    />
+    <motion.div {...fade} css={overlayContainerCss(hasInput)}>
       <div css={overlayHeaderCss}>
         <header css={overlayTitleCss}>{title}</header>
 
@@ -94,6 +103,6 @@ export const Overlay: FC<Props> = ({
       {header}
 
       <div css={overlayBodyCss}>{children}</div>
-    </div>
+    </motion.div>
   </>
 );

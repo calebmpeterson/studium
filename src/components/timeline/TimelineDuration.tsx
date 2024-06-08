@@ -1,13 +1,15 @@
+import { css } from "@emotion/react";
+import { split } from "lodash";
+import Link from "next/link";
+import { FC, FocusEvent, useCallback, useRef, useState } from "react";
+
+import { CURRENT_YEAR } from "@/data/typed/historical";
+import { shadows } from "@/styles/shadows";
 import { HistoricalEvent } from "@/types/historical";
 import { formatYear } from "@/utils/timeline/formatYear";
-import { FC, FocusEvent, useCallback, useRef, useState } from "react";
-import { CURRENT_YEAR } from "@/data/typed/historical";
+
 import { CREATION_YEAR } from "./constants";
-import { css } from "@emotion/react";
-import { shadows } from "@/styles/shadows";
 import { eventLabelCss } from "./styles";
-import Link from "next/link";
-import { split } from "lodash";
 
 type TimelineDurationProps = {
   item: HistoricalEvent;

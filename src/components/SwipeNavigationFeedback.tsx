@@ -1,7 +1,8 @@
-import { shadows } from "@/styles/shadows";
-import { BODY_FONT_FAMILY } from "@/styles/typography";
 import { css } from "@emotion/react";
 import { FC, PropsWithChildren } from "react";
+
+import { shadows } from "@/styles/shadows";
+import { BODY_FONT_FAMILY } from "@/styles/typography";
 
 interface Props extends PropsWithChildren {
   placement: "left" | "right";

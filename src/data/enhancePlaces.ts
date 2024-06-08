@@ -8,6 +8,7 @@ import {
   uniqueId,
   words,
 } from "lodash";
+
 import BIBLICAL_SITES_2 from "./geojson/biblical-sites-2.json";
 import BIBLICAL_SITES_3 from "./geojson/biblical-sites-3.json";
 import COUNTRIES from "./json/countries.json";

@@ -1,6 +1,7 @@
 import { css } from "@emotion/react";
-import { BODY_FONT_FAMILY } from "./typography";
+
 import { transition } from "./transition";
+import { BODY_FONT_FAMILY } from "./typography";
 
 export const navigationCss = css`
   button,

@@ -1,7 +1,8 @@
-import type { NextApiRequest, NextApiResponse } from "next";
 import { get } from "lodash";
-import { getTextSearchResults } from "@/data/getTextSearchResults";
+import type { NextApiRequest, NextApiResponse } from "next";
+
 import { getSemanticSearchResults } from "@/data/getSemanticSearchResults";
+import { getTextSearchResults } from "@/data/getTextSearchResults";
 
 type Result = unknown;
 

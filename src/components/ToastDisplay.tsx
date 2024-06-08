@@ -1,9 +1,10 @@
-import { Toast, useDismissToast } from "@/contexts/toasts";
-import { shadows } from "@/styles/shadows";
 import { css } from "@emotion/react";
 import { mdiClose } from "@mdi/js";
 import Icon from "@mdi/react";
 import { FC, useCallback } from "react";
+
+import { Toast, useDismissToast } from "@/contexts/toasts";
+import { shadows } from "@/styles/shadows";
 
 interface Props {
   toast: Toast;

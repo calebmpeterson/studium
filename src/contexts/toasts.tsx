@@ -1,8 +1,7 @@
-import { ToastsDisplay } from "@/components/ToastsDisplay";
 import {
+  createContext,
   FC,
   PropsWithChildren,
-  createContext,
   useCallback,
   useContext,
   useMemo,
@@ -10,9 +9,14 @@ import {
 } from "react";
 import { v4 as uuid4 } from "uuid";
 
+import { ToastsDisplay } from "@/components/ToastsDisplay";
+
+export type ToastType = "info";
+
 export interface Toast {
   id?: string;
   message: string;
+  type?: ToastType;
 }
 
 interface ToastContextProps {

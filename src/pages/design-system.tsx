@@ -1,10 +1,11 @@
-import { Overlay } from "@/components/Overlay";
-import { useShowToast } from "@/contexts/toasts";
 import { css } from "@emotion/react";
 import { mdiAbjadHebrew } from "@mdi/js";
 import Icon from "@mdi/react";
 import Head from "next/head";
 import { FC, PropsWithChildren, useState } from "react";
+
+import { Overlay } from "@/components/Overlay";
+import { useShowToast } from "@/contexts/toasts";
 
 interface SectionProps extends PropsWithChildren {
   title: string;

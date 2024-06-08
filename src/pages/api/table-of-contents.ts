@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+
 import { getTableOfContents } from "@/data/getTableOfContents";
 import { TableOfContents } from "@/types";
 

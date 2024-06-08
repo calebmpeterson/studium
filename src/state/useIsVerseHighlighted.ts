@@ -1,5 +1,6 @@
-import { isBrowser } from "@/utils/isBrowser";
 import { useEffect, useState } from "react";
+
+import { isBrowser } from "@/utils/isBrowser";
 
 export const useIsVerseHighlighted = (verse: string) => {
   const [isHighlighted, setIsHighlighted] = useState(false);

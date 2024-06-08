@@ -1,8 +1,9 @@
-import { BASE_COLOR, DANGER_COLOR } from "@/styles/colors";
 import { css } from "@emotion/react";
 import { mdiAlert, mdiAlertOutline, mdiMapMarkerRadiusOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { FC, useEffect, useState } from "react";
+
+import { BASE_COLOR, DANGER_COLOR } from "@/styles/colors";
 
 interface Props {
   book: string;

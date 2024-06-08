@@ -1,6 +1,7 @@
-import { useEffect } from "react";
-import { useReadingHistory } from "./useReadingHistory";
 import { first, isEqual } from "lodash";
+import { useEffect } from "react";
+
+import { useReadingHistory } from "./useReadingHistory";
 
 export const useTrackReadingHistory = (
   currentBook: string,
