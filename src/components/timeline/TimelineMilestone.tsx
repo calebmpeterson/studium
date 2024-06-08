@@ -8,6 +8,7 @@ import { eventLabelCss } from "./styles";
 
 type TimelineMilestoneProps = {
   event: HistoricalMilestone;
+  offset?: number;
 };
 
 const containerCss = css`
@@ -28,7 +29,10 @@ const getLabelPositionStyle = ({ labelPosition = "right" }) =>
         left: 0,
       };
 
-export const TimelineMilestone: FC<TimelineMilestoneProps> = ({ event }) => (
+export const TimelineMilestone: FC<TimelineMilestoneProps> = ({
+  event,
+  offset = 0,
+}) => (
   <div
     css={containerCss}
     style={{
@@ -41,12 +45,11 @@ export const TimelineMilestone: FC<TimelineMilestoneProps> = ({ event }) => (
       style={{
         color: `var(--${event.color || "black"})`,
         ...getLabelPositionStyle(event),
+        marginTop: offset,
       }}
     >
-      <div>
-        <div>{event.title}</div>
-        <small>{formatYear(event.date, event.approximate)}</small>
-      </div>
+      <div>{event.title}</div>
+      <small>{formatYear(event.date, event.approximate)}</small>
     </div>
   </div>
 );

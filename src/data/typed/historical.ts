@@ -98,6 +98,41 @@ export const MILESTONES: HistoricalMilestone[] = [
   { title: "Present Day", date: CURRENT_YEAR, color: "blue" },
 ];
 
+export const DISPENSATIONS: HistoricalMilestone[] = [
+  {
+    title: "Ante-deluvian Dispensation",
+    date: -4000,
+    color: "silver",
+    approximate: true,
+  },
+  {
+    title: "Post-deluvian Dispensation",
+    date: -2343,
+    color: "silver",
+    approximate: true,
+  },
+  {
+    title: "Patriarchal Dispensation",
+    date: -2000,
+    color: "silver",
+    approximate: true,
+  },
+  {
+    title: "Levitical Dispensation",
+    date: -1446,
+    color: "silver",
+    approximate: true,
+  },
+  {
+    title: "Ecclesiastical Dispensation",
+    date: 33,
+    color: "silver",
+    approximate: true,
+  },
+  // { title: "Tribulation", date: 33, color: "silver", approximate: true },
+  // { title: "Millenial", date: 33, color: "silver", approximate: true },
+];
+
 export const EVENTS: HistoricalEvent[] = [
   {
     title: "Mosaic Theocracy",

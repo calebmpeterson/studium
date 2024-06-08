@@ -102,6 +102,7 @@ export default function Timeline(props: Props) {
       <div css={scrollingCss}>
         <div css={containerCss}>
           <TimelineRow items={[]} />
+          <TimelineRow items={[]} />
 
           {/* Books of the Bible and when they were written */}
           <TimelineSection title="Books" />
@@ -161,12 +162,16 @@ export default function Timeline(props: Props) {
               </div>
             ))}
 
-          {props.milestones.map((event, index) => (
-            <TimelineMilestone key={`milestone-${index}`} event={event} />
+          {props.dispensations.map((event, index) => (
+            <TimelineMilestone
+              key={`dispensation-${index}`}
+              event={event}
+              offset={20}
+            />
           ))}
 
-          {props.dispensations.map((event, index) => (
-            <TimelineMilestone key={`dispensation-${index}`} event={event} />
+          {props.milestones.map((event, index) => (
+            <TimelineMilestone key={`milestone-${index}`} event={event} />
           ))}
         </div>
       </div>
