@@ -9,6 +9,7 @@ export const typographyCss = css`
 
   header {
     font-family: ${HEADING_FONT_FAMILY};
+    font-size: 16px;
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 1px;

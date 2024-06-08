@@ -2,6 +2,7 @@ import { css } from "@emotion/react";
 import {
   mdiBookOpenPageVariant,
   mdiChartTimeline,
+  mdiClose,
   mdiShareVariantOutline,
 } from "@mdi/js";
 import Icon from "@mdi/react";
@@ -11,14 +12,16 @@ import { FC, MouseEvent, PropsWithChildren, useCallback } from "react";
 import { useShare } from "@/hooks/useShare";
 import { breakpoints } from "@/styles/breakpoints";
 
-interface Props extends PropsWithChildren {}
+interface Props extends PropsWithChildren {
+  isTimeline?: true;
+}
 
 const layoutCss = css`
   display: flex;
   align-items: stretch;
   justify-content: space-between;
   border-bottom: 1px solid var(--border-color);
-  padding: 10px;
+  padding: 10px 15px;
   position: sticky;
   z-index: 1001;
   top: 0;
@@ -72,7 +75,7 @@ const titleCss = css`
   }
 `;
 
-export const TopNav: FC<Props> = ({ children }) => {
+export const TopNav: FC<Props> = ({ children, isTimeline }) => {
   const { canShare, share } = useShare();
   const onShare = useCallback(
     async (event: MouseEvent) => {
@@ -99,13 +102,19 @@ export const TopNav: FC<Props> = ({ children }) => {
           </button>
         )}
 
-        <Link
-          role="button"
-          aria-label="View Biblical timeline"
-          href="/timeline"
-        >
-          <Icon path={mdiChartTimeline} size={0.7} />
-        </Link>
+        {isTimeline ? (
+          <Link role="button" aria-label="Close Biblical timeline" href="/">
+            <Icon path={mdiClose} size={0.7} />
+          </Link>
+        ) : (
+          <Link
+            role="button"
+            aria-label="View Biblical timeline"
+            href="/timeline"
+          >
+            <Icon path={mdiChartTimeline} size={0.7} />
+          </Link>
+        )}
       </div>
     </nav>
   );
