@@ -1,9 +1,11 @@
 import { css } from "@emotion/react";
 import { mdiClose } from "@mdi/js";
 import Icon from "@mdi/react";
+import { motion } from "framer-motion";
 import { FC, useCallback } from "react";
 
 import { Toast, useDismissToast } from "@/contexts/toasts";
+import { fade } from "@/styles/motion";
 import { shadows } from "@/styles/shadows";
 
 interface Props {
@@ -38,7 +40,7 @@ export const ToastDisplay: FC<Props> = ({ toast }) => {
   }, [toast.id, dismissToast]);
 
   return (
-    <div css={toastCss}>
+    <motion.div css={toastCss} {...fade}>
       <div css={messageCss}>{toast.message}</div>
       <button
         role="button"
@@ -49,6 +51,6 @@ export const ToastDisplay: FC<Props> = ({ toast }) => {
       >
         <Icon path={mdiClose} size={0.7} />
       </button>
-    </div>
+    </motion.div>
   );
 };
