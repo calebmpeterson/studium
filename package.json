@@ -14,7 +14,8 @@
     "build:data:toc": "ts-node --skipProject scripts/kjv-to-table-of-contents.ts",
     "build:data:cross-references": "ts-node --skipProject scripts/cross-references-to-json.ts",
     "build:data:sites-3": "ts-node --skipProject scripts/build-biblical-sites-3.ts",
-    "build:search-index": "ts-node --skipProject scripts/build-search-index.ts"
+    "build:search-index": "ts-node --skipProject scripts/build-search-index.ts",
+    "build:thompson-chain-references": "ts-node --skipProject scripts/build-thompson-chain-references.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -42,8 +43,10 @@
   },
   "devDependencies": {
     "@types/fuzzysearch": "^1.0.2",
+    "@types/jsdom": "^21.1.7",
     "@types/leaflet": "^1.9.8",
     "@types/lodash": "^4.14.202",
+    "@types/minimist": "^1.2.5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -51,7 +54,9 @@
     "eslint": "^8",
     "eslint-config-next": "14.0.3",
     "eslint-plugin-simple-import-sort": "^12.1.0",
+    "jsdom": "^24.1.0",
     "kml-to-geojson": "^1.0.13",
+    "minimist": "^1.2.8",
     "netlify-cli": "^17.8.1",
     "ts-node": "^10.9.1",
     "typescript": "^5"
