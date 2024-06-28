@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 import { mdiClose } from "@mdi/js";
 import Icon from "@mdi/react";
 import { motion } from "framer-motion";
-import { FC, PropsWithChildren, ReactNode } from "react";
+import { FC, PropsWithChildren, ReactNode, useEffect } from "react";
 
 import { breakpoints } from "@/styles/breakpoints";
 import { fade } from "@/styles/motion";
@@ -77,32 +77,43 @@ export const Overlay: FC<Props> = ({
   hasInput,
   children,
   onClose,
-}) => (
-  <>
-    <motion.div
-      {...fade}
-      css={overlayBackgroundCss}
-      data-fade-in
-      onClick={onClose}
-    />
-    <motion.div {...fade} css={overlayContainerCss(hasInput)}>
-      <div css={overlayHeaderCss}>
-        <header css={overlayTitleCss}>{title}</header>
+}) => {
+  useEffect(() => {
+    const original = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
 
-        <button
-          role="button"
-          aria-label="Close cross references"
-          data-icon
-          data-borderless
-          onClick={onClose}
-        >
-          <Icon path={mdiClose} size={0.7} />
-        </button>
-      </div>
+    return () => {
+      document.body.style.overflow = original;
+    };
+  });
 
-      {header}
+  return (
+    <>
+      <motion.div
+        {...fade}
+        css={overlayBackgroundCss}
+        data-fade-in
+        onClick={onClose}
+      />
+      <motion.div {...fade} css={overlayContainerCss(hasInput)}>
+        <div css={overlayHeaderCss}>
+          <header css={overlayTitleCss}>{title}</header>
 
-      <div css={overlayBodyCss}>{children}</div>
-    </motion.div>
-  </>
-);
+          <button
+            role="button"
+            aria-label="Close cross references"
+            data-icon
+            data-borderless
+            onClick={onClose}
+          >
+            <Icon path={mdiClose} size={0.7} />
+          </button>
+        </div>
+
+        {header}
+
+        <div css={overlayBodyCss}>{children}</div>
+      </motion.div>
+    </>
+  );
+};

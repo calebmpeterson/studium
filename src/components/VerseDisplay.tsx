@@ -121,6 +121,7 @@ export const VerseDisplay: FC<Props> = ({
                 book={book}
                 chapter={chapter}
                 verse={verse}
+                text={text}
                 crossReferences={crossReferences}
                 onClose={onCloseCrossReferences}
               />

@@ -12,12 +12,13 @@ interface Props {
   book: string;
   chapter: string;
   verse: string;
+  text: string;
   crossReferences: CrossReference[];
   onClose: () => void;
 }
 
 export const CrossReferencesDisplay: FC<Props> = memo(
-  ({ book, chapter, verse, crossReferences, onClose }) => (
+  ({ book, chapter, verse, text, crossReferences, onClose }) => (
     <Overlay
       title={
         <div>
@@ -27,6 +28,7 @@ export const CrossReferencesDisplay: FC<Props> = memo(
           </div>
         </div>
       }
+      header={<div data-muted>{text}</div>}
       onClose={onClose}
     >
       {crossReferences.map((crossReference) => (
