@@ -22,8 +22,8 @@ export const navigationCss = css`
 
     transition: ${transition("color", "background-color", "border-color")};
 
-    &:hover,
-    &:focus {
+    &:hover:not(:disabled),
+    &:focus:not(:disabled) {
       outline: none;
       color: var(--active-fg);
       border-color: var(--active-fg);
@@ -31,8 +31,9 @@ export const navigationCss = css`
     }
 
     &:disabled {
-      background-color: transparent !important;
+      background-color: var(--disabled-bg) !important;
       color: var(--disabled-fg) !important;
+      border-color: var(--disabled-fg) !important;
       cursor: not-allowed;
     }
 

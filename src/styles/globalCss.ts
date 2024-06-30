@@ -33,7 +33,8 @@ export const globalCss = css`
     --button-active-bg: ${BASE_COLOR[950]};
     --active-fg: ${ACTIVE_COLOR[300]};
     --active-bg: ${ACTIVE_COLOR[950]};
-    --disabled-fg: ${BASE_COLOR[500]};
+    --disabled-fg: ${BASE_COLOR[400]};
+    --disabled-bg: ${BASE_COLOR[800]};
     --backdrop: rgba(0, 0, 0, 0.75);
 
     --tooltip-bg: ${BASE_COLOR[800]};
@@ -80,7 +81,8 @@ export const globalCss = css`
       --button-active-bg: ${ACTIVE_COLOR[100]};
       --active-fg: ${ACTIVE_COLOR[600]};
       --active-bg: ${ACTIVE_COLOR[200]};
-      --disabled-fg: ${BASE_COLOR[600]};
+      --disabled-fg: ${BASE_COLOR[500]};
+      --disabled-bg: ${BASE_COLOR[100]};
       --backdrop: rgba(0, 0, 0, 0.5);
       --tooltip-bg: ${BASE_COLOR[50]};
 

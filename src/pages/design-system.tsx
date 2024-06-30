@@ -16,6 +16,7 @@ const sectionLayoutCss = (layout: SectionProps["layout"]) => css`
   margin: 10px 0;
   display: flex;
   justify-content: start;
+  align-items: center;
   gap: 20px;
   flex-direction: ${layout};
 `;
@@ -70,6 +71,7 @@ export default function Timeline() {
 
         <Section title="Navigation">
           <button>Button</button>
+          <button disabled>Disabled Button</button>
           <button data-is-active>Active Button</button>
           <button data-borderless>Borderless Button</button>
           <button data-borderless data-is-active>

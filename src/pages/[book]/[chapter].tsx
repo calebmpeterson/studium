@@ -172,25 +172,31 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
 
   const router = useRouter();
 
+  const [isRouting, setIsRouting] = useState(false);
+
   const onPrevious = useCallback(async () => {
     if (!("none" in previousBookAndChapter)) {
+      setIsRouting(true);
       await router.push(
         getRouteFromBookAndChapter(
           previousBookAndChapter.book,
           previousBookAndChapter.chapter
         )
       );
+      setIsRouting(false);
     }
   }, [previousBookAndChapter, router]);
 
   const onNext = useCallback(async () => {
     if (!("none" in nextBookAndChapter)) {
+      setIsRouting(true);
       await router.push(
         getRouteFromBookAndChapter(
           nextBookAndChapter.book,
           nextBookAndChapter.chapter
         )
       );
+      setIsRouting(false);
     }
   }, [nextBookAndChapter, router]);
 
@@ -248,9 +254,10 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
           {hasPrevious ? (
             <button
               data-icon
-              css={navButtonCss}
-              onClick={onPrevious}
               aria-label={previousBookAndChapter.label}
+              css={navButtonCss}
+              disabled={isRouting}
+              onClick={onPrevious}
             >
               <Icon path={mdiChevronLeft} size={0.7} />
             </button>
@@ -281,9 +288,10 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
           {hasNext ? (
             <button
               data-icon
+              aria-label={nextBookAndChapter.label}
+              disabled={isRouting}
               css={navButtonCss}
               onClick={onNext}
-              aria-label={nextBookAndChapter.label}
             >
               <Icon path={mdiChevronRight} size={0.7} />
             </button>
