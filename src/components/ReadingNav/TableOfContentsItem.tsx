@@ -1,6 +1,8 @@
 import { css } from "@emotion/react";
 import { FC } from "react";
 
+import { useScrollTo } from "@/hooks/useScrollTo";
+
 interface Props {
   book: string;
   chapter: string;
@@ -23,13 +25,20 @@ export const TableOfContentsItem: FC<Props> = ({
   slug,
   isSelected,
   onSelect,
-}) => (
-  <button
-    data-borderless
-    data-is-active={isSelected}
-    css={containerCss}
-    onClick={() => onSelect(book, chapter, slug)}
-  >
-    {book} {chapter}
-  </button>
-);
+}) => {
+  const scrollRef = useScrollTo<HTMLButtonElement>(isSelected, {
+    behavior: "instant",
+  });
+
+  return (
+    <button
+      ref={scrollRef}
+      data-borderless
+      data-is-active={isSelected}
+      css={containerCss}
+      onClick={() => onSelect(book, chapter, slug)}
+    >
+      {book} {chapter}
+    </button>
+  );
+};
