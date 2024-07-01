@@ -7,7 +7,7 @@ export type VerseReference = {
 
 export type ChainReference = {
   type: "chain";
-  label: string;
+  label?: string;
   id: string;
 };
 

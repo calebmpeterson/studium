@@ -3,7 +3,7 @@ import _ from "lodash";
 import { log } from "../utils/log";
 import { parseChainReference } from "./parseChainReference";
 import { parseVerseReference } from "./parseVerseReference";
-import { Entry } from "./types";
+import { Entry, Reference, ReferenceChain } from "./types";
 
 export const parseMultipleChains = (
   id: string,
@@ -19,14 +19,15 @@ export const parseMultipleChains = (
 
   const $chains = $entry.querySelectorAll("li + ul");
 
-  log(`${id} has ${$chains.length} chains`);
+  log(`${id} ${name} has ${$chains.length} chains`);
 
+  const chains: ReferenceChain[] = [];
   for (const $chain of $chains) {
     const $label = $chain.previousElementSibling;
+    const label = $label?.innerHTML;
 
     const $references = $chain.querySelectorAll("li:has(a)");
-
-    const references = _.map($references, ($reference) => {
+    const references: Reference[] = _.map($references, ($reference) => {
       if ($reference.innerHTML.startsWith("SEE")) {
         return parseChainReference($reference);
       }
@@ -35,14 +36,17 @@ export const parseMultipleChains = (
       return parseVerseReference(reference);
     });
 
-    log($label?.innerHTML, references);
+    chains.push({
+      label,
+      references,
+    });
   }
 
   const entry = {
     id,
     name,
     description,
-    chains: [],
+    chains,
   };
 
   return entry;
