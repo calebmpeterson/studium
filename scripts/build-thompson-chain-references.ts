@@ -49,8 +49,10 @@ for (const [index, $name] of $entries.entries()) {
   }
 }
 
-console.log(`Results ${results.length}`);
+log(`Results ${results.length}`);
 
-for (const result of results) {
-  log(result.id, result);
-}
+fs.writeFileSync(
+  "./src/data/json/thompson-chain-references.json",
+  JSON.stringify(results, null, 2),
+  "utf8"
+);
