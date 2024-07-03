@@ -35,6 +35,8 @@ for (const [index, $name] of $entries.entries()) {
   const id = $name.getAttribute("id") as unknown as string;
   const name = $name.querySelector("a")!.innerHTML.trim();
 
+  log(`Processing ${id} / ${name}`);
+
   const entrySelector = `h3[id="${id}"] + ul`;
   const $entry = document.querySelector(entrySelector);
 
