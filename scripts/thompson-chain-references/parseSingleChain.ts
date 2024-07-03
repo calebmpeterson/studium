@@ -21,7 +21,9 @@ export const parseSingleChain = (
     const $references = $entry.querySelectorAll("li:has(a)");
 
     const references = _.map($references, ($reference) => {
-      if ($reference.innerHTML.startsWith("SEE")) {
+      const referenceHTML = $reference.innerHTML;
+
+      if (referenceHTML.trim().startsWith("SEE")) {
         return parseChainReference($reference);
       }
 

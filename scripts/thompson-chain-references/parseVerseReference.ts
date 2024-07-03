@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 import { VerseReference } from "./types";
 
 export const parseVerseReference = (reference: string): VerseReference => {
@@ -14,7 +16,9 @@ export const parseVerseReference = (reference: string): VerseReference => {
     };
   }
   // Example 2 Timothy 1
-  else if (bookAndChapterParts.length === 3) {
+  else if (bookAndChapterParts.length >= 3) {
+    const book = bookAndChapterParts.slice(0, -1).join(" ");
+    const chapter = _.last(bookAndChapterParts);
     return {
       type: "verse",
       book: bookAndChapterParts[0] + " " + bookAndChapterParts[1],
