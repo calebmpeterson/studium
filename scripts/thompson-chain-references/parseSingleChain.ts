@@ -3,7 +3,7 @@ import _ from "lodash";
 import { abort } from "../utils/abort";
 import { parseChainReference } from "./parseChainReference";
 import { parseVerseReference } from "./parseVerseReference";
-import { Entry } from "./types";
+import { Entry, Reference } from "./types";
 
 export const parseSingleChain = (
   id: string,
@@ -20,7 +20,7 @@ export const parseSingleChain = (
 
     const $references = $entry.querySelectorAll("li:has(a)");
 
-    const references = _.map($references, ($reference) => {
+    const references: Reference[] = _.map($references, ($reference) => {
       const referenceHTML = $reference.innerHTML;
 
       if (referenceHTML.trim().startsWith("SEE")) {

@@ -5,10 +5,14 @@ export type VerseReference = {
   verse: string;
 };
 
+export type ChainReferenceEntry = {
+  id: string;
+  label?: string;
+};
+
 export type ChainReference = {
   type: "chain";
-  label?: string;
-  id: string;
+  entries: ChainReferenceEntry[];
 };
 
 export type Reference = VerseReference | ChainReference;

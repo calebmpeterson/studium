@@ -19,17 +19,26 @@ const raw = fs.readFileSync(
 
 log("Parsing document");
 const { document } = new JSDOM(raw).window;
+
+log("Processing document");
 const $entries = document.querySelectorAll('h3[id^="V"]');
 
 const argv = minimist(process.argv.slice(2));
-const { limit } = argv;
-console.log({ limit });
+const { from, to, target } = argv;
 
-let results: Entry[] = [];
+const results: Entry[] = [];
 
 for (const [index, $name] of $entries.entries()) {
-  if (index >= limit) {
+  if (_.isNumber(from) && index < from) {
+    continue;
+  }
+
+  if (_.isNumber(to) && index >= to) {
     break;
+  }
+
+  if (_.isNumber(target) && index + 1 !== target) {
+    continue;
   }
 
   const id = $name.getAttribute("id") as unknown as string;

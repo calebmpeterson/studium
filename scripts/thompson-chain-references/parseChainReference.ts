@@ -1,26 +1,35 @@
-import { ChainReference } from "./types";
+import { ChainReference, ChainReferenceEntry } from "./types";
 
 export const parseChainReference = ($reference: Element): ChainReference => {
-  const $anchor = $reference.querySelector("a");
-  if (!$anchor) {
-    throw new Error(`Chain reference has no anchor: ${$reference.innerHTML}`);
-  }
+  const $anchors = $reference.querySelectorAll("a");
 
-  const href = $anchor.getAttribute("href");
+  const entries: ChainReferenceEntry[] = [];
 
-  if (!href) {
-    throw new Error(`Chain reference has no href ${$reference.innerHTML}`);
-  }
+  for (const $anchor of $anchors) {
+    if (!$anchor) {
+      throw new Error(`Chain reference has no anchor: ${$reference.innerHTML}`);
+    }
 
-  const label = $anchor.innerHTML;
+    const href = $anchor.getAttribute("href");
 
-  if (!label) {
-    throw new Error(`Chain reference has no label ${$reference.innerHTML}`);
+    if (!href) {
+      throw new Error(`Chain reference has no href ${$reference.innerHTML}`);
+    }
+
+    const label = $anchor.innerHTML;
+
+    if (!label) {
+      throw new Error(`Chain reference has no label ${$reference.innerHTML}`);
+    }
+
+    entries.push({
+      id: href?.split("#")[1],
+      label,
+    });
   }
 
   return {
     type: "chain",
-    id: href?.split("#")[1],
-    label,
+    entries,
   };
 };
