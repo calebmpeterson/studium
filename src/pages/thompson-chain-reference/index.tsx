@@ -1,4 +1,5 @@
 import { css } from "@emotion/react";
+import { mapValues, pick } from "lodash";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -8,7 +9,7 @@ import { getThompsonChainReferences } from "@/data/getThompsonChainReferences";
 import { Entry } from "@/types/chain-reference";
 
 type Result = {
-  entries: Record<string, Entry>;
+  entries: Record<string, Pick<Entry, "id" | "name">>;
 };
 
 const containerCss = css`
@@ -25,7 +26,9 @@ const layoutCss = css`
 `;
 
 export const getStaticProps: GetStaticProps<Result, {}> = async (context) => {
-  const entries = getThompsonChainReferences();
+  const entries = mapValues(getThompsonChainReferences(), (entry) =>
+    pick(entry, "id", "name")
+  );
 
   return {
     props: {
