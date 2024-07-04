@@ -38,6 +38,10 @@ const categoryLayoutCss = css`
   flex: 1 1 auto;
 `;
 
+const bookContainerCss = css`
+  padding: 0 0 0 5px;
+`;
+
 export const Footer: FC = () => (
   <footer css={testamentsLayoutCss}>
     {map(BOOK_CATEGORIES, (categories, testament: Testament) => (
@@ -49,7 +53,7 @@ export const Footer: FC = () => (
             <div key={slugify(category)} css={categoryLayoutCss}>
               <header data-sub-header>{category}</header>
               {books.map((book) => (
-                <div key={slugify(book)}>
+                <div key={slugify(book)} css={bookContainerCss}>
                   <Link href={getRouteFromBookAndChapter(book, "1")}>
                     {book}
                   </Link>

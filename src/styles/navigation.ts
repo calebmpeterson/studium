@@ -62,13 +62,14 @@ export const navigationCss = css`
 
     color: var(--fg-muted);
     text-decoration: none;
-    font-size: 80%;
+    font-size: 90%;
 
     transition: ${transition("color")};
 
     &:hover,
     &:focus {
       color: var(--active-fg);
+      outline: none;
     }
   }
 

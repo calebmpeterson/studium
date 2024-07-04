@@ -21,7 +21,7 @@ const containerCss = css`
 const headingLayoutCss = css`
   display: flex;
   justify-content: space-between;
-  align-items: end;
+  align-items: baseline;
 `;
 
 const emptyHistoryContainerCss = css`

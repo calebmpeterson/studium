@@ -26,7 +26,7 @@ const $entries = document.querySelectorAll('h3[id^="V"]');
 const argv = minimist(process.argv.slice(2));
 const { from, to, target } = argv;
 
-const results: Entry[] = [];
+const results: Record<string, Entry> = {};
 
 for (const [index, $name] of $entries.entries()) {
   if (_.isNumber(from) && index < from) {
@@ -51,16 +51,16 @@ for (const [index, $name] of $entries.entries()) {
 
   if ($entry) {
     if (hasMultipleChains($entry)) {
-      results.push(parseMultipleChains(id, name, $entry));
+      results[id] = parseMultipleChains(id, name, $entry);
     } else {
-      results.push(parseSingleChain(id, name, $entry));
+      results[id] = parseSingleChain(id, name, $entry);
     }
   } else {
     abort(`Mismatched element for ${id} / ${name} ${entrySelector}`);
   }
 }
 
-log(`Results ${results.length}`);
+log(`Results ${_.size(results)}`);
 
 fs.writeFileSync(
   "./src/data/json/thompson-chain-references.json",

@@ -16,6 +16,7 @@ export const typographyCss = css`
 
     &[data-sub-header="true"] {
       font-size: 80%;
+      font-weight: 500;
     }
   }
 
@@ -30,6 +31,10 @@ export const typographyCss = css`
   small,
   [data-text-size="small"] {
     font-size: 66%;
+  }
+
+  [data-text-upper] {
+    text-transform: uppercase;
   }
 
   sup {
