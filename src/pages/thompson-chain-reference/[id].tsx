@@ -1,5 +1,10 @@
 import { css } from "@emotion/react";
-import { GetStaticProps, InferGetStaticPropsType } from "next";
+import {
+  GetServerSideProps,
+  GetStaticProps,
+  InferGetServerSidePropsType,
+  InferGetStaticPropsType,
+} from "next";
 import Head from "next/head";
 import Link from "next/link";
 
@@ -39,16 +44,7 @@ const chainReferencesContainerCss = css`
   padding: 0 0 0 5px;
 `;
 
-export const getStaticPaths = async () => {
-  const entries = getThompsonChainReferences();
-
-  return {
-    paths: Object.values(entries).map(({ id }) => ({ params: { id } })),
-    fallback: false,
-  };
-};
-
-export const getStaticProps: GetStaticProps<
+export const getServerSideProps: GetServerSideProps<
   Result & { status: "success" | "failure" },
   { id: string }
 > = async (context) => {
@@ -62,6 +58,7 @@ export const getStaticProps: GetStaticProps<
   }
 
   const entry = getThompsonChainReference(id);
+
   return {
     props: {
       status: "success",
@@ -70,7 +67,7 @@ export const getStaticProps: GetStaticProps<
   };
 };
 
-type Props = InferGetStaticPropsType<typeof getStaticProps>;
+type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 export default function ChainReferencePage({ entry }: Props) {
   const title = entry
