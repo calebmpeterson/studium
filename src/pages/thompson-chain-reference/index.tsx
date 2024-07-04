@@ -9,7 +9,7 @@ import { getThompsonChainReferences } from "@/data/getThompsonChainReferences";
 import { Entry } from "@/types/chain-reference";
 
 type Result = {
-  entries: Pick<Entry, "id" | "name">[];
+  entries: Record<string, string>;
 };
 
 const containerCss = css`
@@ -26,8 +26,9 @@ const layoutCss = css`
 `;
 
 export const getStaticProps: GetStaticProps<Result, {}> = async (context) => {
-  const entries = Object.values(getThompsonChainReferences()).map((entry) =>
-    pick(entry, "id", "name")
+  const entries = mapValues(
+    getThompsonChainReferences(),
+    (entry) => entry.name
   );
 
   return {
@@ -51,10 +52,10 @@ export default function ChainReferences({ entries }: Props) {
       <div css={containerCss}>
         <header>Thompson Chain References</header>
         <div css={layoutCss}>
-          {entries.map((entry) => (
-            <div key={entry.id} id={entry.id}>
-              <Link href={`/thompson-chain-reference/${entry.id}`}>
-                {entry.id}&nbsp;{entry.name}
+          {Object.entries(entries).map(([id, name]) => (
+            <div key={id} id={id}>
+              <Link href={`/thompson-chain-reference/${id}`}>
+                {id}&nbsp;{name}
               </Link>
             </div>
           ))}
