@@ -1,12 +1,11 @@
 import { css } from "@emotion/react";
-import { mapValues, pick } from "lodash";
-import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { mapValues } from "lodash";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Head from "next/head";
 import Link from "next/link";
 
 import { TopNav } from "@/components/TopNav";
 import { getThompsonChainReferences } from "@/data/getThompsonChainReferences";
-import { Entry } from "@/types/chain-reference";
 
 type Result = {
   entries: Record<string, string>;
@@ -25,7 +24,9 @@ const layoutCss = css`
   gap: 5px;
 `;
 
-export const getStaticProps: GetStaticProps<Result, {}> = async (context) => {
+export const getServerSideProps: GetServerSideProps<Result, {}> = async (
+  context
+) => {
   const entries = mapValues(
     getThompsonChainReferences(),
     (entry) => entry.name
@@ -38,7 +39,7 @@ export const getStaticProps: GetStaticProps<Result, {}> = async (context) => {
   };
 };
 
-type Props = InferGetStaticPropsType<typeof getStaticProps>;
+type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 export default function ChainReferences({ entries }: Props) {
   return (
