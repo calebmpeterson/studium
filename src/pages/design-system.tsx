@@ -16,7 +16,7 @@ const sectionLayoutCss = (layout: SectionProps["layout"]) => css`
   margin: 10px 0;
   display: flex;
   justify-content: start;
-  align-items: center;
+  align-items: ${layout === "column" ? "start" : "center"};
   gap: 20px;
   flex-direction: ${layout};
 `;
@@ -40,7 +40,7 @@ const pageLayoutCss = css`
   gap: 20px;
 `;
 
-export default function Timeline() {
+export default function DesignSystemPage() {
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
   const onOpenOverlay = () => {
     setIsOverlayOpen(true);
