@@ -2,6 +2,7 @@ import { css } from "@emotion/react";
 import { motion } from "framer-motion";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Head from "next/head";
+import Link from "next/link";
 
 import { ThompsonReferenceDisplay } from "@/components/ThompsonReferenceDisplay";
 import { TopNav } from "@/components/TopNav";
@@ -27,6 +28,11 @@ const layoutCss = css`
   flex-direction: column;
   justify-content: center;
   gap: 20px;
+`;
+
+const navLayoutCss = css`
+  display: flex;
+  align-items: center;
 `;
 
 const chainsContainerCss = css`
@@ -93,7 +99,17 @@ export default function ChainReferencePage({ entry }: Props) {
         <title>{title}</title>
       </Head>
 
-      <TopNav />
+      <TopNav>
+        <div css={navLayoutCss}>
+          <Link href="/thompson-chain-reference">
+            Thompson Chain References
+          </Link>
+          <small>
+            &nbsp;/&nbsp;
+            {entry.name}
+          </small>
+        </div>
+      </TopNav>
 
       <motion.div
         css={containerCss}

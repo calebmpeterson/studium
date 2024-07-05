@@ -30,6 +30,11 @@ const layoutCss = css`
   gap: 5px;
 `;
 
+const navLayoutCss = css`
+  display: flex;
+  align-items: center;
+`;
+
 const firstLetterLinksContainerCss = css`
   display: flex;
   flex-wrap: wrap;
@@ -96,7 +101,11 @@ export default function ThompsonChainReferences({
         <title>Thompson Chain References</title>
       </Head>
 
-      <TopNav />
+      <TopNav>
+        <div css={navLayoutCss}>
+          <small>Thompson Chain References</small>
+        </div>
+      </TopNav>
 
       <motion.div
         key="thompson-chain-reference-index"

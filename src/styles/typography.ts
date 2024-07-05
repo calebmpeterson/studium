@@ -30,7 +30,7 @@ export const typographyCss = css`
 
   small,
   [data-text-size="small"] {
-    font-size: 80%;
+    font-size: 90%;
   }
 
   [data-text-upper] {
