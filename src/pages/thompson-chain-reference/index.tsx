@@ -32,7 +32,7 @@ const layoutCss = css`
 
 const firstLetterLinksContainerCss = css`
   display: flex;
-  gap: 10px;
+  flex-wrap: wrap;
   margin-bottom: 10px;
 `;
 
@@ -107,7 +107,14 @@ export default function ThompsonChainReferences({
 
         <div css={firstLetterLinksContainerCss}>
           {Object.entries(firstIdPerLetter).map(([letter, id]) => (
-            <a key={letter} href={`#${id}`} onClick={onJumpToLetter}>
+            <a
+              key={letter}
+              href={`#${letter}`}
+              role="button"
+              data-borderless
+              data-icon
+              onClick={onJumpToLetter}
+            >
               {letter}
             </a>
           ))}
@@ -117,7 +124,9 @@ export default function ThompsonChainReferences({
           {Object.entries(entries).map(([id, name]) => (
             <div key={id} id={id}>
               {firstIdPerLetter[name[0]] === id && (
-                <header css={letterCss}>{name[0]}</header>
+                <header css={letterCss} id={name[0]}>
+                  {name[0]}
+                </header>
               )}
 
               <Link href={`/thompson-chain-reference/${id}`} css={linkCss}>
