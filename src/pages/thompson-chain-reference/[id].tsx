@@ -99,7 +99,7 @@ export default function ChainReferencePage({ entry }: Props) {
         <title>{title}</title>
       </Head>
 
-      <TopNav>
+      <TopNav isResource>
         <div css={navLayoutCss}>
           <Link href="/thompson-chain-reference">
             Thompson Chain References

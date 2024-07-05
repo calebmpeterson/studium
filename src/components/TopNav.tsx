@@ -13,7 +13,7 @@ import { useShare } from "@/hooks/useShare";
 import { breakpoints } from "@/styles/breakpoints";
 
 interface Props extends PropsWithChildren {
-  isTimeline?: true;
+  isResource?: true;
 }
 
 const layoutCss = css`
@@ -75,7 +75,7 @@ const titleCss = css`
   }
 `;
 
-export const TopNav: FC<Props> = ({ children, isTimeline }) => {
+export const TopNav: FC<Props> = ({ children, isResource }) => {
   const { canShare, share } = useShare();
   const onShare = useCallback(
     async (event: MouseEvent) => {
@@ -102,8 +102,8 @@ export const TopNav: FC<Props> = ({ children, isTimeline }) => {
           </button>
         )}
 
-        {isTimeline ? (
-          <Link role="button" aria-label="Close Biblical timeline" href="/">
+        {isResource ? (
+          <Link role="button" aria-label="Close" href="/">
             <Icon path={mdiClose} size={0.7} />
           </Link>
         ) : (

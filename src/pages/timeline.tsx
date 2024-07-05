@@ -97,7 +97,7 @@ export default function Timeline(props: Props) {
         <title>Timeline</title>
       </Head>
 
-      <TopNav />
+      <TopNav isResource />
 
       <div css={scrollingCss}>
         <div css={containerCss}>

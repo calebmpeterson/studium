@@ -101,7 +101,7 @@ export default function ThompsonChainReferences({
         <title>Thompson Chain References</title>
       </Head>
 
-      <TopNav>
+      <TopNav isResource>
         <div css={navLayoutCss}>
           <small>Thompson Chain References</small>
         </div>
