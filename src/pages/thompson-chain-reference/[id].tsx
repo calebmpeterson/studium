@@ -22,6 +22,8 @@ type Result = {
 const containerCss = css`
   max-width: 800px;
   margin: 20px auto;
+  padding: 0 20px;
+  box-sizing: border-box;
 `;
 
 const layoutCss = css`
@@ -41,7 +43,7 @@ const chainsContainerCss = css`
 const chainContainerCss = css``;
 
 const chainReferencesContainerCss = css`
-  padding: 0 0 0 5px;
+  padding: 0 0 0 10px;
 `;
 
 export const getServerSideProps: GetServerSideProps<
