@@ -1,5 +1,6 @@
 import { css } from "@emotion/react";
-import { groupBy, mapValues } from "lodash";
+import { motion } from "framer-motion";
+import { mapValues } from "lodash";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -7,6 +8,7 @@ import { MouseEvent, useCallback } from "react";
 
 import { TopNav } from "@/components/TopNav";
 import { getThompsonChainReferences } from "@/data/getThompsonChainReferences";
+import { fade } from "@/styles/motion";
 
 type Result = {
   entries: Record<string, string>;
@@ -96,7 +98,11 @@ export default function ThompsonChainReferences({
 
       <TopNav />
 
-      <div css={containerCss}>
+      <motion.div
+        key="thompson-chain-reference-index"
+        css={containerCss}
+        {...fade}
+      >
         <header>Thompson Chain References</header>
 
         <div css={firstLetterLinksContainerCss}>
@@ -120,7 +126,7 @@ export default function ThompsonChainReferences({
             </div>
           ))}
         </div>
-      </div>
+      </motion.div>
     </>
   );
 }

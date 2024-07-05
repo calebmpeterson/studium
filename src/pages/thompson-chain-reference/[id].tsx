@@ -1,17 +1,12 @@
 import { css } from "@emotion/react";
-import {
-  GetServerSideProps,
-  GetStaticProps,
-  InferGetServerSidePropsType,
-  InferGetStaticPropsType,
-} from "next";
+import { motion } from "framer-motion";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Head from "next/head";
-import Link from "next/link";
 
 import { ThompsonReferenceDisplay } from "@/components/ThompsonReferenceDisplay";
 import { TopNav } from "@/components/TopNav";
 import { getThompsonChainReference } from "@/data/getThompsonChainReference";
-import { getThompsonChainReferences } from "@/data/getThompsonChainReferences";
+import { fade } from "@/styles/motion";
 import { Entry } from "@/types/chain-reference";
 import { getKey } from "@/utils/getKey";
 
@@ -100,11 +95,15 @@ export default function ChainReferencePage({ entry }: Props) {
 
       <TopNav />
 
-      <div css={containerCss}>
+      <motion.div
+        css={containerCss}
+        key={getKey("thompson-chain-reference", entry.id)}
+        {...fade}
+      >
         <div css={layoutCss}>
           <div>
             <header>{entry.name}</header>
-            {entry.description && <div>{entry.description}</div>}
+            {entry.description && <small>{entry.description}</small>}
           </div>
 
           <div css={chainsContainerCss}>
@@ -124,7 +123,7 @@ export default function ChainReferencePage({ entry }: Props) {
             ))}
           </div>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 }
