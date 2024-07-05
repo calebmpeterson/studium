@@ -9,8 +9,11 @@ import { getRouteFromBookAndChapter } from "@/utils/getRouteFromBookAndChapter";
 
 type Testament = keyof typeof BOOK_CATEGORIES;
 
-const testamentsLayoutCss = css`
+const footerCss = css`
   border-top: 1px solid var(--border-color);
+`;
+
+const testamentsLayoutCss = css`
   display: flex;
   flex-wrap: wrap;
   align-items: start;
@@ -38,31 +41,52 @@ const categoryLayoutCss = css`
   flex: 1 1 auto;
 `;
 
-const bookContainerCss = css`
+const linkContainerCss = css`
   padding: 0 0 0 5px;
 `;
 
-export const Footer: FC = () => (
-  <footer css={testamentsLayoutCss}>
-    {map(BOOK_CATEGORIES, (categories, testament: Testament) => (
-      <div key={slugify(testament)} css={testamentLayoutCss}>
-        <header>{testament}</header>
+const resourcesContainerCss = css`
+  padding: 20px;
+`;
 
-        <div css={categoriesLayoutCss}>
-          {map(categories, (books, category) => (
-            <div key={slugify(category)} css={categoryLayoutCss}>
-              <header data-sub-header>{category}</header>
-              {books.map((book) => (
-                <div key={slugify(book)} css={bookContainerCss}>
-                  <Link href={getRouteFromBookAndChapter(book, "1")}>
-                    {book}
-                  </Link>
-                </div>
-              ))}
-            </div>
-          ))}
+export const Footer: FC = () => (
+  <footer css={footerCss}>
+    <div css={testamentsLayoutCss}>
+      {map(BOOK_CATEGORIES, (categories, testament: Testament) => (
+        <div key={slugify(testament)} css={testamentLayoutCss}>
+          <header>{testament}</header>
+
+          <div css={categoriesLayoutCss}>
+            {map(categories, (books, category) => (
+              <div key={slugify(category)} css={categoryLayoutCss}>
+                <header data-sub-header>{category}</header>
+                {books.map((book) => (
+                  <div key={slugify(book)} css={linkContainerCss}>
+                    <Link href={getRouteFromBookAndChapter(book, "1")}>
+                      {book}
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
+      ))}
+    </div>
+
+    <div css={resourcesContainerCss}>
+      <header>Resources</header>
+      <div css={linkContainerCss}>
+        <Link href="/thompson-chain-reference">Thompson Chain Reference</Link>
       </div>
-    ))}
+      <div css={linkContainerCss}>
+        <Link href="/timeline">Timeline</Link>
+      </div>
+      <div css={linkContainerCss}>
+        <Link href="https://github.com/calebmpeterson/studium">
+          Source Code
+        </Link>
+      </div>
+    </div>
   </footer>
 );
