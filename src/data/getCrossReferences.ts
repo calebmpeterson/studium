@@ -8,6 +8,7 @@ import {
 } from "@/types";
 import { slugifyReference } from "@/utils/slugifyReference";
 
+import { getCrossReferenceRecords } from "./getCrossReferenceRecords";
 import { getVerseText } from "./getVerseText";
 import { parseVerseReferenceTuple } from "./parseVerseReferenceTuple";
 
@@ -46,7 +47,7 @@ export const getCrossReferences = async (
 ): Promise<CrossReferencesForBookAndChapter> => {
   try {
     if (isString(book) && isString(chapter)) {
-      const records = await loadCrossReferenceRecords(book);
+      const records = await getCrossReferenceRecords(book);
 
       const recordsForChapter = records.filter((record) => {
         const [, recordChapter] = record.v.split(" ");
