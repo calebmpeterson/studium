@@ -8,14 +8,14 @@ type ErrorResult = {
   message: string;
 };
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<CrossReferencesForBookAndChapter | ErrorResult>
 ) {
   const { book, chapter } = req.query;
 
   try {
-    const crossReferences = getCrossReferences(book, chapter);
+    const crossReferences = await getCrossReferences(book, chapter);
 
     res.status(200).json(crossReferences);
   } catch (error: unknown) {

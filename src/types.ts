@@ -1,4 +1,4 @@
-import { FuseResult } from "fuse.js";
+export * from "./types/cross-references";
 
 export type VerseReference = {
   book: string;
@@ -43,23 +43,6 @@ export type SearchHistoryEntry = {
 };
 
 export type SearchHistory = SearchHistoryEntry[];
-
-export type CrossReference = {
-  book: string;
-  chapter: string;
-  verse: string;
-  score: number;
-  slug: string;
-  text?: string;
-};
-
-export type CrossReferencesForBookAndChapter = {
-  [verse: string]: CrossReference[];
-};
-
-export type CrossReferences = {
-  [bookAndChapterSlug: string]: CrossReferencesForBookAndChapter;
-};
 
 export type SearchResult = Verse;
 
