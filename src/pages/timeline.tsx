@@ -105,25 +105,28 @@ export default function Timeline(props: Props) {
           <TimelineRow items={[]} />
 
           {/* Books of the Bible and when they were written */}
-          <TimelineSection title="Books" />
+          <TimelineSection id="books" title="Books" />
           {props.bookRows.map((booksInRow, index) => (
             <TimelineRow key={`books-${index}`} items={booksInRow} />
           ))}
 
           {/* Ante-deluvian Patriarchs */}
-          <TimelineSection title="Patriarchs" />
+          <TimelineSection id="patriarchs" title="Patriarchs" />
           {props.patriarchRows.map((eventsInRow, index) => (
             <TimelineRow key={`patriarch-${index}`} items={eventsInRow} />
           ))}
 
           {/* World events */}
-          <TimelineSection title="Significant Historical Events" />
+          <TimelineSection
+            id="world-history"
+            title="Significant Historical Events"
+          />
           {props.eventRows.map((eventsInRow, index) => (
             <TimelineRow key={`event-${index}`} items={eventsInRow} />
           ))}
 
           {/* Church ages */}
-          <TimelineSection title="Churches" />
+          <TimelineSection id="churches" title="Churches" />
           {props.churchAgeRows.map((eventsInRow, index) => (
             <TimelineRow key={`church-age-${index}`} items={eventsInRow} />
           ))}

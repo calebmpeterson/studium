@@ -3,6 +3,7 @@ import { FC } from "react";
 
 interface Props {
   title: string;
+  id?: string;
 }
 
 const containerCss = css`
@@ -21,8 +22,16 @@ const placementCss = css`
   font-size: 80%;
 `;
 
-export const TimelineSection: FC<Props> = ({ title }) => (
-  <div css={containerCss}>
-    <div css={placementCss}>{title}</div>
-  </div>
+const anchorCss = css`
+  position: relative;
+  top: -60px;
+`;
+
+export const TimelineSection: FC<Props> = ({ title, id }) => (
+  <>
+    {id && <div id={id} css={anchorCss} />}
+    <div css={containerCss}>
+      <div css={placementCss}>{title}</div>
+    </div>
+  </>
 );
