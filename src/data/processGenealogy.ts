@@ -26,6 +26,7 @@ export const processGenealogy = (
 
   return patriarchs.map((patriarch) => ({
     title: patriarch.name,
+    subTitle: `lived ${patriarch.age} years`,
     date_started: offset + computeYearOfBirth(lookup, patriarch),
     date_completed:
       offset + computeYearOfBirth(lookup, patriarch) + patriarch.age,

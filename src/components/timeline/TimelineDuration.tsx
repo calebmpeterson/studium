@@ -30,6 +30,10 @@ const containerCss = (hasDetails: boolean) => css`
   cursor: ${hasDetails ? "help" : "inherit"};
 `;
 
+const subTitleCss = css`
+  color: var(--fg-muted);
+`;
+
 const detailsContainerCss = css`
   position: absolute;
   cursor: auto;
@@ -89,6 +93,7 @@ export const TimelineDuration: FC<TimelineDurationProps> = ({ item }) => {
     >
       <div css={eventLabelCss}>
         <div>{item.title}</div>
+        {item.subTitle && <small css={subTitleCss}>{item.subTitle}</small>}
         <small>
           {formatYear(item.date_started, item.approximate)}
           {item.date_started !== item.date_completed && (

@@ -17,6 +17,7 @@ export type HistoricalEventColor =
 
 export type HistoricalEvent = {
   title: string;
+  subTitle?: string;
   date_started: number;
   date_completed: number;
   approximate?: true;
