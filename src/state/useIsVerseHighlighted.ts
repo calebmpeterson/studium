@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 
-import { isBrowser } from "@/utils/isBrowser";
+import { isVerseInRange } from "@/utils/isVerseInRange";
 
 export const useIsVerseHighlighted = (verse: string) => {
   const [isHighlighted, setIsHighlighted] = useState(false);
 
   useEffect(() => {
-    const verseInUrl = location.hash.slice(1);
-    setIsHighlighted(verse === verseInUrl);
+    const verseRangeInUrl = location.hash.slice(1);
+    setIsHighlighted(isVerseInRange(parseInt(verse, 10), verseRangeInUrl));
 
     const onHashChange = () => {
       const verseInUrl = location.hash.slice(1);
