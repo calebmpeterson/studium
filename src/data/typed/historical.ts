@@ -37,7 +37,7 @@ export const BOOKS: HistoricalEvent[] = [
   { title: "Amos", date_started: -760, date_completed: -750 },
 
   { title: "Obadiah", date_started: -586, date_completed: -586 },
-  { title: "Jonah", date_started: -780, date_completed: -760 },
+  { title: "Jonah", date_started: -760, date_completed: -760 },
   { title: "Micah", date_started: -735, date_completed: -700 },
   { title: "Nahum", date_started: -663, date_completed: -612 },
   { title: "Habakkuk", date_started: -609, date_completed: -588 },
@@ -159,6 +159,14 @@ export const EVENTS: HistoricalEvent[] = [
     color: "purple",
     details:
       "Constructed by King Solomon. Destroyed by the Babylonians in the early part of the Exile.",
+  },
+  {
+    title: 'Destruction of Nineveh',
+    date_started: -612,
+    date_completed: -612,
+    color: 'red',
+    details: "As forewarned by Jonah and foretold by Nahum, the capital city of the Assyrian empire, Nineveh, was destroyed by the Medes",
+    link: '/nahum/1'
   },
   {
     title: "Babylonian Exile",
@@ -300,7 +308,7 @@ export const EVENTS: HistoricalEvent[] = [
       "As foretold by Daniel 500 years earlier, the Roman Empire eclipses the vestiges of the Greecian empire.\n\nThe Roman Empire continues to exist under various governmental forms until the reign of Constantine.",
   },
   {
-    title: "Holy Roman Empire",
+    title: "Roman Catholic Empire",
     date_started: 313,
     date_completed: CURRENT_YEAR,
     color: "iron",
