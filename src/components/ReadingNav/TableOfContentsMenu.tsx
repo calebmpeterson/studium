@@ -169,6 +169,10 @@ export const TableOfContentsMenu: FC<Props> = ({
               type="text"
               css={tableOfContentsFilterCss}
               placeholder="Search for book and chapter..."
+              autoComplete="off"
+              autoCapitalize="off"
+              autoCorrect="off"
+              spellCheck={false}
               value={tableOfContentsFilter}
               onChange={onChangeTableOfContentsFilter}
             />
