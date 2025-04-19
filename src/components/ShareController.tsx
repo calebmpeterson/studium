@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { mdiContentCopy, mdiShareVariant } from "@mdi/js";
+import { mdiCancel, mdiContentCopy, mdiShareVariant } from "@mdi/js";
 import Icon from "@mdi/react";
 import { FC, MouseEvent, useCallback } from "react";
 
@@ -59,6 +59,11 @@ export const ShareController: FC<Props> = ({
     await copy(textToCopy);
   }, [book, chapter, copy, fragment, versesToShare]);
 
+  const onClear = useCallback(() => {
+    history.replaceState({}, "", "#");
+    window.dispatchEvent(new HashChangeEvent("hashchange"));
+  }, []);
+
   const header = (
     <>
       {book} {chapter}:{fragment}
@@ -67,14 +72,21 @@ export const ShareController: FC<Props> = ({
 
   return (
     <Overlay title={header} onClose={onClose} isModal={false}>
-      <div css={flexboxCss()}>
-        <button disabled={!canShare} onClick={onShare}>
-          <Icon path={mdiShareVariant} size={0.7} />
-          &nbsp;Share
-        </button>
-        <button onClick={onCopy}>
-          <Icon path={mdiContentCopy} size={0.7} />
-          &nbsp;{didCopy ? "Copied" : "Copy"}
+      <div css={flexboxCss({ justify: "space-between" })}>
+        <div css={flexboxCss()}>
+          <button disabled={!canShare} onClick={onShare}>
+            <Icon path={mdiShareVariant} size={0.7} />
+            &nbsp;Share
+          </button>
+          <button onClick={onCopy}>
+            <Icon path={mdiContentCopy} size={0.7} />
+            &nbsp;{didCopy ? "Copied" : "Copy"}
+          </button>
+        </div>
+
+        <button onClick={onClear}>
+          <Icon path={mdiCancel} size={0.7} />
+          &nbsp;Clear selection
         </button>
       </div>
     </Overlay>
