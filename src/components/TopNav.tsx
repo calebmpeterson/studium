@@ -12,8 +12,11 @@ import { FC, MouseEvent, PropsWithChildren, useCallback } from "react";
 import { useShare } from "@/hooks/useShare";
 import { breakpoints } from "@/styles/breakpoints";
 
+type WasShareHandled = boolean;
+
 interface Props extends PropsWithChildren {
   isResource?: true;
+  onShare?: () => WasShareHandled;
 }
 
 const layoutCss = css`
@@ -75,15 +78,19 @@ const titleCss = css`
   }
 `;
 
-export const TopNav: FC<Props> = ({ children, isResource }) => {
+export const TopNav: FC<Props> = ({ children, isResource, onShare }) => {
   const { canShare, share } = useShare();
-  const onShare = useCallback(
+  const onDefaultShare = useCallback(
     async (event: MouseEvent) => {
       event.preventDefault();
 
-      await share();
+      const wasShareHandled = onShare ? onShare() : false;
+
+      if (!wasShareHandled) {
+        await share();
+      }
     },
-    [share]
+    [share, onShare]
   );
 
   return (
@@ -97,7 +104,7 @@ export const TopNav: FC<Props> = ({ children, isResource }) => {
 
       <div css={rightContainerCss}>
         {canShare && (
-          <button type="button" onClick={onShare}>
+          <button type="button" onClick={onDefaultShare}>
             <Icon path={mdiShareVariantOutline} size={0.7} />
           </button>
         )}

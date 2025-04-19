@@ -13,6 +13,7 @@ interface Props extends PropsWithChildren<{}> {
   onClose: () => void;
   header?: ReactNode;
   hasInput?: boolean;
+  isModal?: boolean;
 }
 
 const overlayBackgroundCss = css`
@@ -25,7 +26,7 @@ const overlayBackgroundCss = css`
   background-color: var(--backdrop);
 `;
 
-const overlayContainerCss = (hasInput?: boolean) => css`
+const overlayContainerCss = (hasInput?: boolean, isModal?: boolean) => css`
   position: fixed;
   z-index: 1002;
   bottom: 0px;
@@ -41,9 +42,8 @@ const overlayContainerCss = (hasInput?: boolean) => css`
   border-radius: 10px 10px 0 0;
   background-color: var(--bg);
   max-height: 80vh;
-  min-height: 40vh;
 
-  box-shadow: ${shadows["shadow-xl"]};
+  box-shadow: ${isModal ? shadows["shadow-xl"] : shadows["shadow"]};
 
   @media ${breakpoints["is-mobile"]} {
     min-height: ${hasInput ? "80vh" : "auto"};
@@ -77,25 +77,33 @@ export const Overlay: FC<Props> = ({
   hasInput,
   children,
   onClose,
+  isModal = true,
 }) => {
   useEffect(() => {
+    if (!isModal) {
+      return;
+    }
+
     const original = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
     return () => {
       document.body.style.overflow = original;
     };
-  });
+  }, [isModal]);
 
   return (
     <>
-      <motion.div
-        {...fade}
-        css={overlayBackgroundCss}
-        data-fade-in
-        onClick={onClose}
-      />
-      <motion.div {...fade} css={overlayContainerCss(hasInput)}>
+      {isModal && (
+        <motion.div
+          {...fade}
+          css={overlayBackgroundCss}
+          data-fade-in
+          onClick={onClose}
+        />
+      )}
+
+      <motion.div {...fade} css={overlayContainerCss(hasInput, isModal)}>
         <div css={overlayHeaderCss}>
           <header css={overlayTitleCss}>{title}</header>
 

@@ -2,21 +2,24 @@ import { css } from "@emotion/react";
 import { mdiChevronLeft, mdiChevronRight, mdiMapMarkerMultiple } from "@mdi/js";
 import Icon from "@mdi/react";
 import { motion } from "framer-motion";
-import { flatMap } from "lodash";
+import { flatMap, isEmpty } from "lodash";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import slugify from "slugify";
 
 import { Overlay } from "@/components/Overlay";
 import { ReadingNav } from "@/components/ReadingNav";
 import { SearchController } from "@/components/SearchController";
+import { ShareController } from "@/components/ShareController";
 import { TopNav } from "@/components/TopNav";
 import { VerseDisplay } from "@/components/VerseDisplay";
 import { getBookAndChapter } from "@/data/getBookAndChapter";
 import { getTableOfContents } from "@/data/getTableOfContents";
+import { useToggle } from "@/hooks/useToggle";
+import { useVersesToShare } from "@/hooks/useVersesToShare";
 import { useCrossReferences } from "@/queries/useCrossReferences";
 import { useTrackReadingHistory } from "@/state/useTrackReadingHistory";
 import { breakpoints } from "@/styles/breakpoints";
@@ -26,6 +29,7 @@ import { TableOfContents, Verse } from "@/types";
 import { getNextBookAndChapter } from "@/utils/getNextBookAndChapter";
 import { getPreviousBookAndChapter } from "@/utils/getPreviousBookAndChapter";
 import { getRouteFromBookAndChapter } from "@/utils/getRouteFromBookAndChapter";
+import { parseFragment } from "@/utils/parseFragment";
 
 const DynamicPlacesDisplay = dynamic(
   async () => import("@/components/PlacesController"),
@@ -148,8 +152,12 @@ type Props = InferGetStaticPropsType<typeof getStaticProps>;
 const EMPTY_VERSES: Verse[] = [];
 
 export default function BookAndChapter({ tableOfContents, ...props }: Props) {
+  const router = useRouter();
+  const [isRouting, setIsRouting] = useState(false);
+
   const currentBook = "book" in props ? props.book : "Genesis";
   const currentChapter = "chapter" in props ? props.chapter : "1";
+
   useTrackReadingHistory(currentBook, currentChapter);
 
   const crossReferences = useCrossReferences(currentBook, currentChapter);
@@ -169,10 +177,6 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
     currentChapter
   );
   const hasNext = !("none" in nextBookAndChapter);
-
-  const router = useRouter();
-
-  const [isRouting, setIsRouting] = useState(false);
 
   const onPrevious = useCallback(async () => {
     if (!("none" in previousBookAndChapter)) {
@@ -200,23 +204,35 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
     }
   }, [nextBookAndChapter, router]);
 
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const onOpenSearch = useCallback(() => {
-    setIsSearchOpen(true);
-  }, []);
-  const onCloseSearch = useCallback(() => {
-    setIsSearchOpen(false);
-  }, []);
-
-  const [isMapOpen, setIsMapOpen] = useState(false);
-  const onOpenMap = useCallback(() => {
-    setIsMapOpen(true);
-  }, []);
-  const onCloseMap = useCallback(() => {
-    setIsMapOpen(false);
-  }, []);
+  const search = useToggle();
+  const map = useToggle();
+  const share = useToggle();
 
   const title = `${currentBook} ${currentChapter} | Studium`;
+
+  useEffect(() => {
+    const onHashChange = () => {
+      const fragment = location.hash.replace("#", "");
+      const areVersesHighlighted = !isEmpty(parseFragment(fragment));
+      share.change(areVersesHighlighted);
+    };
+
+    window.addEventListener("hashchange", onHashChange);
+
+    return () => {
+      window.removeEventListener("hashchange", onHashChange);
+    };
+  }, [share]);
+
+  const { versesToShare } = useVersesToShare(verses);
+  const onShare = useCallback(() => {
+    if (versesToShare.length > 0) {
+      share.open();
+      return true;
+    }
+
+    return false;
+  }, [share, versesToShare]);
 
   return (
     <>
@@ -224,7 +240,7 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
         <title>{title}</title>
       </Head>
 
-      <TopNav>
+      <TopNav onShare={onShare}>
         <ReadingNav
           tableOfContents={tableOfContents}
           currentBook={currentBook}
@@ -271,14 +287,14 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
             type="text"
             css={navSearchCss}
             placeholder="Search by words or topic..."
-            onFocus={onOpenSearch}
+            onFocus={search.open}
           />
         </form>
 
         <button
           data-icon
           css={navButtonCss}
-          onClick={onOpenMap}
+          onClick={map.open}
           aria-label="View places"
         >
           <Icon path={mdiMapMarkerMultiple} size={0.7} />
@@ -301,10 +317,10 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
         </div>
       </nav>
 
-      {isMapOpen && (
+      {map.isOpen && (
         <Overlay
           title={`Places in ${currentBook} ${currentChapter}`}
-          onClose={onCloseMap}
+          onClose={map.close}
         >
           <div css={placesContainerCss}>
             <DynamicPlacesDisplay
@@ -316,7 +332,16 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
         </Overlay>
       )}
 
-      {isSearchOpen && <SearchController onClose={onCloseSearch} />}
+      {search.isOpen && <SearchController onClose={search.close} />}
+
+      {share.isOpen && (
+        <ShareController
+          book={currentBook}
+          chapter={currentChapter}
+          verses={verses}
+          onClose={share.close}
+        />
+      )}
     </>
   );
 }

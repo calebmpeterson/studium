@@ -7,11 +7,13 @@ export const useIsVerseHighlighted = (verse: string) => {
 
   useEffect(() => {
     const verseRangeInUrl = location.hash.slice(1);
-    setIsHighlighted(isVerseInRange(parseInt(verse, 10), verseRangeInUrl));
+    const verseAsNumber = parseInt(verse, 10);
+    setIsHighlighted(isVerseInRange(verseAsNumber, verseRangeInUrl));
 
     const onHashChange = () => {
       const verseInUrl = location.hash.slice(1);
-      setIsHighlighted(verse === verseInUrl);
+      const verseAsNumber = parseInt(verse, 10);
+      setIsHighlighted(isVerseInRange(verseAsNumber, verseInUrl));
     };
 
     window.addEventListener("hashchange", onHashChange);

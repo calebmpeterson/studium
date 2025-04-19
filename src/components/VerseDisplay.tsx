@@ -2,11 +2,12 @@ import { css } from "@emotion/react";
 import { isEmpty } from "lodash";
 import { FC, MouseEvent, useCallback, useState } from "react";
 
-import { useShare } from "@/hooks/useShare";
 import { useIsVerseHighlighted } from "@/state/useIsVerseHighlighted";
 import { transition } from "@/styles/transition";
 import { CrossReference, Verse } from "@/types";
-import { slugifyReference } from "@/utils/slugifyReference";
+import { addToFragment } from "@/utils/addToFragment";
+import { isVerseInRange } from "@/utils/isVerseInRange";
+import { removeFromFragment } from "@/utils/removeFromFragment";
 
 import { CrossReferencesDisplay } from "./CrossReferencesDisplay";
 
@@ -73,7 +74,13 @@ export const VerseDisplay: FC<Props> = ({
     (event: MouseEvent<HTMLElement>) => {
       event.preventDefault();
 
-      history.replaceState({}, "", `#${verse}`);
+      const fragment = location.hash.replace("#", "");
+      const verseAsNumber = parseInt(verse, 10);
+      const updatedFragment = isVerseInRange(verseAsNumber, fragment)
+        ? removeFromFragment(fragment, verseAsNumber)
+        : addToFragment(fragment, verseAsNumber);
+
+      history.replaceState({}, "", `#${updatedFragment}`);
       window.dispatchEvent(new HashChangeEvent("hashchange"));
 
       (event.target as HTMLElement).scrollIntoView({
@@ -82,20 +89,6 @@ export const VerseDisplay: FC<Props> = ({
       });
     },
     [verse]
-  );
-
-  const { canShare, share } = useShare({
-    title: `${book} ${chapter}:${verse}`,
-    url: slugifyReference({ book, chapter, verse }),
-  });
-
-  const onShare = useCallback(
-    async (event: MouseEvent<HTMLElement>) => {
-      event.preventDefault();
-
-      await share();
-    },
-    [share]
   );
 
   return (
@@ -126,13 +119,6 @@ export const VerseDisplay: FC<Props> = ({
                 onClose={onCloseCrossReferences}
               />
             )}
-          </>
-        )}
-        {canShare && (
-          <>
-            <a css={linkCss} tabIndex={0} onClick={onShare}>
-              Share
-            </a>
           </>
         )}
       </span>
