@@ -6,6 +6,7 @@ import colors, { ACTIVE_COLOR, BASE_COLOR } from "./colors";
 import { formsCss } from "./forms";
 import { navigationCss } from "./navigation";
 import { scheme } from "./scheme";
+import { shadowsCss } from "./shadows";
 import { BODY_FONT_FAMILY, typographyCss } from "./typography";
 
 export const globalCss = css`
@@ -108,4 +109,5 @@ export const globalCss = css`
   ${navigationCss}
   ${formsCss}
   ${animationsCss}
+  ${shadowsCss}
 `;

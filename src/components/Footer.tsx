@@ -77,10 +77,19 @@ export const Footer: FC = () => (
     <div css={resourcesContainerCss}>
       <header>Resources</header>
       <div css={linkContainerCss}>
-        <Link href="/thompson-chain-reference">Thompson Chain Reference</Link>
+        <Link shallow href="/first-mention">
+          First Mention
+        </Link>
       </div>
       <div css={linkContainerCss}>
-        <Link href="/timeline">Timeline</Link>
+        <Link shallow href="/thompson-chain-reference">
+          Thompson Chain Reference
+        </Link>
+      </div>
+      <div css={linkContainerCss}>
+        <Link shallow href="/timeline">
+          Timeline
+        </Link>
       </div>
       <div css={linkContainerCss}>
         <Link href="https://github.com/calebmpeterson/studium">

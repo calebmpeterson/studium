@@ -28,6 +28,14 @@ export const typographyCss = css`
     color: var(--fg-muted);
   }
 
+  [data-italic="true"] {
+    font-style: italic;
+  }
+
+  [data-bold="true"] {
+    font-weight: bold;
+  }
+
   small,
   [data-text-size="small"] {
     font-size: 90%;

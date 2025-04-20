@@ -1,3 +1,5 @@
+import { css } from "@emotion/react";
+
 export const shadows = {
   "shadow-sm": "0 1px 2px 0 rgb(0 0 0 / 0.25);",
 
@@ -20,3 +22,13 @@ export const shadows = {
 
   "shadow-inset": "0 5px 10px -5px rgba(0, 0, 0, 0.125)",
 };
+
+export const shadowsCss = css`
+  ${Object.entries(shadows).map(
+    ([key, value]) => `
+    [data-${key}] {
+      box-shadow: ${value};
+    }
+  `
+  )}
+`;

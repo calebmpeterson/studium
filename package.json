@@ -14,6 +14,7 @@
     "build:data:toc": "ts-node --skipProject scripts/kjv-to-table-of-contents.ts",
     "build:data:cross-references": "ts-node --skipProject scripts/cross-references-to-json.ts",
     "build:data:sites-3": "ts-node --skipProject scripts/build-biblical-sites-3.ts",
+    "build:data:first-mention-index": "ts-node --skipProject scripts/build-first-mention-index.ts",
     "build:search-index": "ts-node --skipProject scripts/build-search-index.ts",
     "build:thompson-chain-references": "ts-node --skipProject scripts/build-thompson-chain-references.ts"
   },
@@ -39,7 +40,8 @@
     "slugify": "^1.6.6",
     "use-click-outside": "^2.0.0",
     "use-local-storage-state": "^19.1.0",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "zod": "^3.24.3"
   },
   "devDependencies": {
     "@types/fuzzysearch": "^1.0.2",
