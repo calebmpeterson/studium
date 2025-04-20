@@ -3,7 +3,14 @@ import { mdiClose, mdiTableOfContents } from "@mdi/js";
 import Icon from "@mdi/react";
 import fuzzysearch from "fuzzysearch";
 import { flatMap, isEmpty, map } from "lodash";
-import { ChangeEvent, FC, useCallback, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  FC,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 
 import { shadows } from "@/styles/shadows";
@@ -110,7 +117,7 @@ export const TableOfContentsMenu: FC<Props> = ({
 }) => {
   const filterInputRef = useRef<HTMLInputElement>(null);
 
-  useHotkeys("ctrl+k", onToggleTableOfContents);
+  useHotkeys(["ctrl+k", "meta+k"], onToggleTableOfContents);
 
   const tableOfContentsEntries = flatMap(tableOfContents, (chapters, book) =>
     map(chapters, (slug, chapter) => ({
@@ -150,6 +157,12 @@ export const TableOfContentsMenu: FC<Props> = ({
       }
     }, 0);
   }, [onToggleTableOfContents]);
+
+  useEffect(() => {
+    if (isTableOfContentsOpen) {
+      filterInputRef.current?.focus();
+    }
+  }, [isTableOfContentsOpen]);
 
   return (
     <>
