@@ -43,7 +43,10 @@ const overlayContainerCss = (hasInput?: boolean, isModal?: boolean) => css`
   background-color: var(--bg);
   max-height: 80vh;
 
-  box-shadow: ${isModal ? shadows["shadow-xl"] : shadows["shadow"]};
+  box-shadow: ${isModal ? shadows["shadow-xl"] : shadows["shadow-lg"]};
+  border-top: ${!isModal ? "1px solid var(--border-color)" : "none"};
+  border-left: ${!isModal ? "1px solid var(--border-color)" : "none"};
+  border-right: ${!isModal ? "1px solid var(--border-color)" : "none"};
 
   @media ${breakpoints["is-mobile"]} {
     min-height: ${hasInput ? "80vh" : "auto"};
