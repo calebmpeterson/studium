@@ -12,6 +12,8 @@ import { FC, MouseEvent, PropsWithChildren, useCallback } from "react";
 import { useShare } from "@/hooks/useShare";
 import { breakpoints } from "@/styles/breakpoints";
 
+import { Tooltip } from "./Tooltip";
+
 type WasShareHandled = boolean;
 
 interface Props extends PropsWithChildren {
@@ -106,12 +108,14 @@ export const TopNav: FC<Props> = ({ children, isResource, onShare }) => {
         {canShare && (
           <button type="button" onClick={onDefaultShare}>
             <Icon path={mdiShareVariantOutline} size={0.7} />
+            <Tooltip placement="left">Share</Tooltip>
           </button>
         )}
 
         {isResource ? (
           <Link role="button" aria-label="Close" href="/">
             <Icon path={mdiClose} size={0.7} />
+            <Tooltip placement="left">Close</Tooltip>
           </Link>
         ) : (
           <Link
@@ -120,6 +124,7 @@ export const TopNav: FC<Props> = ({ children, isResource, onShare }) => {
             href="/timeline"
           >
             <Icon path={mdiChartTimeline} size={0.7} />
+            <Tooltip placement="left">Biblical timeline</Tooltip>
           </Link>
         )}
       </div>

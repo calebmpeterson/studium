@@ -6,11 +6,13 @@ import { BODY_FONT_FAMILY } from "./typography";
 export const navigationCss = css`
   button,
   a[role="button"] {
+    position: relative;
     border: 1px solid var(--button-border);
     background-color: var(--bg);
     color: var(--button-fg);
     border-radius: var(--border-radius);
     display: flex;
+    gap: 5px;
     align-items: center;
     justify-content: center;
     padding: 5px 10px;
@@ -52,6 +54,11 @@ export const navigationCss = css`
     &[data-is-active="true"] {
       color: var(--active-fg);
       border-color: var(--active-fg);
+    }
+
+    &:hover [data-tooltip-content] {
+      opacity: 1;
+      visibility: visible;
     }
   }
 

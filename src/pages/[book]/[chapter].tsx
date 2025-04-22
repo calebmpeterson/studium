@@ -14,6 +14,7 @@ import { Overlay } from "@/components/Overlay";
 import { ReadingNav } from "@/components/ReadingNav";
 import { SearchController } from "@/components/SearchController";
 import { ShareController } from "@/components/ShareController";
+import { Tooltip } from "@/components/Tooltip";
 import { TopNav } from "@/components/TopNav";
 import { VerseDisplay } from "@/components/VerseDisplay";
 import { getBookAndChapter } from "@/data/getBookAndChapter";
@@ -276,6 +277,7 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
               onClick={onPrevious}
             >
               <Icon path={mdiChevronLeft} size={0.7} />
+              <Tooltip placement="top">Previous chapter</Tooltip>
             </button>
           ) : (
             <div css={navButtonPlaceholderCss} />
@@ -310,6 +312,7 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
               onClick={onNext}
             >
               <Icon path={mdiChevronRight} size={0.7} />
+              <Tooltip placement="top">Next chapter</Tooltip>
             </button>
           ) : (
             <div css={navButtonPlaceholderCss} />

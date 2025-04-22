@@ -13,10 +13,13 @@ import {
 } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 
+import { FloatingBox } from "@/components/FloatingBox";
+import { Tooltip } from "@/components/Tooltip";
+import { flexboxCss } from "@/styles/layout";
 import { shadows } from "@/styles/shadows";
 import { TableOfContents } from "@/types";
+import { isAppleDevice } from "@/utils/isAppleDevice";
 
-import { FloatingBox } from "../FloatingBox";
 import { TableOfContentsItem } from "./TableOfContentsItem";
 
 interface Props {
@@ -104,7 +107,9 @@ const emptyTableOfContentsCss = css`
   padding: 0 10px;
 `;
 
-const tableOfContentsButtonCss = css``;
+const tableOfContentsButtonCss = css`
+  position: relative;
+`;
 
 export const TableOfContentsMenu: FC<Props> = ({
   tableOfContents,
@@ -118,6 +123,12 @@ export const TableOfContentsMenu: FC<Props> = ({
   const filterInputRef = useRef<HTMLInputElement>(null);
 
   useHotkeys(["ctrl+k", "meta+k"], onToggleTableOfContents);
+
+  const [hotkeyModifier, setHotkeyModifier] = useState<"ctrl" | "meta">("ctrl");
+
+  useEffect(() => {
+    setHotkeyModifier(isAppleDevice() ? "meta" : "ctrl");
+  }, []);
 
   const tableOfContentsEntries = flatMap(tableOfContents, (chapters, book) =>
     map(chapters, (slug, chapter) => ({
@@ -168,7 +179,15 @@ export const TableOfContentsMenu: FC<Props> = ({
     <>
       <button css={tableOfContentsButtonCss} onClick={onToggle}>
         <Icon path={mdiTableOfContents} size={0.7} />
+
+        <Tooltip placement="left">
+          Table of Contents
+          <div css={flexboxCss({ gap: "2px", wrap: false })}>
+            <kbd>{hotkeyModifier}</kbd>+<kbd>K</kbd>
+          </div>
+        </Tooltip>
       </button>
+
       {isTableOfContentsOpen && (
         <FloatingBox
           shouldMaximizeOnMobile

@@ -14,6 +14,7 @@ import { ChapterMenuItem } from "./ChapterMenuItem";
 import { FloatingBox } from "./FloatingBox";
 import { ReadingHistoryMenuItem } from "./ReadingHistoryMenuItem";
 import { TableOfContentsMenu } from "./ReadingNav/TableOfContentsMenu";
+import { Tooltip } from "./Tooltip";
 
 interface Props {
   tableOfContents: TableOfContents;
@@ -191,7 +192,10 @@ export const ReadingNav: FC<Props> = ({
         onClick={onToggleReadingHistoryMenu}
       >
         <Icon path={mdiHistory} size={0.7} />
+
+        <Tooltip placement="right">Reading history</Tooltip>
       </button>
+
       {isReadingHistoryMenuOpen && (
         <FloatingBox
           css={readingHistoryMenuCss}

@@ -39,6 +39,10 @@ export const globalCss = css`
     --backdrop: rgba(0, 0, 0, 0.75);
 
     --tooltip-bg: ${BASE_COLOR[800]};
+    --tooltip-fg: ${BASE_COLOR[50]};
+
+    --kbd-bg: ${BASE_COLOR[900]};
+    --kbd-fg: ${BASE_COLOR[50]};
 
     --info: ${colors.blue[500]};
     --gold: ${colors.yellow[500]};
@@ -85,7 +89,12 @@ export const globalCss = css`
       --disabled-fg: ${BASE_COLOR[500]};
       --disabled-bg: ${BASE_COLOR[100]};
       --backdrop: rgba(0, 0, 0, 0.5);
-      --tooltip-bg: ${BASE_COLOR[50]};
+
+      --tooltip-bg: ${BASE_COLOR[800]};
+      --tooltip-fg: ${BASE_COLOR[50]};
+
+      --kbd-bg: ${BASE_COLOR[200]};
+      --kbd-fg: ${BASE_COLOR[700]};
 
       --info: ${colors.blue[500]};
       --gold: ${colors.yellow[500]};
@@ -110,4 +119,27 @@ export const globalCss = css`
   ${formsCss}
   ${animationsCss}
   ${shadowsCss}
+
+  /* Hide by default */
+  [data-for-keyboard] {
+    display: none;
+  }
+
+  /* Show when device likely has a physical keyboard (hover support) */
+  @media (hover: hover) {
+    [data-for-keyboard] {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  kbd {
+    font-size: 10px;
+    font-family: monospace;
+    text-transform: uppercase;
+    color: var(--kbd-fg);
+    background-color: var(--kbd-bg);
+    border-radius: 3px;
+    padding: 2px 4px;
+  }
 `;
