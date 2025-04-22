@@ -66,7 +66,8 @@ const tooltipCss = (placement: TooltipPlacement = "bottom") => css`
   background-color: var(--tooltip-bg);
   color: var(--tooltip-fg);
   border-radius: 4px;
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: 600;
   white-space: nowrap;
   opacity: 0;
   visibility: hidden;

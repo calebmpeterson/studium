@@ -38,10 +38,10 @@ export const globalCss = css`
     --disabled-bg: ${BASE_COLOR[800]};
     --backdrop: rgba(0, 0, 0, 0.75);
 
-    --tooltip-bg: ${BASE_COLOR[800]};
+    --tooltip-bg: ${BASE_COLOR[950]};
     --tooltip-fg: ${BASE_COLOR[50]};
 
-    --kbd-bg: ${BASE_COLOR[900]};
+    --kbd-bg: ${BASE_COLOR[700]};
     --kbd-fg: ${BASE_COLOR[50]};
 
     --info: ${colors.blue[500]};
