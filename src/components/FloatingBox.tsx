@@ -28,6 +28,7 @@ const maximizedOnMobileCss = css`
 
 const containerCss = (shouldMaximizeOnMobile: boolean) => css`
   position: absolute;
+  z-index: 1005;
   top: calc(100% + 5px);
   max-height: 500px;
   overflow-y: auto;
