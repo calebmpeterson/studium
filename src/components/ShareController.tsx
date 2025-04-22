@@ -73,7 +73,7 @@ export const ShareController: FC<Props> = ({
   return (
     <Overlay title={header} onClose={onClose} isModal={false}>
       <div css={flexboxCss({ justify: "space-between" })}>
-        <div css={flexboxCss()}>
+        <div css={flexboxCss({ width: "auto" })}>
           <button disabled={!canShare} onClick={onShare}>
             <Icon path={mdiShareVariant} size={0.7} />
             &nbsp;Share
