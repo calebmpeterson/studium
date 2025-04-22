@@ -68,6 +68,11 @@ export const globalCss = css`
 
     --skeleton-base-color: ${BASE_COLOR[800]};
     --skeleton-highlight-color: ${BASE_COLOR[900]};
+
+    --z-index-sticky: 1;
+    --z-index-overlay: 1002;
+    --z-index-floating-box: 1005;
+    --z-index-tooltip: 1010;
   }
 
   body {

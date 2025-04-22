@@ -77,7 +77,7 @@ const tableOfContentsCss = css`
 
 const topControlsCss = css`
   position: sticky;
-  z-index: 1;
+  z-index: var(--z-index-sticky);
   top: 0px;
   width: 100%;
   display: flex;

@@ -58,6 +58,7 @@ const getPlacementStyles = (placement: TooltipPlacement) => {
 
 const tooltipCss = (placement: TooltipPlacement = "bottom") => css`
   position: absolute;
+  z-index: var(--z-index-tooltip);
   display: flex;
   align-items: center;
   gap: 5px;
