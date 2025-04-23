@@ -4,6 +4,7 @@ import { animationsCss } from "./animations";
 import { breakpoints } from "./breakpoints";
 import colors, { ACTIVE_COLOR, BASE_COLOR } from "./colors";
 import { formsCss } from "./forms";
+import { layoutCss } from "./layout";
 import { navigationCss } from "./navigation";
 import { scheme } from "./scheme";
 import { shadowsCss } from "./shadows";
@@ -120,6 +121,7 @@ export const globalCss = css`
     }
   }
 
+  ${layoutCss}
   ${navigationCss}
   ${formsCss}
   ${animationsCss}

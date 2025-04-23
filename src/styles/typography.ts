@@ -36,6 +36,14 @@ export const typographyCss = css`
     font-weight: bold;
   }
 
+  [data-text-wrap] {
+    text-wrap: wrap;
+  }
+
+  [data-text-nowrap] {
+    text-wrap: nowrap;
+  }
+
   small,
   [data-text-size="small"] {
     font-size: 90%;

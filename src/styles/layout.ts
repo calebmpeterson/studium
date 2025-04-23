@@ -1,5 +1,15 @@
 import { css } from "@emotion/react";
 
+export const layoutCss = css`
+  [data-flex-shrink="0"] {
+    flex-shrink: 0;
+  }
+
+  [data-flex-shrink="1"] {
+    flex-shrink: 1;
+  }
+`;
+
 export const marginCss = (margin: string) => css`
   margin: ${margin};
 `;

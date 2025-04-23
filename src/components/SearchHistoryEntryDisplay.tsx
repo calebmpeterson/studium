@@ -5,10 +5,11 @@ import ago from "s-ago";
 import { SearchHistoryEntry } from "@/types";
 
 const containerCss = css`
+  color: var(--fg);
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  gap: 20px;
+  gap: 10px;
   width: 100%;
 `;
 
@@ -33,7 +34,9 @@ export const SearchHistoryEntryDisplay: FC<Props> = ({
   return (
     <a css={containerCss} onClick={onClick}>
       <span>{query}</span>
-      <em>{timestamp && ago(new Date(timestamp))}</em>
+      <span data-text-nowrap data-flex-shrink="0" data-muted>
+        {timestamp && ago(new Date(timestamp))}
+      </span>
     </a>
   );
 };
