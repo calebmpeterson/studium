@@ -1,16 +1,14 @@
 import { css } from "@emotion/react";
-import { mdiChevronLeft, mdiChevronRight, mdiMapMarkerMultiple } from "@mdi/js";
+import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
 import Icon from "@mdi/react";
 import { motion } from "framer-motion";
 import { flatMap, isEmpty } from "lodash";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
-import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import slugify from "slugify";
 
-import { Overlay } from "@/components/Overlay";
 import { ReadingNav } from "@/components/ReadingNav";
 import { SearchController } from "@/components/SearchController";
 import { ShareController } from "@/components/ShareController";
@@ -32,12 +30,6 @@ import { getPreviousBookAndChapter } from "@/utils/getPreviousBookAndChapter";
 import { getRouteFromBookAndChapter } from "@/utils/getRouteFromBookAndChapter";
 import { parseFragment } from "@/utils/parseFragment";
 
-const DynamicPlacesDisplay = dynamic(
-  async () => import("@/components/PlacesController"),
-  {
-    ssr: false,
-  }
-);
 
 const layoutCss = css`
   position: relative;
@@ -99,9 +91,6 @@ const navSearchCss = css`
   box-shadow: ${shadows["shadow-md"]};
 `;
 
-const placesContainerCss = css`
-  height: 400px;
-`;
 
 type DataResult = {
   book: string;
@@ -206,7 +195,6 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
   }, [nextBookAndChapter, router]);
 
   const search = useToggle();
-  const map = useToggle();
   const share = useToggle();
 
   const title = `${currentBook} ${currentChapter} | Studium`;
@@ -293,14 +281,6 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
           />
         </form>
 
-        <button
-          data-icon
-          css={navButtonCss}
-          onClick={map.open}
-          aria-label="View places"
-        >
-          <Icon path={mdiMapMarkerMultiple} size={0.7} />
-        </button>
 
         <div css={navButtonContainerCss}>
           {hasNext ? (
@@ -320,20 +300,7 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
         </div>
       </nav>
 
-      {map.isOpen && (
-        <Overlay
-          title={`Places in ${currentBook} ${currentChapter}`}
-          onClose={map.close}
-        >
-          <div css={placesContainerCss}>
-            <DynamicPlacesDisplay
-              book={currentBook}
-              chapter={currentChapter}
-              verses={verses}
-            />
-          </div>
-        </Overlay>
-      )}
+
 
       {search.isOpen && <SearchController onClose={search.close} />}
 
