@@ -6428,13 +6428,6 @@ kind-of@^6.0.2:
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.3.tgz#07c05034a6c349fa06e24fa35aa76db4580ce4dd"
   integrity sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==
 
-kml-to-geojson@^1.0.13:
-  version "1.0.13"
-  resolved "https://registry.yarnpkg.com/kml-to-geojson/-/kml-to-geojson-1.0.13.tgz#a3de674669024b85ac7809212d0e6f85a21fd823"
-  integrity sha512-koN/vs19E8w9YGdcNPXmFF5Ogm2jeyMH70sIrI+Llg71twyXZ9wkBpltsVFVddzzkY4STkDwXp22L9OFoj1JkQ==
-  dependencies:
-    xmldom "^0.6.0"
-
 kuler@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/kuler/-/kuler-2.0.0.tgz#e2c570a3800388fb44407e851531c1d670b061b3"
