@@ -1,17 +1,19 @@
 import { css } from "@emotion/react";
 import {
   mdiBookOpenPageVariant,
-  mdiChartTimeline,
   mdiClose,
+  mdiMenu,
   mdiShareVariantOutline,
 } from "@mdi/js";
 import Icon from "@mdi/react";
 import Link from "next/link";
-import { FC, MouseEvent, PropsWithChildren, useCallback } from "react";
+import { FC, MouseEvent, PropsWithChildren, useCallback, useState } from "react";
 
+import { RESOURCE_LINKS } from "@/data/resourceLinks";
 import { useShare } from "@/hooks/useShare";
 import { breakpoints } from "@/styles/breakpoints";
 
+import { FloatingBox } from "./FloatingBox";
 import { Tooltip } from "./Tooltip";
 
 type WasShareHandled = boolean;
@@ -80,8 +82,17 @@ const titleCss = css`
   }
 `;
 
+const resourcesMenuCss = css`
+  padding-right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 200px;
+`;
+
 export const TopNav: FC<Props> = ({ children, isResource, onShare }) => {
   const { canShare, share } = useShare();
+  const [isResourcesMenuOpen, setIsResourcesMenuOpen] = useState(false);
   const onDefaultShare = useCallback(
     async (event: MouseEvent) => {
       event.preventDefault();
@@ -118,14 +129,34 @@ export const TopNav: FC<Props> = ({ children, isResource, onShare }) => {
             <Tooltip placement="left">Close</Tooltip>
           </Link>
         ) : (
-          <Link
-            role="button"
-            aria-label="View Biblical timeline"
-            href="/timeline"
-          >
-            <Icon path={mdiChartTimeline} size={0.7} />
-            <Tooltip placement="left">Biblical timeline</Tooltip>
-          </Link>
+          <>
+            <button
+              type="button"
+              aria-label="Resources"
+              onClick={() => setIsResourcesMenuOpen((o) => !o)}
+              data-icon
+            >
+              <Icon path={mdiMenu} size={0.7} />
+              <Tooltip placement="left">Resources</Tooltip>
+            </button>
+
+            {isResourcesMenuOpen && (
+              <FloatingBox
+                css={resourcesMenuCss}
+                onClickOutside={() => setIsResourcesMenuOpen(false)}
+              >
+                {RESOURCE_LINKS.map(({ label, href, shallow }) => (
+                  <Link
+                    key={href}
+                    href={href}
+                    {...(shallow ? { shallow: true } : {})}
+                  >
+                    {label}
+                  </Link>
+                ))}
+              </FloatingBox>
+            )}
+          </>
         )}
       </div>
     </nav>
