@@ -5,6 +5,7 @@ import { FC } from "react";
 import slugify from "slugify";
 
 import BOOK_CATEGORIES from "@/data/json/categorized-books.json";
+import { RESOURCE_LINKS } from "@/data/resources";
 import { getRouteFromBookAndChapter } from "@/utils/getRouteFromBookAndChapter";
 
 type Testament = keyof typeof BOOK_CATEGORIES;
@@ -76,26 +77,13 @@ export const Footer: FC = () => (
 
     <div css={resourcesContainerCss}>
       <header>Resources</header>
-      <div css={linkContainerCss}>
-        <Link shallow href="/first-mention">
-          First Mention
-        </Link>
-      </div>
-      <div css={linkContainerCss}>
-        <Link shallow href="/thompson-chain-reference">
-          Thompson Chain Reference
-        </Link>
-      </div>
-      <div css={linkContainerCss}>
-        <Link shallow href="/timeline">
-          Timeline
-        </Link>
-      </div>
-      <div css={linkContainerCss}>
-        <Link href="https://github.com/calebmpeterson/studium">
-          Source Code
-        </Link>
-      </div>
+      {RESOURCE_LINKS.map(({ label, href, shallow }) => (
+        <div key={href} css={linkContainerCss}>
+          <Link href={href} {...(shallow ? { shallow: true } : {})}>
+            {label}
+          </Link>
+        </div>
+      ))}
     </div>
   </footer>
 );
