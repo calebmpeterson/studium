@@ -83,7 +83,7 @@ const titleCss = css`
 `;
 
 const resourcesMenuCss = css`
-  padding-right: 10px;
+  padding: 5px;
   display: flex;
   flex-direction: column;
   gap: 5px;
