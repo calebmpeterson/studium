@@ -7,7 +7,14 @@ import {
 } from "@mdi/js";
 import Icon from "@mdi/react";
 import Link from "next/link";
-import { FC, MouseEvent, PropsWithChildren, useCallback, useState } from "react";
+import {
+  FC,
+  Fragment,
+  MouseEvent,
+  PropsWithChildren,
+  useCallback,
+  useState,
+} from "react";
 
 import { RESOURCE_LINKS } from "@/data/resources";
 import { useShare } from "@/hooks/useShare";
@@ -83,7 +90,7 @@ const titleCss = css`
 `;
 
 const resourcesMenuCss = css`
-  padding: 5px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -145,14 +152,16 @@ export const TopNav: FC<Props> = ({ children, isResource, onShare }) => {
                 onClickOutside={() => setIsResourcesMenuOpen(false)}
               >
                 {RESOURCE_LINKS.map(({ label, href, shallow }) => (
-                  <Link
-                    key={href}
-                    href={href}
-                    {...(shallow ? { shallow: true } : {})}
-                    onClick={() => setIsResourcesMenuOpen(false)}
-                  >
-                    {label}
-                  </Link>
+                  <Fragment key={href}>
+                    <Link
+                      href={href}
+                      {...(shallow ? { shallow: true } : {})}
+                      onClick={() => setIsResourcesMenuOpen(false)}
+                    >
+                      {label}
+                    </Link>
+                    {label === "Timeline" && <hr />}
+                  </Fragment>
                 ))}
               </FloatingBox>
             )}
