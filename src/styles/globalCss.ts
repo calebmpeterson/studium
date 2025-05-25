@@ -149,4 +149,10 @@ export const globalCss = css`
     border-radius: 3px;
     padding: 2px 4px;
   }
+
+  hr {
+    height: 1px;
+    border: none;
+    background-color: var(--border-color);
+  }
 `;
