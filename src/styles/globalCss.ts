@@ -154,5 +154,8 @@ export const globalCss = css`
     height: 1px;
     border: none;
     background-color: var(--border-color);
+    width: 100%;
+    margin: 0;
+    padding: 0;
   }
 `;
