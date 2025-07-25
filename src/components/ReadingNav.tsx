@@ -198,6 +198,7 @@ export const ReadingNav: FC<Props> = ({
 
       {isReadingHistoryMenuOpen && (
         <FloatingBox
+          shouldMaximizeOnMobile
           css={readingHistoryMenuCss}
           onClickOutside={onCloseReadingHistoryMenu}
         >
