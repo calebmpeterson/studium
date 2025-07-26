@@ -3,6 +3,7 @@ import { FC } from "react";
 
 import { shadows } from "@/styles/shadows";
 import { transition } from "@/styles/transition";
+import { breakpoints } from "@/styles/breakpoints";
 
 type TooltipPlacement = "top" | "bottom" | "left" | "right";
 
@@ -75,6 +76,9 @@ const tooltipCss = (placement: TooltipPlacement = "bottom") => css`
   transition: ${transition("opacity", "visibility")};
   box-shadow: ${shadows["shadow-lg"]};
   ${getPlacementStyles(placement)}
+  @media ${breakpoints["is-mobile"]} {
+    display: none;
+  }
 `;
 
 export const Tooltip: FC<TooltipProps> = ({
