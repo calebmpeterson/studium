@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { mdiHistory } from "@mdi/js";
+import { mdiClose, mdiHistory } from "@mdi/js";
 import Icon from "@mdi/react";
 import { useRouter } from "next/router";
 import { FC, useCallback, useEffect, useState } from "react";
@@ -55,6 +55,18 @@ const readingHistoryMenuCss = css`
   flex-direction: column;
   gap: 5px;
   min-width: 240px;
+`;
+
+const overlayHeaderCss = css`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const overlayTitleCss = css`
+  display: flex;
+  align-items: center;
+  gap: 5px;
 `;
 
 export const ReadingNav: FC<Props> = ({
@@ -202,7 +214,19 @@ export const ReadingNav: FC<Props> = ({
           css={readingHistoryMenuCss}
           onClickOutside={onCloseReadingHistoryMenu}
         >
-          <header css={marginCss("5px")}>Reading History</header>
+          <div css={overlayHeaderCss}>
+            <header css={overlayTitleCss}>Reading History</header>
+
+            <button
+              role="button"
+              aria-label="Close cross references"
+              data-icon
+              data-borderless
+              onClick={onCloseReadingHistoryMenu}
+            >
+              <Icon path={mdiClose} size={0.7} />
+            </button>
+          </div>
 
           {readingHistory.map((entry, index) => (
             <ReadingHistoryMenuItem
