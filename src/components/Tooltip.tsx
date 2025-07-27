@@ -1,9 +1,9 @@
 import { css } from "@emotion/react";
 import { FC } from "react";
 
+import { breakpoints } from "@/styles/breakpoints";
 import { shadows } from "@/styles/shadows";
 import { transition } from "@/styles/transition";
-import { breakpoints } from "@/styles/breakpoints";
 
 type TooltipPlacement = "top" | "bottom" | "left" | "right";
 
