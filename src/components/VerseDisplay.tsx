@@ -9,7 +9,7 @@ import { addToFragment } from "@/utils/addToFragment";
 import { isVerseInRange } from "@/utils/isVerseInRange";
 import { removeFromFragment } from "@/utils/removeFromFragment";
 
-import { CrossReferencesDisplay } from "./CrossReferencesDisplay";
+import { ReferencesOverlay } from "./ReferencesOverlay/ReferencesOverlay";
 
 const containerCss = css`
   position: relative;
@@ -110,7 +110,7 @@ export const VerseDisplay: FC<Props> = ({
               Cross refs
             </a>
             {areCrossReferencesOpen && (
-              <CrossReferencesDisplay
+              <ReferencesOverlay
                 book={book}
                 chapter={chapter}
                 verse={verse}
