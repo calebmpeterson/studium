@@ -107,7 +107,7 @@ export const VerseDisplay: FC<Props> = ({
         {hasCrossReferences && (
           <>
             <a css={linkCss} tabIndex={0} onClick={onToggleCrossReferences}>
-              Cross refs
+              refs
             </a>
             {areCrossReferencesOpen && (
               <ReferencesOverlay

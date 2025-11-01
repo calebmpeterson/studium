@@ -19,7 +19,7 @@ export const navigationCss = css`
     box-sizing: border-box;
     font-family: ${BODY_FONT_FAMILY};
     letter-spacing: 1px;
-    font-weight: 600;
+    font-weight: bold;
     cursor: pointer;
 
     transition: ${transition("color", "background-color", "border-color")};
@@ -78,9 +78,5 @@ export const navigationCss = css`
       color: var(--active-fg);
       outline: none;
     }
-  }
-
-  button {
-    font-weight: 600;
   }
 `;

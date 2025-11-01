@@ -32,6 +32,7 @@ export const typographyCss = css`
     font-style: italic;
   }
 
+  strong,
   [data-bold="true"] {
     font-weight: bold;
   }
