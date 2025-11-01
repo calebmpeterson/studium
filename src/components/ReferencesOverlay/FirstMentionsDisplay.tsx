@@ -1,10 +1,9 @@
 import { css } from "@emotion/react";
-import Link from "next/link";
-import { FC, Fragment } from "react";
+import { FC } from "react";
 
 import { useFirstMentions } from "@/queries/useFirstMentions";
-import { slugifyReference } from "@/utils/slugifyReference";
 
+import { FirstMentionDisplay } from "./FirstMentionDisplay";
 import { FirstMentionsLoader } from "./FirstMentionsLoader";
 
 interface Props {
@@ -26,29 +25,12 @@ export const FirstMentionsDisplay: FC<Props> = ({ text, onClose }) => {
     <div css={layoutCss}>
       {isLoading && <FirstMentionsLoader />}
       {firstMentions.map(({ word, firstMention }, index) => (
-        <Fragment key={`${word}-${index}`}>
-          {firstMention ? (
-            <>
-              <strong>{word}</strong>
-              <div>
-                {firstMention.text ?? (
-                  <em data-muted>Failed to look up first mention text.</em>
-                )}
-                <div>
-                  <Link href={slugifyReference(firstMention)} onClick={onClose}>
-                    {firstMention.book} {firstMention.chapter}:
-                    {firstMention.verse}
-                  </Link>
-                </div>
-              </div>
-            </>
-          ) : (
-            <>
-              <em data-muted>{word}</em>
-              <div />
-            </>
-          )}
-        </Fragment>
+        <FirstMentionDisplay
+          key={`${word}-${index}`}
+          word={word}
+          firstMention={firstMention}
+          onClose={onClose}
+        />
       ))}
     </div>
   );
