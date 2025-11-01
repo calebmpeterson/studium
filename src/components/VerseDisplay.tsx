@@ -40,10 +40,6 @@ const verseCss = css`
   border-bottom-right-radius: var(--border-radius);
 
   transition: ${transition("background-color")};
-
-  &[data-is-highlighted="true"] {
-    background-color: var(--active-bg);
-  }
 `;
 
 interface Props extends Verse {

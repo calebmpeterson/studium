@@ -68,4 +68,8 @@ export const typographyCss = css`
     border: none;
     border-bottom: 1px solid var(--border-color);
   }
+
+  [data-is-highlighted="true"] {
+    background-color: var(--active-bg) !important;
+  }
 `;
