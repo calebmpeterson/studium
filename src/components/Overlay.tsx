@@ -35,7 +35,6 @@ const overlayContainerCss = (hasInput?: boolean, isModal?: boolean) => css`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 10px;
   box-sizing: border-box;
   max-width: 800px;
   padding: 20px 20px 0;
@@ -59,7 +58,7 @@ const overlayBodyCss = css`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding-bottom: 20px;
+  padding: 10px 0 20px 0;
   scrollbar-width: thin;
 `;
 
@@ -67,6 +66,12 @@ const overlayHeaderCss = css`
   display: flex;
   align-items: center;
   justify-content: space-between;
+`;
+
+const headerContainerCss = css`
+  box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.125);
+  padding: 10px;
+  margin: 0 -10px;
 `;
 
 const overlayTitleCss = css`
@@ -122,7 +127,7 @@ export const Overlay: FC<Props> = ({
           </button>
         </div>
 
-        {header}
+        {header && <div css={headerContainerCss}>{header}</div>}
 
         <div css={overlayBodyCss}>{children}</div>
       </motion.div>
