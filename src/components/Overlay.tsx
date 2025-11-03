@@ -24,6 +24,9 @@ const overlayBackgroundCss = css`
   bottom: 0;
   left: 0;
   background-color: var(--backdrop);
+
+  backdrop-filter: blur(2px); /* blur content behind */
+  -webkit-backdrop-filter: blur(2px); /* Safari support */
 `;
 
 const overlayContainerCss = (hasInput?: boolean, isModal?: boolean) => css`
