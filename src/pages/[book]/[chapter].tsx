@@ -21,6 +21,7 @@ import { useToggle } from "@/hooks/useToggle";
 import { useVersesToShare } from "@/hooks/useVersesToShare";
 import { useCrossReferences } from "@/queries/useCrossReferences";
 import { useTrackReadingHistory } from "@/state/useTrackReadingHistory";
+import { backdropCss } from "@/styles/backdrop";
 import { breakpoints } from "@/styles/breakpoints";
 import { fade } from "@/styles/motion";
 import { shadows } from "@/styles/shadows";
@@ -29,7 +30,6 @@ import { getNextBookAndChapter } from "@/utils/getNextBookAndChapter";
 import { getPreviousBookAndChapter } from "@/utils/getPreviousBookAndChapter";
 import { getRouteFromBookAndChapter } from "@/utils/getRouteFromBookAndChapter";
 import { parseFragment } from "@/utils/parseFragment";
-
 
 const layoutCss = css`
   position: relative;
@@ -51,7 +51,7 @@ const versesCss = css`
 
 const chapterNavigationCss = css`
   position: sticky;
-  bottom: 0px;
+  bottom: 20px;
   margin: 0 auto;
   box-sizing: border-box;
   padding: 0 0px;
@@ -63,6 +63,15 @@ const chapterNavigationCss = css`
   @media ${breakpoints["is-mobile"]} {
     padding: 0 30px;
   }
+
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+
+  border: 1px solid var(--border-color);
+  ${backdropCss};
+
+  box-shadow: ${shadows["shadow-xl"]};
 `;
 
 const navButtonContainerCss = css``;
@@ -70,7 +79,6 @@ const navButtonContainerCss = css``;
 const navButtonCss = css`
   position: sticky;
   top: 80%;
-  margin-bottom: 20px;
   box-shadow: ${shadows["shadow-md"]};
 `;
 
@@ -90,7 +98,6 @@ const navSearchCss = css`
   width: 100%;
   box-shadow: ${shadows["shadow-md"]};
 `;
-
 
 type DataResult = {
   book: string;
@@ -281,7 +288,6 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
           />
         </form>
 
-
         <div css={navButtonContainerCss}>
           {hasNext ? (
             <button
@@ -299,8 +305,6 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
           )}
         </div>
       </nav>
-
-
 
       {search.isOpen && <SearchController onClose={search.close} />}
 

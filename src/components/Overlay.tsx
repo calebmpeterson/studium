@@ -4,6 +4,7 @@ import Icon from "@mdi/react";
 import { motion } from "framer-motion";
 import { FC, PropsWithChildren, ReactNode, useEffect } from "react";
 
+import { backdropCss } from "@/styles/backdrop";
 import { breakpoints } from "@/styles/breakpoints";
 import { fade } from "@/styles/motion";
 import { shadows } from "@/styles/shadows";
@@ -25,8 +26,7 @@ const overlayBackgroundCss = css`
   left: 0;
   background-color: var(--backdrop);
 
-  backdrop-filter: blur(2px); /* blur content behind */
-  -webkit-backdrop-filter: blur(2px); /* Safari support */
+  ${backdropCss}
 `;
 
 const overlayContainerCss = (hasInput?: boolean, isModal?: boolean) => css`
