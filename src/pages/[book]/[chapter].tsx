@@ -61,7 +61,9 @@ const chapterNavigationCss = css`
   justify-content: space-between;
 
   @media ${breakpoints["is-mobile"]} {
-    padding: 0 30px;
+    padding: 10px;
+    margin: 10px;
+    bottom: 10px;
   }
 
   padding: 10px;
