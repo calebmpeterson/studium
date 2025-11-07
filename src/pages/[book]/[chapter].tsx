@@ -10,7 +10,7 @@ import { useCallback, useEffect, useState } from "react";
 import slugify from "slugify";
 
 import { ReadingNav } from "@/components/ReadingNav";
-import { SearchController } from "@/components/SearchController";
+import { SearchController } from "@/components/Search/SearchController";
 import { ShareController } from "@/components/ShareController";
 import { Tooltip } from "@/components/Tooltip";
 import { TopNav } from "@/components/TopNav";

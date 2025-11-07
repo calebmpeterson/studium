@@ -16,7 +16,7 @@ import Skeleton from "react-loading-skeleton";
 import { useTextSearchHistory } from "@/state/useTextSearchHistory";
 import { SearchResponse, SearchResults } from "@/types";
 
-import { Overlay } from "./Overlay";
+import { Overlay } from "../Overlay";
 import { SearchHistoryDisplay } from "./SearchHistoryDisplay";
 import { SearchResultDisplay } from "./SearchResultDisplay";
 
