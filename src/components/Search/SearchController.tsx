@@ -175,6 +175,9 @@ export const SearchController: FC<Props> = ({
           type="text"
           css={searchInputCss}
           placeholder="Search by reference, words, or topic..."
+          autoCapitalize="off"
+          autoComplete="off"
+          autoCorrect="off"
           value={query}
           onChange={onQueryChange}
         />
