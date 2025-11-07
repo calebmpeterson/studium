@@ -18,7 +18,9 @@ import {
 
 import { RESOURCE_LINKS } from "@/data/resources";
 import { useShare } from "@/hooks/useShare";
+import { backdropCss } from "@/styles/backdrop";
 import { breakpoints } from "@/styles/breakpoints";
+import { shadows } from "@/styles/shadows";
 
 import { FloatingBox } from "./FloatingBox";
 import { Tooltip } from "./Tooltip";
@@ -41,7 +43,9 @@ const layoutCss = css`
   top: 0;
   height: 50px;
   box-sizing: border-box;
-  background-color: var(--bg);
+
+  ${backdropCss}
+  box-shadow: ${shadows["shadow-md"]};
 
   & > div {
     width: 100%;
