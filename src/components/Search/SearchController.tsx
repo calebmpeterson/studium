@@ -1,7 +1,8 @@
 import { css } from "@emotion/react";
 import { mdiMagnify } from "@mdi/js";
 import Icon from "@mdi/react";
-import { isEmpty } from "lodash";
+import fuzzysearch from "fuzzysearch";
+import { flatMap, isEmpty, map, size } from "lodash";
 import {
   ChangeEvent,
   FC,
@@ -14,14 +15,19 @@ import {
 import Skeleton from "react-loading-skeleton";
 
 import { useTextSearchHistory } from "@/state/useTextSearchHistory";
-import { SearchResponse, SearchResults } from "@/types";
+import { SearchResponse, SearchResults, TableOfContents } from "@/types";
 
 import { Overlay } from "../Overlay";
+import { TableOfContentsItem } from "../ReadingNav/TableOfContentsItem";
 import { SearchHistoryDisplay } from "./SearchHistoryDisplay";
 import { SearchResultDisplay } from "./SearchResultDisplay";
 
 interface Props {
   onClose: () => void;
+  onSelectBookAndChapter: (book: string, chapter: string, slug: string) => void;
+  tableOfContents: TableOfContents;
+  currentBook: string;
+  currentChapter: string;
 }
 
 const searchFormCss = css`
@@ -33,10 +39,11 @@ const searchInputCss = css`
   width: 100%;
 `;
 
-const searchTypeSelectorCss = css`
+const tableOfContentsItemsCss = css`
+  width: 100%;
+  box-sizing: border-box;
   display: flex;
-  align-items: center;
-  gap: 20px;
+  flex-direction: column;
 `;
 
 const searchResultsContainerCss = css`
@@ -52,7 +59,13 @@ const statusContainerCss = css`
   justify-content: center;
 `;
 
-export const SearchController: FC<Props> = ({ onClose }) => {
+export const SearchController: FC<Props> = ({
+  onClose,
+  tableOfContents,
+  currentBook,
+  currentChapter,
+  onSelectBookAndChapter,
+}) => {
   const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState<SearchResults>([]);
@@ -128,6 +141,32 @@ export const SearchController: FC<Props> = ({ onClose }) => {
     [performSearch]
   );
 
+  const tableOfContentsEntries = flatMap(tableOfContents, (chapters, book) =>
+    map(chapters, (slug, chapter) => ({
+      book,
+      chapter,
+      slug,
+    }))
+  );
+
+  const filteredTableOfContentsEntries =
+    size(query) > 2
+      ? tableOfContentsEntries.filter((entry) =>
+          fuzzysearch(
+            query.toLowerCase(),
+            `${entry.book} ${entry.chapter}`.toLowerCase()
+          )
+        )
+      : [];
+
+  const performSelectBookAndChapter = useCallback(
+    (book: string, chapter: string, slug: string) => {
+      onClose();
+      onSelectBookAndChapter(book, chapter, slug);
+    },
+    [onClose, onSelectBookAndChapter]
+  );
+
   const header = (
     <div>
       <form css={searchFormCss} onSubmit={onSearch}>
@@ -135,7 +174,7 @@ export const SearchController: FC<Props> = ({ onClose }) => {
           ref={inputRef}
           type="text"
           css={searchInputCss}
-          placeholder="Search by words or topic..."
+          placeholder="Search by reference, words, or topic..."
           value={query}
           onChange={onQueryChange}
         />
@@ -149,7 +188,35 @@ export const SearchController: FC<Props> = ({ onClose }) => {
 
   return (
     <>
-      <Overlay title="Search" onClose={onClose} header={header} hasInput>
+      <Overlay
+        title="Search"
+        onClose={onClose}
+        header={header}
+        hasInput
+        isMaximized
+      >
+        <header data-sub-header data-muted>
+          References
+        </header>
+        <div css={tableOfContentsItemsCss}>
+          {filteredTableOfContentsEntries.map((entry) => (
+            <TableOfContentsItem
+              key={entry.slug}
+              book={entry.book}
+              chapter={entry.chapter}
+              slug={entry.slug}
+              isSelected={
+                currentBook === entry.book && currentChapter === entry.chapter
+              }
+              onSelect={performSelectBookAndChapter}
+            />
+          ))}
+
+          {size(query) < 2 && (
+            <em data-muted>Start typing to look up book and chapter</em>
+          )}
+        </div>
+
         {isLoading && (
           <>
             <div>

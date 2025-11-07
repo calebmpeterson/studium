@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import { FC, useCallback, useEffect, useState } from "react";
 
 import { useReadingHistory } from "@/state/useReadingHistory";
-import { marginCss } from "@/styles/layout";
 import { ReadingHistoryEntry, TableOfContents } from "@/types";
 import { getRouteFromBookAndChapter } from "@/utils/getRouteFromBookAndChapter";
 
@@ -13,7 +12,6 @@ import { BookMenuItem } from "./BookMenuItem";
 import { ChapterMenuItem } from "./ChapterMenuItem";
 import { FloatingBox } from "./FloatingBox";
 import { ReadingHistoryMenuItem } from "./ReadingHistoryMenuItem";
-import { TableOfContentsMenu } from "./ReadingNav/TableOfContentsMenu";
 import { Tooltip } from "./Tooltip";
 
 interface Props {
@@ -76,19 +74,8 @@ export const ReadingNav: FC<Props> = ({
 }) => {
   const router = useRouter();
 
-  const [isTableOfContentsOpen, setIsTableOfContentsOpen] = useState(false);
-  const onToggleTableOfContents = useCallback(() => {
-    setIsTableOfContentsOpen((open) => !open);
-    setIsBookMenuOpen(false);
-    setIsChapterMenuOpen(false);
-  }, []);
-  const onCloseTableOfContents = useCallback(() => {
-    setIsTableOfContentsOpen(false);
-  }, []);
-
   const [isBookMenuOpen, setIsBookMenuOpen] = useState(false);
   const onToggleBookMenu = useCallback(() => {
-    setIsTableOfContentsOpen(false);
     setIsBookMenuOpen((open) => !open);
     setIsChapterMenuOpen(false);
   }, []);
@@ -98,7 +85,6 @@ export const ReadingNav: FC<Props> = ({
 
   const [isChapterMenuOpen, setIsChapterMenuOpen] = useState(false);
   const onToggleChapterMenu = useCallback(() => {
-    setIsTableOfContentsOpen(false);
     setIsBookMenuOpen(false);
     setIsChapterMenuOpen((open) => !open);
   }, []);
@@ -125,7 +111,6 @@ export const ReadingNav: FC<Props> = ({
 
   const onSelectBookAndChapter = useCallback(
     (book: string, chapter: string, slug: string) => {
-      setIsTableOfContentsOpen(false);
       setSelectedBook(book);
       setSelectedChapter(chapter);
       router.push(getRouteFromBookAndChapter(book, chapter));
@@ -157,16 +142,6 @@ export const ReadingNav: FC<Props> = ({
 
   return (
     <>
-      <TableOfContentsMenu
-        tableOfContents={tableOfContents}
-        currentBook={currentBook}
-        currentChapter={currentChapter}
-        isTableOfContentsOpen={isTableOfContentsOpen}
-        onToggleTableOfContents={onToggleTableOfContents}
-        onCloseTableOfContents={onCloseTableOfContents}
-        onSelectBookAndChapter={onSelectBookAndChapter}
-      />
-
       <button css={bookButtonCss} onClick={onToggleBookMenu}>
         {selectedBook}
       </button>
@@ -182,7 +157,6 @@ export const ReadingNav: FC<Props> = ({
           ))}
         </FloatingBox>
       )}
-
       <button css={chapterButtonCss} onClick={onToggleChapterMenu}>
         {selectedChapter}
       </button>
@@ -198,7 +172,6 @@ export const ReadingNav: FC<Props> = ({
           ))}
         </FloatingBox>
       )}
-
       <button
         css={readingHistoryButtonCss}
         onClick={onToggleReadingHistoryMenu}
@@ -207,7 +180,6 @@ export const ReadingNav: FC<Props> = ({
 
         <Tooltip placement="right">Reading history</Tooltip>
       </button>
-
       {isReadingHistoryMenuOpen && (
         <FloatingBox
           shouldMaximizeOnMobile

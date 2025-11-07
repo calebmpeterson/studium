@@ -11,6 +11,8 @@ const containerCss = css`
   align-items: baseline;
   gap: 10px;
   width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
 `;
 
 interface Props extends SearchHistoryEntry {

@@ -8,6 +8,7 @@ import { backdropCss } from "@/styles/backdrop";
 import { breakpoints } from "@/styles/breakpoints";
 import { fade } from "@/styles/motion";
 import { shadows } from "@/styles/shadows";
+import { transition } from "@/styles/transition";
 
 interface Props extends PropsWithChildren<{}> {
   title: string | ReactNode;
@@ -15,6 +16,7 @@ interface Props extends PropsWithChildren<{}> {
   header?: ReactNode;
   hasInput?: boolean;
   isModal?: boolean;
+  isMaximized?: boolean;
 }
 
 const overlayBackgroundCss = css`
@@ -26,10 +28,16 @@ const overlayBackgroundCss = css`
   left: 0;
   background-color: var(--backdrop);
 
+  transition: ${transition("background-color")};
+
   ${backdropCss}
 `;
 
-const overlayContainerCss = (hasInput?: boolean, isModal?: boolean) => css`
+const overlayContainerCss = (
+  hasInput?: boolean,
+  isModal?: boolean,
+  isMaximized?: boolean
+) => css`
   position: fixed;
   z-index: var(--z-index-overlay);
   bottom: 0px;
@@ -44,6 +52,7 @@ const overlayContainerCss = (hasInput?: boolean, isModal?: boolean) => css`
   border-radius: 10px 10px 0 0;
   background-color: var(--bg);
   max-height: 90vh;
+  height: ${isMaximized ? "90vh" : "auto"};
 
   box-shadow: ${isModal ? shadows["shadow-xl"] : shadows["shadow-lg"]};
 
@@ -90,6 +99,7 @@ export const Overlay: FC<Props> = ({
   children,
   onClose,
   isModal = true,
+  isMaximized = false,
 }) => {
   useEffect(() => {
     if (!isModal) {
@@ -115,7 +125,10 @@ export const Overlay: FC<Props> = ({
         />
       )}
 
-      <motion.div {...fade} css={overlayContainerCss(hasInput, isModal)}>
+      <motion.div
+        {...fade}
+        css={overlayContainerCss(hasInput, isModal, isMaximized)}
+      >
         <div css={overlayHeaderCss}>
           <header css={overlayTitleCss}>{title}</header>
 

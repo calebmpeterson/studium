@@ -232,6 +232,13 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
     return false;
   }, [share, versesToShare]);
 
+  const onSelectBookAndChapter = useCallback(
+    (book: string, chapter: string, slug: string) => {
+      router.push(getRouteFromBookAndChapter(book, chapter));
+    },
+    [router]
+  );
+
   return (
     <>
       <Head>
@@ -308,7 +315,15 @@ export default function BookAndChapter({ tableOfContents, ...props }: Props) {
         </div>
       </nav>
 
-      {search.isOpen && <SearchController onClose={search.close} />}
+      {search.isOpen && (
+        <SearchController
+          onClose={search.close}
+          onSelectBookAndChapter={onSelectBookAndChapter}
+          tableOfContents={tableOfContents}
+          currentBook={currentBook}
+          currentChapter={currentChapter}
+        />
+      )}
 
       {share.isOpen && (
         <ShareController
