@@ -18,9 +18,9 @@ import { useTextSearchHistory } from "@/state/useTextSearchHistory";
 import { SearchResponse, SearchResults, TableOfContents } from "@/types";
 
 import { Overlay } from "../Overlay";
-import { TableOfContentsItem } from "../ReadingNav/TableOfContentsItem";
 import { SearchHistoryDisplay } from "./SearchHistoryDisplay";
 import { SearchResultDisplay } from "./SearchResultDisplay";
+import { TableOfContentsItem } from "./TableOfContentsItem";
 
 interface Props {
   onClose: () => void;

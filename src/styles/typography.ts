@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 
 export const BODY_FONT_FAMILY = "'Hind', Verdana, sans-serif";
-export const HEADING_FONT_FAMILY = "'Expletus Sans', Verdana, sans-serif";
+const HEADING_FONT_FAMILY = "'Expletus Sans', Verdana, sans-serif";
 
 export const typographyCss = css`
   @import url("https://fonts.googleapis.com/css2?family=Expletus+Sans&display=swap");
