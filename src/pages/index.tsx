@@ -6,6 +6,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
+import { useIsStandalone } from "@/hooks/useIsStandalone";
 import { useReadingHistory } from "@/state/useReadingHistory";
 import { getRouteFromBookAndChapter } from "@/utils/getRouteFromBookAndChapter";
 
@@ -20,12 +21,13 @@ const layoutCss = css`
 `;
 
 export default function Home() {
+  const isStandalone = useIsStandalone();
   const [readingHistory] = useReadingHistory();
   const mostRecentReadingHistoryEntry = first(readingHistory);
   const router = useRouter();
 
   useEffect(() => {
-    if (mostRecentReadingHistoryEntry) {
+    if (mostRecentReadingHistoryEntry && isStandalone) {
       router.push(
         getRouteFromBookAndChapter(
           mostRecentReadingHistoryEntry.book,
@@ -33,7 +35,17 @@ export default function Home() {
         )
       );
     }
-  }, [mostRecentReadingHistoryEntry, router]);
+  }, [isStandalone, mostRecentReadingHistoryEntry, router]);
+
+  const readingLabel = mostRecentReadingHistoryEntry
+    ? "Continue reading"
+    : "Start reading";
+  const readingLink = mostRecentReadingHistoryEntry
+    ? getRouteFromBookAndChapter(
+        mostRecentReadingHistoryEntry.book,
+        mostRecentReadingHistoryEntry.chapter
+      )
+    : getRouteFromBookAndChapter("Genesis", "1");
 
   return (
     <>
@@ -46,9 +58,7 @@ export default function Home() {
       <main css={layoutCss}>
         <Icon path={mdiBookOpenPageVariant} size={3} />
         <strong>Studium</strong>
-        <a href={getRouteFromBookAndChapter("Genesis", "1")}>
-          Start reading&nbsp;⏵
-        </a>
+        <a href={readingLink}>{readingLabel}&nbsp;⏵</a>
       </main>
     </>
   );
