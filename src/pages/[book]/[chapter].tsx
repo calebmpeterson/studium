@@ -63,7 +63,7 @@ const chapterNavigationCss = css`
   @media ${breakpoints["is-mobile"]} {
     padding: 10px;
     margin: 10px;
-    bottom: 10px;
+    bottom: 40px;
   }
 
   padding: 10px;
