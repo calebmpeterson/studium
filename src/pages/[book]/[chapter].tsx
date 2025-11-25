@@ -81,7 +81,6 @@ const navButtonContainerCss = css``;
 const navButtonCss = css`
   position: sticky;
   top: 80%;
-  box-shadow: ${shadows["shadow-md"]};
 `;
 
 const navButtonPlaceholderCss = css`
@@ -98,7 +97,6 @@ const navSearchFormCss = css`
 
 const navSearchCss = css`
   width: 100%;
-  box-shadow: ${shadows["shadow-md"]};
 `;
 
 type DataResult = {
