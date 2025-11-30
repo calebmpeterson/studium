@@ -1,10 +1,11 @@
-import { toLower, words } from "lodash";
+import { words } from "lodash";
 import Link from "next/link";
 import { FC } from "react";
 
 import { FirstMention } from "@/schemas/first-mention-index";
 import { interpose } from "@/utils/interpose";
 import { slugifyReference } from "@/utils/slugifyReference";
+import { stemWord } from "@/utils/stemWord";
 
 interface Props {
   word: string;
@@ -26,10 +27,12 @@ export const FirstMentionDisplay: FC<Props> = ({
     );
   }
 
+  const targetStem = stemWord(word);
+
   const wordsContent = firstMention.text
     ? interpose(
         words(firstMention.text).map((token, index) =>
-          toLower(token) === toLower(word) ? (
+          stemWord(token) === targetStem ? (
             <strong
               key={index}
               data-is-highlighted

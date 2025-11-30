@@ -3,6 +3,8 @@ import fs from "node:fs";
 import { isEmpty, isObject } from "lodash";
 import { z } from "zod";
 
+import { stemWord } from "../src/utils/stemWord";
+
 const VerseSchema = z.object({
   reference: z.string(),
   book: z.string(),
@@ -18,56 +20,58 @@ type Verse = z.infer<typeof VerseSchema>;
 type Bible = z.infer<typeof BibleSchema>;
 type FirstMentionByWord = Record<string, Verse>;
 
-const stopWords = new Set([
-  "a",
-  "an",
-  "and",
-  "are",
-  "as",
-  "at",
-  "be",
-  "but",
-  "by",
-  "for",
-  "if",
-  "in",
-  "into",
-  "is",
-  "it",
-  "no",
-  "not",
-  "of",
-  "on",
-  "or",
-  "such",
-  "that",
-  "the",
-  "their",
-  "then",
-  "there",
-  "these",
-  "they",
-  "this",
-  "to",
-  "was",
-  "will",
-  "with",
-  "he",
-  "she",
-  "his",
-  "her",
-  "you",
-  "i",
-  "we",
-  "our",
-  "yours",
-  "them",
-  "from",
-  "up",
-  "down",
-  "over",
-  "under",
-]);
+const stopWords = new Set(
+  [
+    "a",
+    "an",
+    "and",
+    "are",
+    "as",
+    "at",
+    "be",
+    "but",
+    "by",
+    "for",
+    "if",
+    "in",
+    "into",
+    "is",
+    "it",
+    "no",
+    "not",
+    "of",
+    "on",
+    "or",
+    "such",
+    "that",
+    "the",
+    "their",
+    "then",
+    "there",
+    "these",
+    "they",
+    "this",
+    "to",
+    "was",
+    "will",
+    "with",
+    "he",
+    "she",
+    "his",
+    "her",
+    "you",
+    "i",
+    "we",
+    "our",
+    "yours",
+    "them",
+    "from",
+    "up",
+    "down",
+    "over",
+    "under",
+  ].map(stemWord)
+);
 
 export const wordsByFirstMention = (bible: Bible): FirstMentionByWord => {
   const wordMap: FirstMentionByWord = {};
@@ -87,9 +91,15 @@ export const wordsByFirstMention = (bible: Bible): FirstMentionByWord => {
           .split(/\s+/);
 
         for (const word of words) {
-          if (!seen.has(word) && !stopWords.has(word) && !isEmpty(word)) {
-            seen.add(word);
-            wordMap[word] = verse;
+          const stemmedWord = stemWord(word);
+
+          if (
+            !seen.has(stemmedWord) &&
+            !stopWords.has(stemmedWord) &&
+            !isEmpty(stemmedWord)
+          ) {
+            seen.add(stemmedWord);
+            wordMap[stemmedWord] = verse;
           }
         }
       }
