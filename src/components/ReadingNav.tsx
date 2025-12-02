@@ -3,7 +3,6 @@ import { mdiClose, mdiHistory } from "@mdi/js";
 import Icon from "@mdi/react";
 import { useRouter } from "next/router";
 import { FC, useCallback, useEffect, useState } from "react";
-import { createPortal } from "react-dom";
 
 import { useReadingHistory } from "@/state/useReadingHistory";
 import { ReadingHistoryEntry, TableOfContents } from "@/types";
@@ -35,13 +34,14 @@ const bookMenuCss = css`
   display: flex;
   flex-direction: column;
   gap: 5px;
-  padding-right: 10px;
+  padding: 0 5px;
+  min-width: 240px;
 `;
 
 const chapterMenuCss = css`
   width: fit-content;
   max-width: 400px;
-  padding-right: 10px;
+  padding: 5px;
 
   display: flex;
   gap: 5px;
@@ -49,7 +49,7 @@ const chapterMenuCss = css`
 `;
 
 const readingHistoryMenuCss = css`
-  padding: 10px;
+  padding: 0 5px;
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -57,9 +57,14 @@ const readingHistoryMenuCss = css`
 `;
 
 const overlayHeaderCss = css`
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 5px 0 5px 5px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background: var(--bg);
 `;
 
 const overlayTitleCss = css`
@@ -110,15 +115,6 @@ export const ReadingNav: FC<Props> = ({
     [router, selectedBook]
   );
 
-  const onSelectBookAndChapter = useCallback(
-    (book: string, chapter: string, slug: string) => {
-      setSelectedBook(book);
-      setSelectedChapter(chapter);
-      router.push(getRouteFromBookAndChapter(book, chapter));
-    },
-    [router]
-  );
-
   const [isReadingHistoryMenuOpen, setIsReadingHistoryMenuOpen] =
     useState(false);
   const onToggleReadingHistoryMenu = useCallback(() => {
@@ -147,7 +143,24 @@ export const ReadingNav: FC<Props> = ({
         {selectedBook}
       </button>
       {isBookMenuOpen && (
-        <FloatingBox css={bookMenuCss} onClickOutside={onCloseBookMenu}>
+        <FloatingBox
+          shouldMaximizeOnMobile
+          css={bookMenuCss}
+          onClickOutside={onCloseBookMenu}
+        >
+          <div css={overlayHeaderCss}>
+            <header css={overlayTitleCss}>Books</header>
+
+            <button
+              role="button"
+              aria-label="Close books menu"
+              data-icon
+              data-borderless
+              onClick={onCloseBookMenu}
+            >
+              <Icon path={mdiClose} size={0.7} />
+            </button>
+          </div>
           {Object.keys(tableOfContents).map((book) => (
             <BookMenuItem
               key={book}
@@ -181,37 +194,35 @@ export const ReadingNav: FC<Props> = ({
 
         <Tooltip placement="right">Reading history</Tooltip>
       </button>
-      {isReadingHistoryMenuOpen &&
-        createPortal(
-          <FloatingBox
-            shouldMaximizeOnMobile
-            css={readingHistoryMenuCss}
-            onClickOutside={onCloseReadingHistoryMenu}
-          >
-            <div css={overlayHeaderCss}>
-              <header css={overlayTitleCss}>Reading History</header>
+      {isReadingHistoryMenuOpen && (
+        <FloatingBox
+          shouldMaximizeOnMobile
+          css={readingHistoryMenuCss}
+          onClickOutside={onCloseReadingHistoryMenu}
+        >
+          <div css={overlayHeaderCss}>
+            <header css={overlayTitleCss}>Reading History</header>
 
-              <button
-                role="button"
-                aria-label="Close cross references"
-                data-icon
-                data-borderless
-                onClick={onCloseReadingHistoryMenu}
-              >
-                <Icon path={mdiClose} size={0.7} />
-              </button>
-            </div>
+            <button
+              role="button"
+              aria-label="Close cross references"
+              data-icon
+              data-borderless
+              onClick={onCloseReadingHistoryMenu}
+            >
+              <Icon path={mdiClose} size={0.7} />
+            </button>
+          </div>
 
-            {readingHistory.map((entry, index) => (
-              <ReadingHistoryMenuItem
-                key={index}
-                entry={entry}
-                onSelect={onSelectReadingHistoryEntry}
-              />
-            ))}
-          </FloatingBox>,
-          document.body
-        )}
+          {readingHistory.map((entry, index) => (
+            <ReadingHistoryMenuItem
+              key={index}
+              entry={entry}
+              onSelect={onSelectReadingHistoryEntry}
+            />
+          ))}
+        </FloatingBox>
+      )}
     </>
   );
 };

@@ -1,6 +1,8 @@
 import { css } from "@emotion/react";
 import { FC, PropsWithChildren, useRef } from "react";
+import { createPortal } from "react-dom";
 import useClickOutside from "use-click-outside";
+import { useMediaQuery } from "usehooks-ts";
 
 import { breakpoints } from "@/styles/breakpoints";
 import { shadows } from "@/styles/shadows";
@@ -36,7 +38,6 @@ const containerCss = (shouldMaximizeOnMobile: boolean) => css`
   scrollbar-width: thin;
   background-color: var(--bg);
   border-radius: 5px;
-  padding: 5px;
   box-sizing: border-box;
   border: 1px solid var(--border-color);
   box-shadow: ${shadows["shadow-xl"]};
@@ -53,7 +54,9 @@ export const FloatingBox: FC<Props> = ({
   const ref = useRef<HTMLDivElement>(null);
   useClickOutside(ref, onClickOutside, "pointerdown");
 
-  return (
+  const shouldUsePortal = useMediaQuery(breakpoints["is-mobile"]);
+
+  const content = (
     <div
       ref={ref}
       css={containerCss(shouldMaximizeOnMobile)}
@@ -62,4 +65,6 @@ export const FloatingBox: FC<Props> = ({
       {children}
     </div>
   );
+
+  return shouldUsePortal ? createPortal(content, document.body) : content;
 };

@@ -35,6 +35,7 @@
     "slugify": "^1.6.6",
     "use-click-outside": "^2.0.0",
     "use-local-storage-state": "^19.1.0",
+    "usehooks-ts": "^3.1.1",
     "uuid": "^9.0.1",
     "wink-porter2-stemmer": "^2.0.1",
     "zod": "^3.24.3"
