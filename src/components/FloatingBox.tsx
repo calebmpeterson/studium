@@ -66,5 +66,7 @@ export const FloatingBox: FC<Props> = ({
     </div>
   );
 
-  return shouldUsePortal ? createPortal(content, document.body) : content;
+  return shouldUsePortal && shouldMaximizeOnMobile
+    ? createPortal(content, document.body)
+    : content;
 };
