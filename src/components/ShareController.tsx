@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { mdiCancel, mdiContentCopy, mdiShareVariant } from "@mdi/js";
+import { mdiCancel, mdiContentCopy, mdiContentDuplicate, mdiShareVariant } from "@mdi/js";
 import Icon from "@mdi/react";
 import { FC, MouseEvent, useCallback } from "react";
 
@@ -49,6 +49,8 @@ export const ShareController: FC<Props> = ({
 
   const { versesToShare, fragment } = useVersesToShare(verses);
   const { copy, didCopy } = useCopyToClipboard();
+  const { copy: copyMarkdown, didCopy: didCopyMarkdown } =
+    useCopyToClipboard();
 
   const onCopy = useCallback(async () => {
     const textToCopy =
@@ -58,6 +60,16 @@ export const ShareController: FC<Props> = ({
 
     await copy(textToCopy);
   }, [book, chapter, copy, fragment, versesToShare]);
+
+  const onCopyAsMarkdown = useCallback(async () => {
+    const quoteLines = versesToShare
+      .map((verse) => `> ${verse.verse} ${verse.text}`)
+      .join("\n");
+    const attribution = `> - [${book} ${chapter}:${fragment}](${location.href})`;
+    const markdownToCopy = `${quoteLines}\n>\n${attribution}`;
+
+    await copyMarkdown(markdownToCopy);
+  }, [book, chapter, copyMarkdown, fragment, versesToShare]);
 
   const onClear = useCallback(() => {
     history.replaceState({}, "", "#");
@@ -81,6 +93,10 @@ export const ShareController: FC<Props> = ({
           <button onClick={onCopy}>
             <Icon path={mdiContentCopy} size={0.7} />
             &nbsp;{didCopy ? "Copied" : "Copy"}
+          </button>
+          <button onClick={onCopyAsMarkdown}>
+            <Icon path={mdiContentDuplicate} size={0.7} />
+            &nbsp;{didCopyMarkdown ? "Copied" : "Copy markdown"}
           </button>
         </div>
 
