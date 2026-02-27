@@ -2,13 +2,17 @@
   "name": "studium",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@9.13.2",
+  "engines": {
+    "node": ">=24 <25"
+  },
   "scripts": {
     "dev": "PORT=3000 next dev",
     "build": "next build",
     "start": "netlify dev",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",
-    "typecheck": "yarn tsc --noEmit",
+    "typecheck": "tsc --noEmit",
     "build:data:kjv": "ts-node --skipProject scripts/kjv-to-json.ts",
     "build:data:toc": "ts-node --skipProject scripts/kjv-to-table-of-contents.ts",
     "build:data:cross-references": "ts-node --skipProject scripts/cross-references-to-json.ts",
@@ -45,7 +49,7 @@
     "@types/jsdom": "^21.1.7",
     "@types/lodash": "^4.14.202",
     "@types/minimist": "^1.2.5",
-    "@types/node": "^20",
+    "@types/node": "^24",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/uuid": "^9.0.7",
