@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 
 import { animationsCss } from "./animations";
 import { breakpoints } from "./breakpoints";
-import colors, { ACTIVE_COLOR, BASE_COLOR } from "./colors";
+import colors, { ACTIVE_COLOR, BASE_COLOR, HIGHLIGHT_COLOR_1 } from "./colors";
 import { formsCss } from "./forms";
 import { layoutCss } from "./layout";
 import { navigationCss } from "./navigation";
@@ -37,6 +37,8 @@ export const globalCss = css`
     --active-bg: ${ACTIVE_COLOR[950]};
     --disabled-fg: ${BASE_COLOR[400]};
     --disabled-bg: ${BASE_COLOR[800]};
+    --highlight-1-fg: ${HIGHLIGHT_COLOR_1[300]};
+    --highlight-1-bg: ${HIGHLIGHT_COLOR_1[600]};
     --backdrop: rgba(0, 0, 0, 0.75);
 
     --tooltip-bg: ${BASE_COLOR[950]};
@@ -94,6 +96,8 @@ export const globalCss = css`
       --active-bg: ${ACTIVE_COLOR[200]};
       --disabled-fg: ${BASE_COLOR[500]};
       --disabled-bg: ${BASE_COLOR[100]};
+      --highlight-1-fg: ${HIGHLIGHT_COLOR_1[600]};
+      --highlight-1-bg: ${HIGHLIGHT_COLOR_1[400]};
       --backdrop: rgba(0, 0, 0, 0.5);
 
       --tooltip-bg: ${BASE_COLOR[800]};

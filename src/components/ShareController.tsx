@@ -1,11 +1,18 @@
 import { css } from "@emotion/react";
-import { mdiCancel, mdiContentCopy, mdiContentDuplicate, mdiShareVariant } from "@mdi/js";
+import {
+  mdiCancel,
+  mdiContentCopy,
+  mdiContentDuplicate,
+  mdiFormatColorHighlight,
+  mdiShareVariant,
+} from "@mdi/js";
 import Icon from "@mdi/react";
-import { FC, MouseEvent, useCallback } from "react";
+import { FC, MouseEvent, useCallback, useMemo } from "react";
 
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { useShare } from "@/hooks/useShare";
 import { useVersesToShare } from "@/hooks/useVersesToShare";
+import { useVerseHighlighting } from "@/state/useVerseHighlighting";
 import { flexboxCss } from "@/styles/layout";
 import { Verse } from "@/types";
 
@@ -44,13 +51,20 @@ export const ShareController: FC<Props> = ({
 
       await share();
     },
-    [share]
+    [share],
   );
 
   const { versesToShare, fragment } = useVersesToShare(verses);
+  const [isHighlighted, setHighlight] = useVerseHighlighting();
+  const verseReferences = useMemo(
+    () => versesToShare.map((verse) => ({ book, chapter, verse: verse.verse })),
+    [book, chapter, versesToShare],
+  );
+  const areAllHighlighted =
+    verseReferences.length > 0 &&
+    verseReferences.every((reference) => isHighlighted(reference));
   const { copy, didCopy } = useCopyToClipboard();
-  const { copy: copyMarkdown, didCopy: didCopyMarkdown } =
-    useCopyToClipboard();
+  const { copy: copyMarkdown, didCopy: didCopyMarkdown } = useCopyToClipboard();
 
   const onCopy = useCallback(async () => {
     const textToCopy =
@@ -76,6 +90,13 @@ export const ShareController: FC<Props> = ({
     window.dispatchEvent(new HashChangeEvent("hashchange"));
   }, []);
 
+  const onToggleHighlight = useCallback(() => {
+    const shouldHighlight = !areAllHighlighted;
+    for (const reference of verseReferences) {
+      setHighlight(reference, shouldHighlight);
+    }
+  }, [areAllHighlighted, setHighlight, verseReferences]);
+
   const header = (
     <>
       {book} {chapter}:{fragment}
@@ -97,6 +118,17 @@ export const ShareController: FC<Props> = ({
           <button onClick={onCopyAsMarkdown}>
             <Icon path={mdiContentDuplicate} size={0.7} />
             &nbsp;{didCopyMarkdown ? "Copied" : "Copy markdown"}
+          </button>
+
+          <button
+            onClick={onToggleHighlight}
+            data-is-highlighted={areAllHighlighted ? "highlight-1" : false}
+          >
+            <Icon
+              path={areAllHighlighted ? mdiCancel : mdiFormatColorHighlight}
+              size={0.7}
+            />
+            {areAllHighlighted ? "Unhighlight" : "Highlight"}
           </button>
         </div>
 

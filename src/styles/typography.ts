@@ -69,7 +69,20 @@ export const typographyCss = css`
     border-bottom: 1px solid var(--border-color);
   }
 
-  [data-is-highlighted="true"] {
+  [data-is-highlighted="true"],
+  [data-is-highlighted="active"] {
     background-color: var(--active-bg) !important;
+
+    a {
+      color: var(--active-fg) !important;
+    }
+  }
+
+  [data-is-highlighted="highlight-1"] {
+    background-color: var(--highlight-1-bg) !important;
+
+    a {
+      color: var(--highlight-1-fg) !important;
+    }
   }
 `;

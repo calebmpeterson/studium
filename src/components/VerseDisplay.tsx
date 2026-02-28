@@ -34,12 +34,14 @@ const linkCss = css`
   padding-left: 5px;
 `;
 
-const verseCss = css`
+const verseCss = (isActive: boolean) => css`
   background-color: transparent;
   border-top-left-radius: var(--border-radius);
   border-bottom-right-radius: var(--border-radius);
 
   transition: ${transition("background-color")};
+
+  text-decoration: ${isActive ? "underline dotted" : "none"};
 `;
 
 interface Props extends Verse {
@@ -64,7 +66,11 @@ export const VerseDisplay: FC<Props> = ({
     setAreCrossReferencesOpen(false);
   }, []);
 
-  const isHighlighted = useIsVerseHighlighted(verse);
+  const { isActive, highlight } = useIsVerseHighlighted({
+    book,
+    chapter,
+    verse,
+  });
 
   const onClickAnchor = useCallback(
     (event: MouseEvent<HTMLElement>) => {
@@ -84,13 +90,13 @@ export const VerseDisplay: FC<Props> = ({
         block: "center",
       });
     },
-    [verse]
+    [verse],
   );
 
   return (
     <div css={containerCss}>
       <div id={verse} css={anchorCss} />
-      <span css={verseCss} data-is-highlighted={isHighlighted}>
+      <span css={verseCss(isActive)} data-is-highlighted={highlight}>
         <sup>
           <a href={`#${verse}`} onClick={onClickAnchor}>
             {verse}

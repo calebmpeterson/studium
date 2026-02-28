@@ -1,0 +1,3 @@
+- Add a "Highlight" button to the ShareController just after the Share button
+- When the button is clicked, toggle the presence of `{book}/{chapter}#{verse}` key in a `src/types/annotations.ts#Highlights` value managed via `useLocalStorageState('highlights', { defaultValue: {} })`
+- Encapsulate the state management into a new `src/hooks/useVerseHighlighting` which should return `[highlight, setHighlight]` for a given `{book}/{chapter}#{verse}`
