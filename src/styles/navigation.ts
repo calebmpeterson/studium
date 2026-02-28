@@ -43,6 +43,17 @@ export const navigationCss = css`
       border: none;
     }
 
+    &[data-variant="highlight-1"] {
+      background-color: var(--highlight-1-bg) !important;
+
+      &:hover,
+      &:focus {
+        background-color: var(--highlight-1-bg);
+        color: var(--highlight-1-fg);
+        border-color: var(--highlight-1-fg);
+      }
+    }
+
     &[data-icon="true"] {
       width: var(--input-size);
       height: var(--input-size);

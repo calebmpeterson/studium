@@ -71,7 +71,11 @@ export const typographyCss = css`
 
   [data-is-highlighted="true"],
   [data-is-highlighted="active"] {
-    background-color: var(--active-bg) !important;
+    &,
+    &:hover,
+    &:focus {
+      background-color: var(--active-bg) !important;
+    }
 
     a {
       color: var(--active-fg) !important;
@@ -79,7 +83,11 @@ export const typographyCss = css`
   }
 
   [data-is-highlighted="highlight-1"] {
-    background-color: var(--highlight-1-bg) !important;
+    &,
+    &:hover,
+    &:focus {
+      background-color: var(--highlight-1-bg) !important;
+    }
 
     a {
       color: var(--highlight-1-fg) !important;

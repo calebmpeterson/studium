@@ -119,18 +119,18 @@ export const ShareController: FC<Props> = ({
             <Icon path={mdiContentDuplicate} size={0.7} />
             &nbsp;{didCopyMarkdown ? "Copied" : "Copy markdown"}
           </button>
-
-          <button
-            onClick={onToggleHighlight}
-            data-is-highlighted={areAllHighlighted ? false : "highlight-1"}
-          >
-            <Icon
-              path={areAllHighlighted ? mdiCancel : mdiFormatColorHighlight}
-              size={0.7}
-            />
-            {areAllHighlighted ? "Unhighlight" : "Highlight"}
-          </button>
         </div>
+
+        <button
+          onClick={onToggleHighlight}
+          data-variant={areAllHighlighted ? false : "highlight-1"}
+        >
+          <Icon
+            path={areAllHighlighted ? mdiCancel : mdiFormatColorHighlight}
+            size={0.7}
+          />
+          {areAllHighlighted ? "Unhighlight" : "Highlight"}
+        </button>
 
         <button onClick={onClear}>
           <Icon path={mdiCancel} size={0.7} />
