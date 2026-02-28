@@ -122,7 +122,7 @@ export const ShareController: FC<Props> = ({
 
           <button
             onClick={onToggleHighlight}
-            data-is-highlighted={areAllHighlighted ? "highlight-1" : false}
+            data-is-highlighted={areAllHighlighted ? false : "highlight-1"}
           >
             <Icon
               path={areAllHighlighted ? mdiCancel : mdiFormatColorHighlight}
