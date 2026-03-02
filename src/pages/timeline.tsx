@@ -18,8 +18,8 @@ import {
   MILESTONES,
 } from "@/data/typed/historical";
 import { HistoricalEvent, HistoricalMilestone } from "@/types/historical";
-import { layout } from "@/utils/intervalScheduling";
 import { formatYear } from "@/utils/timeline/formatYear";
+import { layout } from "@/utils/timeline/layoutTimeline";
 
 type PageData = {
   bookRows: HistoricalEvent[][];

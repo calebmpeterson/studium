@@ -2,6 +2,7 @@ import useLocalStorageState from "use-local-storage-state";
 
 import { VerseReference } from "@/types";
 import { Highlights } from "@/types/annotations";
+import { slugifyReference } from "@/utils/slugifyReference";
 
 type IsHighlighted = (reference: VerseReference) => boolean | string;
 
@@ -16,11 +17,11 @@ export const useVerseHighlighting = (): HookResult => {
   );
 
   const isHighlighted = ({ book, chapter, verse }: VerseReference) =>
-    highlights[`${book}/${chapter}#${verse}`];
+    highlights[slugifyReference({ book, chapter, verse })];
 
   const setHighlight = (reference: VerseReference, isHighlighted: boolean) => {
     setHighlights((currentHighlights): Highlights => {
-      const slug = `${reference.book}/${reference.chapter}#${reference.verse}`;
+      const slug = slugifyReference(reference);
 
       if (isHighlighted) {
         return {
