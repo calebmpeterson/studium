@@ -1,0 +1,20 @@
+{
+  "name": "kjv-cli",
+  "version": "1.0.1",
+  "private": false,
+  "type": "commonjs",
+  "bin": {
+    "kjv": "./main.cjs"
+  },
+  "files": [
+    "main.cjs",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "commander": "^14.0.1"
+  }
+}

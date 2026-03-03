@@ -21,12 +21,17 @@
     "build:data:cross-references": "ts-node --skipProject scripts/cross-references-to-json.ts",
     "build:data:first-mention-index": "tsx scripts/build-first-mention-index.ts",
     "build:search-index": "ts-node --skipProject scripts/build-search-index.ts",
-    "build:thompson-chain-references": "ts-node --skipProject scripts/build-thompson-chain-references.ts"
+    "build:thompson-chain-references": "ts-node --skipProject scripts/build-thompson-chain-references.ts",
+    "build:cli": "esbuild src/cli/main.ts --bundle --platform=node --format=cjs --target=node20 --outfile=dist/main.cjs && cp src/cli/README.md dist/README.md",
+    "cli": "pnpm build:cli && node dist/main.cjs",
+    "prepare:publish:cli": "cp src/cli/package.json dist/package.json && cp LICENSE dist/LICENSE",
+    "publish:cli": "pnpm build:cli && pnpm prepare:publish:cli && npm publish ./dist"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@mdi/js": "^7.3.67",
     "@mdi/react": "^1.6.1",
+    "commander": "^14.0.3",
     "framer-motion": "^10.16.14",
     "fuse.js": "^7.0.0",
     "fuzzysearch": "^1.0.3",
@@ -64,6 +69,7 @@
     "minimist": "^1.2.8",
     "netlify-cli": "^17.8.1",
     "ts-node": "^10.9.1",
+    "tsup": "^8.5.1",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
     "vitest": "^4.0.15"

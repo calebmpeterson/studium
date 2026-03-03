@@ -16,6 +16,9 @@
 # production
 /build
 
+# CLI distribution
+/dist
+
 # misc
 .DS_Store
 *.pem
