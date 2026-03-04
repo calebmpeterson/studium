@@ -1,6 +1,6 @@
 {
   "name": "kjv-cli",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": false,
   "type": "commonjs",
   "bin": {
@@ -15,6 +15,7 @@
     "node": ">=20"
   },
   "dependencies": {
-    "commander": "^14.0.1"
+    "commander": "^14.0.1",
+    "chalk": "^5.3.0"
   }
 }
