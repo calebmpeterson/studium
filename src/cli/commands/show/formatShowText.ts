@@ -1,10 +1,11 @@
+import { formatBook } from "../../output/formatBook";
+import { formatVerse } from "../../output/formatVerse";
 import { VerseRecord } from "../../types";
-
 import { buildVerseSelectionLabel } from "./buildVerseSelectionLabel";
 
 export const formatShowText = (
   records: VerseRecord[],
-  verses?: number[]
+  verses?: number[],
 ): string => {
   if (records.length === 0) {
     throw new Error("Cannot format empty verse output.");
@@ -16,7 +17,7 @@ export const formatShowText = (
     ? `${first.book} ${first.chapter}:${buildVerseSelectionLabel(verses)}`
     : `${first.book} ${first.chapter}`;
 
-  const lines = records.map((record) => `${record.verse} ${record.text}`);
+  const lines = records.map((record) => formatVerse(record.verse, record.text));
 
-  return `${header}\n\n${lines.join("\n")}`;
+  return `${formatBook(header)}\n\n${lines.join("\n\n")}`;
 };

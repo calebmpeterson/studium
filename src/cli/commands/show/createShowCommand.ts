@@ -11,10 +11,11 @@ import { show } from "./show";
 export const createShowCommand = (): Command =>
   new Command("show")
     .description("Show KJV verses for a reference")
-    .argument("<reference>", "Bible reference (single chapter only)")
+    .argument("<reference...>", "Bible reference (single chapter only)")
     .option("--json", "Output valid JSON")
-    .action((reference: string, options: CliJsonOption) => {
+    .action((referenceParts: string[], options: CliJsonOption) => {
       try {
+        const reference = referenceParts.join(" ");
         const parsed = parseReference(reference);
         const records = show(parsed.book, parsed.chapter, parsed.verses);
 

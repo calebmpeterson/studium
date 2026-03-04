@@ -1,6 +1,6 @@
-import { bookAbbreviations } from "../../data/book-abbreviations";
+import { listBookRecords } from "./listBookRecords";
 
-export const listBooks = (): string[] =>
-  Object.entries(bookAbbreviations).map(
-    ([book, abbreviation]) => `${book},${abbreviation}`
+export const listBooks = (query?: string): string[] =>
+  listBookRecords(query).map(
+    ({ title, abbreviation }) => `${title},${abbreviation}`
   );
