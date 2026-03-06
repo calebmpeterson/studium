@@ -1,6 +1,6 @@
 {
   "name": "kjv-cli",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "private": false,
   "type": "commonjs",
   "bin": {
@@ -11,6 +11,10 @@
     "README.md",
     "LICENSE"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/calebmpeterson/studium.git"
+  },
   "engines": {
     "node": ">=20"
   },
