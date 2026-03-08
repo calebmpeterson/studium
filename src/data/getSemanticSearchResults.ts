@@ -1,8 +1,9 @@
 import { isUndefined } from "lodash";
-import OpenAI from "openai";
+import { generateText, Output } from "ai";
+import { openai } from "@ai-sdk/openai";
+import { z } from "zod";
 
 import { VerseReference } from "@/types";
-import { extractJsonFromOpenAI } from "@/utils/extractJsonFromOpenAI";
 
 import { normalizeQuery } from "./normalizeQuery";
 import { normalizeVerseReferences } from "./normalizeVerseReferences";
@@ -10,10 +11,14 @@ import { normalizeVerseReferences } from "./normalizeVerseReferences";
 type Result = VerseReference[];
 
 const PROMPT = `
-Given the following query, respond with a list of relevant Bible references in JSON using the schema:
-
-[{ "book": string, "chapter": number, "verse": number }]
+Given the following query, identify relevant Bible references.
 `;
+
+const VerseReferenceSchema = z.object({
+  book: z.string(),
+  chapter: z.string(),
+  verse: z.string(),
+});
 
 export const getSemanticSearchResults = async (
   query: string | string[] | undefined
@@ -24,31 +29,15 @@ export const getSemanticSearchResults = async (
 
   try {
     const normalizedQuery = normalizeQuery(query);
-
-    const openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
-    });
-
-    const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        {
-          role: "system",
-          content: PROMPT,
-        },
-        {
-          role: "user",
-          content: `Query: ${normalizedQuery}`,
-        },
-      ],
+    const { output: verses } = await generateText({
+      model: openai("gpt-4o-mini"),
+      output: Output.array({
+        element: VerseReferenceSchema,
+      }),
+      system: PROMPT,
+      prompt: `Query: ${normalizedQuery}`,
       temperature: 1,
-      max_tokens: 4096,
-      top_p: 1,
-      frequency_penalty: 0,
-      presence_penalty: 0,
     });
-
-    const verses = extractJsonFromOpenAI(response);
 
     return normalizeVerseReferences(verses);
   } catch (error: unknown) {

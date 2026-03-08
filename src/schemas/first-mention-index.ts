@@ -10,6 +10,6 @@ export const FirstMentionSchema = z.object({
 
 export type FirstMention = z.infer<typeof FirstMentionSchema>;
 
-export const FirstMentionIndexSchema = z.record(FirstMentionSchema);
+export const FirstMentionIndexSchema = z.record(z.string(), FirstMentionSchema);
 
 export type FirstMentionIndex = z.infer<typeof FirstMentionIndexSchema>;
