@@ -39,7 +39,6 @@ export const getSemanticSearchResults = async (
       output: OutputSchema,
       system: PROMPT,
       prompt: `Query: ${normalizedQuery}`,
-      temperature: 1,
     });
 
     return normalizeVerseReferences(verses);
