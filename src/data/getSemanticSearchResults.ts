@@ -1,6 +1,6 @@
-import { isUndefined } from "lodash";
-import { generateText, Output } from "ai";
 import { openai } from "@ai-sdk/openai";
+import { generateText, Output } from "ai";
+import { isUndefined } from "lodash";
 import { z } from "zod";
 
 import { VerseReference } from "@/types";
@@ -11,7 +11,8 @@ import { normalizeVerseReferences } from "./normalizeVerseReferences";
 type Result = VerseReference[];
 
 const PROMPT = `
-Given the following query, identify relevant Bible references.
+You are a helpful Bible scholarship assistant. Given the user's query,
+identify all relevant Bible references. Order the results by relevance.
 `;
 
 const VerseReferenceSchema = z.object({
@@ -20,8 +21,12 @@ const VerseReferenceSchema = z.object({
   verse: z.string(),
 });
 
+const OutputSchema = Output.array({
+  element: VerseReferenceSchema,
+});
+
 export const getSemanticSearchResults = async (
-  query: string | string[] | undefined
+  query: string | string[] | undefined,
 ): Promise<Result> => {
   if (isUndefined(query)) {
     return [];
@@ -30,10 +35,8 @@ export const getSemanticSearchResults = async (
   try {
     const normalizedQuery = normalizeQuery(query);
     const { output: verses } = await generateText({
-      model: openai("gpt-4o-mini"),
-      output: Output.array({
-        element: VerseReferenceSchema,
-      }),
+      model: openai("gpt-5"),
+      output: OutputSchema,
       system: PROMPT,
       prompt: `Query: ${normalizedQuery}`,
       temperature: 1,
