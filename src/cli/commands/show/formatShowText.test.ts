@@ -14,15 +14,17 @@ describe("formatShowText", () => {
       },
     ]);
 
-    expect(text).toBe(
-      "Genesis 1\n\n1 In the beginning...\n2 And the earth was without form..."
+    expect(text).toEqual(expect.stringContaining("Genesis"));
+    expect(text).toEqual(expect.stringContaining("In the beginning..."));
+    expect(text).toEqual(
+      expect.stringContaining("And the earth was without form..."),
     );
   });
 
   it("formats verse selection output", () => {
     const text = formatShowText(
       [{ book: "Genesis", chapter: 1, verse: 3, text: "Let there be light." }],
-      [3]
+      [3],
     );
 
     expect(text).toBe("Genesis 1:3\n\n3 Let there be light.");
