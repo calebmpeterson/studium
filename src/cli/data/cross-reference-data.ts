@@ -1,0 +1,137 @@
+import data0 from "../../data/json/cross-references/1-chronicles.json";
+import data1 from "../../data/json/cross-references/1-corinthians.json";
+import data2 from "../../data/json/cross-references/1-john.json";
+import data3 from "../../data/json/cross-references/1-kings.json";
+import data4 from "../../data/json/cross-references/1-peter.json";
+import data5 from "../../data/json/cross-references/1-samuel.json";
+import data6 from "../../data/json/cross-references/1-thessalonians.json";
+import data7 from "../../data/json/cross-references/1-timothy.json";
+import data8 from "../../data/json/cross-references/2-chronicles.json";
+import data9 from "../../data/json/cross-references/2-corinthians.json";
+import data10 from "../../data/json/cross-references/2-john.json";
+import data11 from "../../data/json/cross-references/2-kings.json";
+import data12 from "../../data/json/cross-references/2-peter.json";
+import data13 from "../../data/json/cross-references/2-samuel.json";
+import data14 from "../../data/json/cross-references/2-thessalonians.json";
+import data15 from "../../data/json/cross-references/2-timothy.json";
+import data16 from "../../data/json/cross-references/3-john.json";
+import data17 from "../../data/json/cross-references/acts.json";
+import data18 from "../../data/json/cross-references/amos.json";
+import data19 from "../../data/json/cross-references/colossians.json";
+import data20 from "../../data/json/cross-references/daniel.json";
+import data21 from "../../data/json/cross-references/deuteronomy.json";
+import data22 from "../../data/json/cross-references/ecclesiastes.json";
+import data23 from "../../data/json/cross-references/ephesians.json";
+import data24 from "../../data/json/cross-references/esther.json";
+import data25 from "../../data/json/cross-references/exodus.json";
+import data26 from "../../data/json/cross-references/ezekiel.json";
+import data27 from "../../data/json/cross-references/ezra.json";
+import data28 from "../../data/json/cross-references/galatians.json";
+import data29 from "../../data/json/cross-references/genesis.json";
+import data30 from "../../data/json/cross-references/habakkuk.json";
+import data31 from "../../data/json/cross-references/haggai.json";
+import data32 from "../../data/json/cross-references/hebrews.json";
+import data33 from "../../data/json/cross-references/hosea.json";
+import data34 from "../../data/json/cross-references/isaiah.json";
+import data35 from "../../data/json/cross-references/james.json";
+import data36 from "../../data/json/cross-references/jeremiah.json";
+import data37 from "../../data/json/cross-references/job.json";
+import data38 from "../../data/json/cross-references/joel.json";
+import data39 from "../../data/json/cross-references/john.json";
+import data40 from "../../data/json/cross-references/jonah.json";
+import data41 from "../../data/json/cross-references/joshua.json";
+import data42 from "../../data/json/cross-references/jude.json";
+import data43 from "../../data/json/cross-references/judges.json";
+import data44 from "../../data/json/cross-references/lamentations.json";
+import data45 from "../../data/json/cross-references/leviticus.json";
+import data46 from "../../data/json/cross-references/luke.json";
+import data47 from "../../data/json/cross-references/malachi.json";
+import data48 from "../../data/json/cross-references/mark.json";
+import data49 from "../../data/json/cross-references/matthew.json";
+import data50 from "../../data/json/cross-references/micah.json";
+import data51 from "../../data/json/cross-references/nahum.json";
+import data52 from "../../data/json/cross-references/nehemiah.json";
+import data53 from "../../data/json/cross-references/numbers.json";
+import data54 from "../../data/json/cross-references/obadiah.json";
+import data55 from "../../data/json/cross-references/philemon.json";
+import data56 from "../../data/json/cross-references/philippians.json";
+import data57 from "../../data/json/cross-references/proverbs.json";
+import data58 from "../../data/json/cross-references/psalms.json";
+import data59 from "../../data/json/cross-references/revelation.json";
+import data60 from "../../data/json/cross-references/romans.json";
+import data61 from "../../data/json/cross-references/ruth.json";
+import data62 from "../../data/json/cross-references/song-of-solomon.json";
+import data63 from "../../data/json/cross-references/titus.json";
+import data64 from "../../data/json/cross-references/zechariah.json";
+import data65 from "../../data/json/cross-references/zephaniah.json";
+
+import { CrossReferenceRecord } from "../types";
+
+export const crossReferenceData: Record<string, CrossReferenceRecord[]> = {
+  "1-chronicles": data0 as CrossReferenceRecord[],
+  "1-corinthians": data1 as CrossReferenceRecord[],
+  "1-john": data2 as CrossReferenceRecord[],
+  "1-kings": data3 as CrossReferenceRecord[],
+  "1-peter": data4 as CrossReferenceRecord[],
+  "1-samuel": data5 as CrossReferenceRecord[],
+  "1-thessalonians": data6 as CrossReferenceRecord[],
+  "1-timothy": data7 as CrossReferenceRecord[],
+  "2-chronicles": data8 as CrossReferenceRecord[],
+  "2-corinthians": data9 as CrossReferenceRecord[],
+  "2-john": data10 as CrossReferenceRecord[],
+  "2-kings": data11 as CrossReferenceRecord[],
+  "2-peter": data12 as CrossReferenceRecord[],
+  "2-samuel": data13 as CrossReferenceRecord[],
+  "2-thessalonians": data14 as CrossReferenceRecord[],
+  "2-timothy": data15 as CrossReferenceRecord[],
+  "3-john": data16 as CrossReferenceRecord[],
+  acts: data17 as CrossReferenceRecord[],
+  amos: data18 as CrossReferenceRecord[],
+  colossians: data19 as CrossReferenceRecord[],
+  daniel: data20 as CrossReferenceRecord[],
+  deuteronomy: data21 as CrossReferenceRecord[],
+  ecclesiastes: data22 as CrossReferenceRecord[],
+  ephesians: data23 as CrossReferenceRecord[],
+  esther: data24 as CrossReferenceRecord[],
+  exodus: data25 as CrossReferenceRecord[],
+  ezekiel: data26 as CrossReferenceRecord[],
+  ezra: data27 as CrossReferenceRecord[],
+  galatians: data28 as CrossReferenceRecord[],
+  genesis: data29 as CrossReferenceRecord[],
+  habakkuk: data30 as CrossReferenceRecord[],
+  haggai: data31 as CrossReferenceRecord[],
+  hebrews: data32 as CrossReferenceRecord[],
+  hosea: data33 as CrossReferenceRecord[],
+  isaiah: data34 as CrossReferenceRecord[],
+  james: data35 as CrossReferenceRecord[],
+  jeremiah: data36 as CrossReferenceRecord[],
+  job: data37 as CrossReferenceRecord[],
+  joel: data38 as CrossReferenceRecord[],
+  john: data39 as CrossReferenceRecord[],
+  jonah: data40 as CrossReferenceRecord[],
+  joshua: data41 as CrossReferenceRecord[],
+  jude: data42 as CrossReferenceRecord[],
+  judges: data43 as CrossReferenceRecord[],
+  lamentations: data44 as CrossReferenceRecord[],
+  leviticus: data45 as CrossReferenceRecord[],
+  luke: data46 as CrossReferenceRecord[],
+  malachi: data47 as CrossReferenceRecord[],
+  mark: data48 as CrossReferenceRecord[],
+  matthew: data49 as CrossReferenceRecord[],
+  micah: data50 as CrossReferenceRecord[],
+  nahum: data51 as CrossReferenceRecord[],
+  nehemiah: data52 as CrossReferenceRecord[],
+  numbers: data53 as CrossReferenceRecord[],
+  obadiah: data54 as CrossReferenceRecord[],
+  philemon: data55 as CrossReferenceRecord[],
+  philippians: data56 as CrossReferenceRecord[],
+  proverbs: data57 as CrossReferenceRecord[],
+  psalms: data58 as CrossReferenceRecord[],
+  revelation: data59 as CrossReferenceRecord[],
+  romans: data60 as CrossReferenceRecord[],
+  ruth: data61 as CrossReferenceRecord[],
+  "song-of-solomon": data62 as CrossReferenceRecord[],
+  titus: data63 as CrossReferenceRecord[],
+  zechariah: data64 as CrossReferenceRecord[],
+  zephaniah: data65 as CrossReferenceRecord[],
+};

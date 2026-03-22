@@ -23,6 +23,9 @@ importers:
       ai:
         specifier: ^6.0.116
         version: 6.0.116(zod@4.3.6)
+      boxen:
+        specifier: ^7.1.1
+        version: 7.1.1
       chalk:
         specifier: ^5.3.0
         version: 5.3.0

@@ -15,6 +15,28 @@ export type CliJsonOption = {
   json?: boolean;
 };
 
+export type CrossReferenceRecord = {
+  v: string;
+  r: string[];
+};
+
+export type XrefRecord = {
+  book: string;
+  chapter: number;
+  verse: number;
+  text: string;
+};
+
+export type XrefGroup = {
+  reference: {
+    book: string;
+    chapter: number;
+    verse: number;
+  };
+  text: string;
+  xrefs: XrefRecord[];
+};
+
 export type BookAbbreviationRecord = {
   title: string;
   abbreviation: string;
