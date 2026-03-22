@@ -2,8 +2,8 @@
   - Move the `useLocalStorageState` key of "highlights" out to `src/state/constants.ts` as VERSE_HIGHLIGHTING_STATE_KEY.
 - Introduce a `src/state/useHighlightedVerses` hook which exposes the value (not the setter) for consumption elsewhere.
 - Introduce a new Overlay-based view which is accessed from the same menu which includes "First mention" and "Source code".
-- Put the new view in `src/components/HighlightedVersesView/*.tsx`
-  - The new view should read highlighted verses from the new hook.
+- Put the new view in `src/components/HighlightsOverlay/*.tsx`
+  - The new overlay should read highlighted verses from the new hook.
   - Individual items go in their own sibling `.tsx` file.
   - Each individual item in the list should show the source text for the highlighted verse.
   - When clicked, the item should navigate to the /{book}/{chapter}#{verse} referenced.
