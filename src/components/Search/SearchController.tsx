@@ -73,7 +73,9 @@ export const SearchController: FC<Props> = ({
   const [searchHistory, setSearchHistory] = useTextSearchHistory();
 
   const performSearch = useCallback(
-    async (query: string) => {
+    async (query: string, options: { saveToHistory?: boolean } = {}) => {
+      const { saveToHistory = true } = options;
+
       // Don't search for empty queries
       if (query.trim().length === 0) {
         setHasSearched(false);
@@ -81,10 +83,12 @@ export const SearchController: FC<Props> = ({
         return;
       }
 
-      setSearchHistory((previous) => [
-        { query, timestamp: Date.now() },
-        ...previous,
-      ]);
+      if (saveToHistory) {
+        setSearchHistory((previous) => [
+          { query, timestamp: Date.now() },
+          ...previous.filter((entry) => entry.query !== query),
+        ]);
+      }
 
       setResults([]);
       setIsLoading(true);
@@ -104,6 +108,22 @@ export const SearchController: FC<Props> = ({
     [setSearchHistory]
   );
 
+  useEffect(() => {
+    const trimmedQuery = query.trim();
+
+    if (trimmedQuery.length < 2) {
+      setHasSearched(false);
+      setResults([]);
+      return;
+    }
+
+    const timeoutId = setTimeout(() => {
+      performSearch(trimmedQuery, { saveToHistory: false });
+    }, 200);
+
+    return () => clearTimeout(timeoutId);
+  }, [query, performSearch]);
+
   const onClearSearchHistory = useCallback(() => {
     setSearchHistory([]);
   }, [setSearchHistory]);
@@ -116,7 +136,7 @@ export const SearchController: FC<Props> = ({
     async (event: FormEvent) => {
       event.preventDefault();
 
-      await performSearch(query);
+      await performSearch(query, { saveToHistory: true });
     },
     [query, performSearch]
   );
@@ -136,7 +156,7 @@ export const SearchController: FC<Props> = ({
         inputRef.current.focus();
       }
 
-      await performSearch(query);
+      await performSearch(query, { saveToHistory: true });
     },
     [performSearch]
   );
