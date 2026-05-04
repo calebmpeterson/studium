@@ -44,7 +44,18 @@ export type SearchHistoryEntry = {
 
 export type SearchHistory = SearchHistoryEntry[];
 
-export type SearchResult = Verse;
+export type VerseSearchResult = {
+  kind: "verse";
+  verse: Verse;
+};
+
+export type FirstMentionSearchResult = {
+  kind: "first-mention";
+  word: string;
+  verse: Verse;
+};
+
+export type SearchResult = VerseSearchResult | FirstMentionSearchResult;
 
 export type SearchResults = SearchResult[];
 

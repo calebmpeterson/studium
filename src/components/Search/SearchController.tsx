@@ -255,7 +255,7 @@ export const SearchController: FC<Props> = ({
 
         <div css={searchResultsContainerCss}>
           {results.map((result, index) => (
-            <SearchResultDisplay key={index} {...result} onClick={onClose} />
+            <SearchResultDisplay key={index} result={result} onClick={onClose} />
           ))}
         </div>
       </Overlay>
