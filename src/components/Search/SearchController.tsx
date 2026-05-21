@@ -73,7 +73,9 @@ export const SearchController: FC<Props> = ({
   const [searchHistory, setSearchHistory] = useTextSearchHistory();
 
   const performSearch = useCallback(
-    async (query: string) => {
+    async (query: string, options: { saveToHistory?: boolean } = {}) => {
+      const { saveToHistory = true } = options;
+
       // Don't search for empty queries
       if (query.trim().length === 0) {
         setHasSearched(false);
@@ -81,10 +83,12 @@ export const SearchController: FC<Props> = ({
         return;
       }
 
-      setSearchHistory((previous) => [
-        { query, timestamp: Date.now() },
-        ...previous,
-      ]);
+      if (saveToHistory) {
+        setSearchHistory((previous) => [
+          { query, timestamp: Date.now() },
+          ...previous.filter((entry) => entry.query !== query),
+        ]);
+      }
 
       setResults([]);
       setIsLoading(true);
@@ -92,7 +96,7 @@ export const SearchController: FC<Props> = ({
 
       try {
         const response = await fetch(
-          `/api/search?query=${encodeURIComponent(query)}`
+          `/api/search?query=${encodeURIComponent(query)}`,
         );
         const { results } = (await response.json()) as SearchResponse;
 
@@ -101,8 +105,24 @@ export const SearchController: FC<Props> = ({
         setIsLoading(false);
       }
     },
-    [setSearchHistory]
+    [setSearchHistory],
   );
+
+  useEffect(() => {
+    const trimmedQuery = query.trim();
+
+    if (trimmedQuery.length < 2) {
+      setHasSearched(false);
+      setResults([]);
+      return;
+    }
+
+    const timeoutId = setTimeout(() => {
+      performSearch(trimmedQuery, { saveToHistory: false });
+    }, 200);
+
+    return () => clearTimeout(timeoutId);
+  }, [query, performSearch]);
 
   const onClearSearchHistory = useCallback(() => {
     setSearchHistory([]);
@@ -116,9 +136,9 @@ export const SearchController: FC<Props> = ({
     async (event: FormEvent) => {
       event.preventDefault();
 
-      await performSearch(query);
+      await performSearch(query, { saveToHistory: true });
     },
-    [query, performSearch]
+    [query, performSearch],
   );
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -136,9 +156,9 @@ export const SearchController: FC<Props> = ({
         inputRef.current.focus();
       }
 
-      await performSearch(query);
+      await performSearch(query, { saveToHistory: true });
     },
-    [performSearch]
+    [performSearch],
   );
 
   const tableOfContentsEntries = flatMap(tableOfContents, (chapters, book) =>
@@ -146,7 +166,7 @@ export const SearchController: FC<Props> = ({
       book,
       chapter,
       slug,
-    }))
+    })),
   );
 
   const filteredTableOfContentsEntries =
@@ -154,8 +174,8 @@ export const SearchController: FC<Props> = ({
       ? tableOfContentsEntries.filter((entry) =>
           fuzzysearch(
             query.toLowerCase(),
-            `${entry.book} ${entry.chapter}`.toLowerCase()
-          )
+            `${entry.book} ${entry.chapter}`.toLowerCase(),
+          ),
         )
       : [];
 
@@ -164,7 +184,7 @@ export const SearchController: FC<Props> = ({
       onClose();
       onSelectBookAndChapter(book, chapter, slug);
     },
-    [onClose, onSelectBookAndChapter]
+    [onClose, onSelectBookAndChapter],
   );
 
   const header = (
@@ -201,24 +221,27 @@ export const SearchController: FC<Props> = ({
         <header data-sub-header data-muted>
           References
         </header>
-        <div css={tableOfContentsItemsCss}>
-          {filteredTableOfContentsEntries.map((entry) => (
-            <TableOfContentsItem
-              key={entry.slug}
-              book={entry.book}
-              chapter={entry.chapter}
-              slug={entry.slug}
-              isSelected={
-                currentBook === entry.book && currentChapter === entry.chapter
-              }
-              onSelect={performSelectBookAndChapter}
-            />
-          ))}
 
-          {size(query) < 2 && (
-            <em data-muted>Start typing to look up book and chapter</em>
-          )}
-        </div>
+        {(size(filteredTableOfContentsEntries) > 0 || size(query) < 2) && (
+          <div css={tableOfContentsItemsCss}>
+            {filteredTableOfContentsEntries.map((entry) => (
+              <TableOfContentsItem
+                key={entry.slug}
+                book={entry.book}
+                chapter={entry.chapter}
+                slug={entry.slug}
+                isSelected={
+                  currentBook === entry.book && currentChapter === entry.chapter
+                }
+                onSelect={performSelectBookAndChapter}
+              />
+            ))}
+
+            {size(query) < 2 && (
+              <em data-muted>Start typing to look up book and chapter</em>
+            )}
+          </div>
+        )}
 
         {isLoading && (
           <>
@@ -255,7 +278,11 @@ export const SearchController: FC<Props> = ({
 
         <div css={searchResultsContainerCss}>
           {results.map((result, index) => (
-            <SearchResultDisplay key={index} {...result} onClick={onClose} />
+            <SearchResultDisplay
+              key={index}
+              result={result}
+              onClick={onClose}
+            />
           ))}
         </div>
       </Overlay>
