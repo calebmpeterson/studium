@@ -1,4 +1,3 @@
-import stem from "wink-porter2-stemmer";
 import { firstMentionIndex } from "../../data/first-mention-index";
 import { VerseRecord } from "../../types";
 
@@ -7,7 +6,7 @@ import { findClosestFirstMentionKey } from "./findClosestFirstMentionKey";
 
 export const getFirstMentionRecord = (term: string): VerseRecord => {
   const singleTerm = ensureSingleTerm(term);
-  const normalized = stem(singleTerm.toLowerCase());
+  const normalized = singleTerm.toLowerCase();
 
   const keys = Object.keys(firstMentionIndex);
   const key =

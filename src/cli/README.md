@@ -118,7 +118,7 @@ Rules:
 
 - `<term>` must be a single word/term.
 - Matching is case-insensitive.
-- Uses closest Levenshtein match when exact term is not found.
+- Uses closest Levenshtein match when an exact term is not found.
 
 Text output:
 
@@ -141,34 +141,30 @@ JSON output (`--json`):
 ]
 ```
 
-### `xrefs <reference...>`
+### `occurrences <term>`
 
 Usage:
 
 ```bash
-kjv xrefs <reference...> [--json]
+kjv occurrences <term> [--json]
 ```
 
 Description:
 
-- Shows cross references for one verse, a verse selection, or a full chapter selection within one chapter.
-- Uses the same reference parsing and validation behavior as `show`.
-
-Supported reference forms (single chapter only):
-
-- `Genesis 1:1`
-- `Genesis 1:3-10`
-- `Genesis 1:3,4,7`
-- `Genesis 1`
+- Shows every verse containing a case-insensitive, whole-word match for a single term.
+- Results follow canonical Bible order.
+- `<term>` must be a single word/term; matching is exact and case-insensitive.
 
 Text output:
 
 ```text
-{source-book} {source-chapter}:{source-verse}
-{source-text}
+{book} {chapter}:{verse}
 
-{xref-book-1} {xref-chapter-1}:{xref-verse-1}
-{xref-text-1}
+{verse} {text-of-verse}
+
+{next-book} {next-chapter}:{next-verse}
+
+{next-verse} {text-of-verse}
 ```
 
 JSON output (`--json`):
@@ -176,20 +172,10 @@ JSON output (`--json`):
 ```json
 [
   {
-    "reference": {
-      "book": "Genesis",
-      "chapter": 1,
-      "verse": 1
-    },
-    "text": "In the beginning...",
-    "xrefs": [
-      {
-        "book": "John",
-        "chapter": 1,
-        "verse": 1,
-        "text": "In the beginning was the Word..."
-      }
-    ]
+    "book": "Genesis",
+    "chapter": 1,
+    "verse": 1,
+    "text": "In the beginning..."
   }
 ]
 ```
@@ -203,4 +189,12 @@ Available on all subcommands:
 - `kjv list --json`
 - `kjv show <reference...> --json`
 - `kjv define <term> --json`
-- `kjv xrefs <reference...> --json`
+- `kjv occurrences <term> --json`
+
+### `--skill`
+
+Prints the bundled `SKILL.md` instructions for an AI agent using this CLI:
+
+```bash
+kjv --skill
+```

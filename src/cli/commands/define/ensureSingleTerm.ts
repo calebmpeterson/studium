@@ -1,4 +1,4 @@
-export const ensureSingleTerm = (term: string): string => {
+export const ensureSingleTerm = (term: string, command = "define"): string => {
   const normalized = term.trim();
 
   if (normalized.length === 0) {
@@ -6,7 +6,7 @@ export const ensureSingleTerm = (term: string): string => {
   }
 
   if (/\s/.test(normalized)) {
-    throw new Error("The define command accepts a single term only.");
+    throw new Error(`The ${command} command accepts a single term only.`);
   }
 
   return normalized;

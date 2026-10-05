@@ -3,8 +3,6 @@ import fs from "node:fs";
 import { isEmpty, isObject } from "lodash";
 import { z } from "zod";
 
-import { stemWord } from "../src/utils/stemWord";
-
 const VerseSchema = z.object({
   reference: z.string(),
   book: z.string(),
@@ -70,7 +68,7 @@ const stopWords = new Set(
     "down",
     "over",
     "under",
-  ].map(stemWord)
+  ]
 );
 
 export const wordsByFirstMention = (bible: Bible): FirstMentionByWord => {
@@ -91,15 +89,13 @@ export const wordsByFirstMention = (bible: Bible): FirstMentionByWord => {
           .split(/\s+/);
 
         for (const word of words) {
-          const stemmedWord = stemWord(word);
-
           if (
-            !seen.has(stemmedWord) &&
-            !stopWords.has(stemmedWord) &&
-            !isEmpty(stemmedWord)
+            !seen.has(word) &&
+            !stopWords.has(word) &&
+            !isEmpty(word)
           ) {
-            seen.add(stemmedWord);
-            wordMap[stemmedWord] = verse;
+            seen.add(word);
+            wordMap[word] = verse;
           }
         }
       }

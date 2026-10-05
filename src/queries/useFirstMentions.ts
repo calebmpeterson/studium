@@ -1,8 +1,6 @@
 import { isEmpty, words } from "lodash";
 
 import { FirstMention } from "@/schemas/first-mention-index";
-import { stemWord } from "@/utils/stemWord";
-
 import { useFirstMentionIndex } from "./useFirstMentionIndex";
 
 type ResultEntry = {
@@ -25,7 +23,7 @@ export const useFirstMentions = (text: string): HookResult => {
   return {
     firstMentions: words(text).map((word) => ({
       word,
-      firstMention: index[stemWord(word)],
+      firstMention: index[word.toLowerCase()],
     })),
     isLoading,
   };

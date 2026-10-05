@@ -11,6 +11,15 @@ export const createListCommand = (): Command =>
     .description("List all books and their abbreviations")
     .argument("[query...]", "Filter by book title or abbreviation")
     .option("--json", "Output valid JSON")
+    .addHelpText(
+      "after",
+      `
+Examples:
+  $ kjv list
+  $ kjv list John
+  $ kjv list --json
+`
+    )
     .action((queryParts: string[] | undefined, options: CliJsonOption) => {
       try {
         const query = queryParts?.join(" ").trim() || undefined;

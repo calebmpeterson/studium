@@ -18,7 +18,7 @@
     "build:data:first-mention-index": "tsx scripts/build-first-mention-index.ts",
     "build:search-index": "ts-node --skipProject scripts/build-search-index.ts",
     "build:thompson-chain-references": "ts-node --skipProject scripts/build-thompson-chain-references.ts",
-    "build:cli": "esbuild src/cli/main.ts --bundle --platform=node --format=cjs --target=node20 --outfile=dist/main.cjs && cp src/cli/README.md dist/README.md",
+    "build:cli": "esbuild src/cli/main.ts --bundle --platform=node --format=cjs --target=node20 --outfile=dist/main.cjs && cp src/cli/README.md dist/README.md && mkdir -p dist/skill && cp src/cli/skill/SKILL.md dist/skill/SKILL.md",
     "cli": "pnpm build:cli && node dist/main.cjs",
     "prepare:publish:cli": "cp src/cli/package.json dist/package.json && cp LICENSE dist/LICENSE",
     "publish:cli": "pnpm build:cli && pnpm prepare:publish:cli && npm publish ./dist"
@@ -49,7 +49,6 @@
     "use-local-storage-state": "^19.1.0",
     "usehooks-ts": "^3.1.1",
     "uuid": "^9.0.1",
-    "wink-porter2-stemmer": "^2.0.1",
     "zod": "^4.3.6"
   },
   "devDependencies": {

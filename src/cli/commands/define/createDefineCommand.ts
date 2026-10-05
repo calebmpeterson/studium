@@ -12,6 +12,14 @@ export const createDefineCommand = (): Command =>
     .description("Show the first mention record for a term")
     .argument("<term>", "Single word/term")
     .option("--json", "Output valid JSON")
+    .addHelpText(
+      "after",
+      `
+Examples:
+  $ kjv define Aaron
+  $ kjv define faith --json
+`
+    )
     .action((term: string, options: CliJsonOption) => {
       try {
         const record = getFirstMentionRecord(term);

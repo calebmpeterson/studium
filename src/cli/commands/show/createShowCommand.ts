@@ -13,6 +13,19 @@ export const createShowCommand = (): Command =>
     .description("Show KJV verses for a reference")
     .argument("<reference...>", "Bible reference (single chapter only)")
     .option("--json", "Output valid JSON")
+    .addHelpText(
+      "after",
+      `
+Reference formats:
+  $ kjv show Genesis 1:1       Single verse
+  $ kjv show Genesis 1:3-10    Verse range
+  $ kjv show Genesis 1:3,4,7   Verse selection
+  $ kjv show Genesis 1         Whole chapter
+  $ kjv show 1 John 1:1        Multi-word book title
+
+Book titles and abbreviations are case-insensitive. Use --json for JSON output.
+`
+    )
     .action((referenceParts: string[], options: CliJsonOption) => {
       try {
         const reference = referenceParts.join(" ");

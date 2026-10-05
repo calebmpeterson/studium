@@ -12,7 +12,16 @@ describe("getFirstMentionRecord", () => {
     });
   });
 
-  it("falls back to closest term by Levenshtein distance", () => {
+  it("does not stem exact terms", () => {
+    expect(getFirstMentionRecord("running")).toEqual({
+      book: "Leviticus",
+      chapter: 14,
+      verse: 5,
+      text: expect.stringContaining("running water"),
+    });
+  });
+
+  it("falls back to the closest term by Levenshtein distance", () => {
     expect(getFirstMentionRecord("aaronitee")).toEqual({
       book: "1 Chronicles",
       chapter: 12,

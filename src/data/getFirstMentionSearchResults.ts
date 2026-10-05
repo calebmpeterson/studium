@@ -2,8 +2,6 @@ import { flatten, isUndefined, keys, take } from "lodash";
 
 import { getFirstMentionIndex } from "@/data/getFirstMentionIndex";
 import { Verse } from "@/types";
-import { stemWord } from "@/utils/stemWord";
-
 import { normalizeQuery } from "./normalizeQuery";
 
 type Options = {
@@ -31,7 +29,9 @@ export const getFirstMentionSearchResults = (
   }
 
   const index = getFirstMentionIndex();
-  const queryWords = normalizedQuery.split(" ").map(stemWord);
+  const queryWords = normalizedQuery
+    .split(" ")
+    .map((word) => word.toLowerCase());
   const parsedLimit = parseInt(flatten([limit])[0] ?? DEFAULT_LIMIT, 10);
 
   const matchingKeys = keys(index).filter((key) =>
