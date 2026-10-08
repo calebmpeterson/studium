@@ -11,7 +11,7 @@ Use `kjv` to retrieve KJV text. Add `--json` whenever the result will be consume
 
 - `kjv list [query...]` lists books and abbreviations. An optional query matches either field case-insensitively.
 - `kjv show <reference...>` retrieves a passage within one chapter.
-- `kjv define <term>` returns one first-mention verse for a single term. It uses case-insensitive exact keys, then a closest-spelling fallback when no exact key exists; verify the returned term when precision matters.
+- `kjv define <term>` returns one first-mention verse for a single term. It uses case-insensitive exact keys, then a closest-spelling fallback when no exact key exists. A quoted trailing `*` performs a case-insensitive prefix lookup and returns the earliest matching first mention, for example `kjv define 'eye*'`; verify the returned term when precision matters.
 - `kjv occurrences <term>` returns every verse with a case-insensitive whole-word match for one term, in canonical Bible order.
 
 ## References

@@ -1,0 +1,6 @@
+allowBuilds:
+  esbuild: true
+  netlify-cli: true
+  protobufjs: true
+  sharp: true
+  unix-dgram: true

@@ -29,4 +29,28 @@ describe("getFirstMentionRecord", () => {
       text: expect.stringContaining("Aaronites"),
     });
   });
+
+  it("returns the earliest first mention for a trailing wildcard prefix", () => {
+    expect(getFirstMentionRecord("EYE*")).toEqual({
+      book: "Genesis",
+      chapter: 3,
+      verse: 5,
+      text: expect.stringContaining("then your eyes shall be opened"),
+    });
+  });
+
+  it("does not fall back to fuzzy matching for an unmatched wildcard prefix", () => {
+    expect(() => getFirstMentionRecord("zzzzz*")).toThrow(
+      "No first mention found for prefix: zzzzz"
+    );
+  });
+
+  it("only accepts non-empty trailing wildcard prefixes", () => {
+    expect(() => getFirstMentionRecord("*")).toThrow(
+      "Wildcard prefix cannot be empty."
+    );
+    expect(() => getFirstMentionRecord("ey*e")).toThrow(
+      "The define command only supports a trailing * wildcard."
+    );
+  });
 });

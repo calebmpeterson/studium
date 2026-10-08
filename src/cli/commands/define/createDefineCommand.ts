@@ -9,8 +9,8 @@ import { getFirstMentionRecord } from "./getFirstMentionRecord";
 
 export const createDefineCommand = (): Command =>
   new Command("define")
-    .description("Show the first mention record for a term")
-    .argument("<term>", "Single word/term")
+    .description("Show the first mention record for a term or trailing-* prefix")
+    .argument("<term>", "Single word/term or prefix ending in *")
     .option("--json", "Output valid JSON")
     .addHelpText(
       "after",
@@ -18,6 +18,7 @@ export const createDefineCommand = (): Command =>
 Examples:
   $ kjv define Aaron
   $ kjv define faith --json
+  $ kjv define 'eye*'
 `
     )
     .action((term: string, options: CliJsonOption) => {

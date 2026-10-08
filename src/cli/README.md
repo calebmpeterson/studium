@@ -118,6 +118,7 @@ Rules:
 
 - `<term>` must be a single word/term.
 - Matching is case-insensitive.
+- A trailing `*` finds the earliest first mention of any word beginning with the prefix; quote it in your shell, for example `kjv define 'eye*'`.
 - Uses closest Levenshtein match when an exact term is not found.
 
 Text output:

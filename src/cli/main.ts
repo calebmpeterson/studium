@@ -23,6 +23,7 @@ Examples:
   $ kjv show John 3:16
   $ kjv show Genesis 1:3-10
   $ kjv define Aaron
+  $ kjv define 'eye*'
   $ kjv occurrences beginning --json
 
 Run "kjv <command> --help" for command-specific examples.
