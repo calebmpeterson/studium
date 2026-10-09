@@ -22,6 +22,10 @@ vi.mock("../../output/formatRecordsAsJson", () => ({
 import { createListCommand } from "./createListCommand";
 
 describe("createListCommand", () => {
+  it("aliases list as books", () => {
+    expect(createListCommand().aliases()).toContain("books");
+  });
+
   it("passes query to text listing", async () => {
     listBooksMock.mockReturnValue(["Genesis,Ge"]);
 

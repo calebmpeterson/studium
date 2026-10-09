@@ -4,6 +4,7 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import { Command } from "commander";
 
+import { createCategoriesCommand } from "./commands/categories/createCategoriesCommand";
 import { createDefineCommand } from "./commands/define/createDefineCommand";
 import { createListCommand } from "./commands/list/createListCommand";
 import { createOccurrencesCommand } from "./commands/occurrences/createOccurrencesCommand";
@@ -19,7 +20,8 @@ program.addHelpText(
   "after",
   `
 Examples:
-  $ kjv list
+  $ kjv books
+  $ kjv categories
   $ kjv show John 3:16
   $ kjv show Genesis 1:3-10
   $ kjv define Aaron
@@ -30,6 +32,7 @@ Run "kjv <command> --help" for command-specific examples.
 `
 );
 program.addCommand(createListCommand());
+program.addCommand(createCategoriesCommand());
 program.addCommand(createShowCommand());
 program.addCommand(createDefineCommand());
 program.addCommand(createOccurrencesCommand());

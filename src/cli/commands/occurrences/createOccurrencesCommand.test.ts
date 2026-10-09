@@ -25,7 +25,7 @@ describe("createOccurrencesCommand", () => {
       from: "user",
     });
 
-    expect(findOccurrencesMock).toHaveBeenCalledWith("beginning");
+    expect(findOccurrencesMock).toHaveBeenCalledWith("beginning", undefined, undefined);
     expect(logSpy).toHaveBeenCalledWith(JSON.stringify(records, null, 2));
 
     logSpy.mockRestore();
@@ -41,6 +41,26 @@ describe("createOccurrencesCommand", () => {
 
     expect(formatOccurrencesTextMock).toHaveBeenCalledWith(records);
     expect(logSpy).toHaveBeenCalledWith("formatted");
+
+    logSpy.mockRestore();
+  });
+
+  it("passes repeated category and book filters", async () => {
+    const records = [{ book: "John", chapter: 1, verse: 1, text: "In the beginning..." }];
+    findOccurrencesMock.mockReturnValue(records);
+    formatOccurrencesTextMock.mockReturnValue("formatted");
+    const logSpy = vi.spyOn(console, "log").mockImplementation(() => undefined);
+
+    await createOccurrencesCommand().parseAsync(
+      ["beginning", "-c", "Gospels", "--category", "Apocalyptic", "-b", "John", "--book", "Rev"],
+      { from: "user" }
+    );
+
+    expect(findOccurrencesMock).toHaveBeenCalledWith(
+      "beginning",
+      ["Gospels", "Apocalyptic"],
+      ["John", "Rev"]
+    );
 
     logSpy.mockRestore();
   });

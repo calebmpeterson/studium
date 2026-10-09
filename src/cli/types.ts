@@ -15,6 +15,11 @@ export type CliJsonOption = {
   json?: boolean;
 };
 
+export type CliOccurrencesOptions = CliJsonOption & {
+  category?: string[];
+  book?: string[];
+};
+
 export type BookAbbreviationRecord = {
   title: string;
   abbreviation: string;

@@ -1,3 +1,5 @@
+import { resolveBookTitle } from "../../books/resolveBookTitle";
+import { resolveCategoryBooks } from "../../data/book-categories";
 import { kjvData } from "../../data/kjv-data";
 import { RawVerseRecord, VerseRecord } from "../../types";
 import { ensureSingleTerm } from "../define/ensureSingleTerm";
@@ -13,12 +15,31 @@ const allVerses = (): RawVerseRecord[] =>
     )
   );
 
-export const findOccurrences = (term: string): VerseRecord[] => {
+const resolveSelectedBooks = (books?: string[]): Set<string> | undefined =>
+  books && books.length > 0
+    ? new Set(books.map((book) => kjvData[resolveBookTitle(book)].title))
+    : undefined;
+
+export const findOccurrences = (
+  term: string,
+  categories?: string[],
+  books?: string[]
+): VerseRecord[] => {
   const singleTerm = ensureSingleTerm(term, "occurrences");
   const pattern = escapeForRegex(singleTerm);
   const matcher = new RegExp(`(?<![\\p{L}\\p{N}_])${pattern}(?![\\p{L}\\p{N}_])`, "iu");
+  const categoryBooks =
+    categories && categories.length > 0
+      ? resolveCategoryBooks(categories)
+      : undefined;
+  const selectedBooks = resolveSelectedBooks(books);
 
   return allVerses()
-    .filter(({ text }) => matcher.test(text))
+    .filter(
+      ({ book, text }) =>
+        matcher.test(text) &&
+        (!categoryBooks || categoryBooks.has(book)) &&
+        (!selectedBooks || selectedBooks.has(book))
+    )
     .map(mapVerseToRecord);
 };

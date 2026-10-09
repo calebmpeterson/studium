@@ -8,6 +8,7 @@ import { CliJsonOption } from "../../types";
 
 export const createListCommand = (): Command =>
   new Command("list")
+    .alias("books")
     .description("List all books and their abbreviations")
     .argument("[query...]", "Filter by book title or abbreviation")
     .option("--json", "Output valid JSON")
@@ -16,6 +17,7 @@ export const createListCommand = (): Command =>
       `
 Examples:
   $ kjv list
+  $ kjv books
   $ kjv list John
   $ kjv list --json
 `

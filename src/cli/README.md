@@ -8,12 +8,14 @@ kjv <subcommand> [options]
 
 ## Subcommands
 
-### `list`
+### `list` (alias: `books`)
 
 Usage:
 
 ```bash
 kjv list [query...] [--json]
+# or
+kjv books [query...] [--json]
 ```
 
 Description:
@@ -102,6 +104,20 @@ JSON output (`--json`):
 ]
 ```
 
+### `categories`
+
+Usage:
+
+```bash
+kjv categories [--json]
+```
+
+Description:
+
+- Lists the Testament and book categories used in the website footer.
+- Text output contains one category per line, such as `Old Testament` and `Pentateuch`.
+- `--json` includes each category's testament, name, label, and books.
+
 ### `define <term>`
 
 Usage:
@@ -147,7 +163,7 @@ JSON output (`--json`):
 Usage:
 
 ```bash
-kjv occurrences <term> [--json]
+kjv occurrences <term> [-c <category>]... [-b <book>]... [--json]
 ```
 
 Description:
@@ -155,6 +171,18 @@ Description:
 - Shows every verse containing a case-insensitive, whole-word match for a single term.
 - Results follow canonical Bible order.
 - `<term>` must be a single word/term; matching is exact and case-insensitive.
+- `-c`/`--category` may be repeated and is case-insensitive. Repeated categories are combined.
+- `-b`/`--book` may be repeated. Each book accepts a case-insensitive full name or abbreviation.
+- When categories and books are both supplied, a verse's book must match both filters.
+- Testament categories select every book in that Testament. Shared labels such as `Historical` combine their matching book groups.
+
+Examples:
+
+```bash
+kjv occurrences faith -c Gospels -c "Pauline Epistles"
+kjv occurrences faith -b John -b Rom
+kjv occurrences faith -c Gospels -b John
+```
 
 Text output:
 
@@ -187,7 +215,8 @@ JSON output (`--json`):
 
 Available on all subcommands:
 
-- `kjv list --json`
+- `kjv list --json` (or `kjv books --json`)
+- `kjv categories --json`
 - `kjv show <reference...> --json`
 - `kjv define <term> --json`
 - `kjv occurrences <term> --json`
