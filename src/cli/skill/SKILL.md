@@ -7,6 +7,14 @@ description: Query the King James Version with the kjv CLI for book metadata, pa
 
 Use `kjv` to retrieve KJV text. Add `--json` whenever the result will be consumed programmatically or needs structured fields.
 
+## Scripture fidelity
+
+When presenting Scripture retrieved with `kjv`:
+
+- Quote the returned Scripture verbatim. Never elide, truncate, paraphrase, modernize, correct, or otherwise modify its wording, punctuation, capitalization, or verse content.
+- Do not editorialize the Scripture.
+- Do not provide commentary, interpretation, explanation, or contextual framing unless the user explicitly requests it. If explicitly requested, keep it clearly separate from the quoted text.
+
 ## Choose a command
 
 - `kjv list [query...]` (alias: `kjv books`) lists books and abbreviations. An optional query matches either field case-insensitively.
