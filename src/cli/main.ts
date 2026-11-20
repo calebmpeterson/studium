@@ -11,6 +11,8 @@ import { createOccurrencesCommand } from "./commands/occurrences/createOccurrenc
 import { createShowCommand } from "./commands/show/createShowCommand";
 import packageJson from "./package.json";
 
+declare const __KJV_STANDALONE__: boolean | undefined;
+
 const program = new Command();
 const skillPath = path.join(__dirname, "skill", "SKILL.md");
 
@@ -38,7 +40,10 @@ program.addCommand(createDefineCommand());
 program.addCommand(createOccurrencesCommand());
 
 if (process.argv.slice(2).includes("--skill")) {
-  process.stdout.write(readFileSync(skillPath, "utf8"));
+  const skill = typeof __KJV_STANDALONE__ !== "undefined" && __KJV_STANDALONE__
+    ? (require("node:sea") as typeof import("node:sea")).getAsset("skill", "utf8")
+    : readFileSync(skillPath, "utf8");
+  process.stdout.write(skill);
 } else {
   program.parse();
 }

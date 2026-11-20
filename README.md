@@ -51,6 +51,22 @@ For a published release, install from npm:
 npm install --global kjv-cli
 ```
 
+### Standalone executable
+
+With Node.js 25.5 or newer, build a standalone executable for the current
+operating system and architecture:
+
+```bash
+pnpm build:cli:standalone
+./dist/standalone/kjv --help
+```
+
+On Windows the executable is `dist/standalone/kjv.exe`. It includes the Node.js
+runtime, CLI data, and `--skill` instructions, so it can be copied and run without
+installing Node.js. Build separately for each target platform. On macOS the build
+applies an ad hoc signature. This uses Node's single executable application
+feature, which is still under active development.
+
 ## License
 
 Source code is licensed under the MIT License.
