@@ -40,7 +40,7 @@ JSON output (`--json`):
 Usage:
 
 ```bash
-kjv show <reference...> [--json]
+kjv show <reference...> [--json | -m | --markdown]
 ```
 
 Description:
@@ -90,6 +90,16 @@ Whole chapter:
 {verse-2} {text-of-verse-2}
 ...
 ```
+
+Markdown output (`-m` or `--markdown`) uses a heading for the reference and bold verse numbers:
+
+```markdown
+# Genesis 1:1
+
+**1** In the beginning God created the heaven and the earth.
+```
+
+`--markdown` and `--json` cannot be used together.
 
 JSON output (`--json`):
 
